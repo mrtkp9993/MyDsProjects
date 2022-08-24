@@ -1,0 +1,71 @@
+---
+title: "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: paged
+---
+
+```{r message=FALSE}
+library(readxl)
+library(sf)
+library(raster)
+library(dplyr)
+library(spData)
+library(tmap)    
+library(leaflet)
+library(ggplot2)
+```
+
+```{r}
+data_with_coordinates <- read_excel("data.xlsx", 
+    sheet = "earth", col_types = c("date", 
+        "numeric", "numeric", "numeric", 
+        "numeric", "skip"))
+data_diff_between_eq <- read_excel("data.xlsx", 
+    sheet = "diff")
+data_count_by_year <- read_excel("data.xlsx", 
+    sheet = "byyear")
+```
+
+## EDA
+
+Let's look and visualize the historical earthquake data.
+
+### Spatial data
+
+```{r}
+data_with_coordinates
+```
+
+```{r warning=FALSE}
+tur_shp <- st_read("gadm41_TUR.gpkg", layer = "ADM_ADM_0")
+spdf <- SpatialPointsDataFrame(coords = data_with_coordinates[c(3,2)], data = data_with_coordinates)
+
+tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnitude", alpha=0.4)
+```
+
+### Time Span between Earthquake Occurrences
+
+```{r}
+p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density()
+p
+```
+
+### Earthquake Count By Year
+
+```{r}
+p2 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
+p2
+```
+
+## Modelling the probability
+
+WIP
+
+## References
+
+-   Earthquake historical data was downloaded from: <http://deprem.afad.gov.tr/depremkatalogu>
+
+-   Map shape file was downloaded from: <https://gadm.org/>
