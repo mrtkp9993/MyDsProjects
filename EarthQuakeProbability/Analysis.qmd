@@ -16,6 +16,9 @@ library(spData)
 library(tmap)    
 library(leaflet)
 library(ggplot2)
+library(fitdistrplus)
+
+set.seed(1234)
 ```
 
 ```{r}
@@ -49,23 +52,95 @@ tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnit
 ### Time Span between Earthquake Occurrences
 
 ```{r}
+summary(data_diff_between_eq)
+```
+
+```{r}
 p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density()
 p
+```
+
+```{r}
+p2 <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_boxplot()
+p2
 ```
 
 ### Earthquake Count By Year
 
 ```{r}
-p2 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
-p2
+p3 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
+p3
 ```
 
 ## Modelling the probability
 
-WIP
+Let's fit Weibull distribution to distribution of days between two earthquakes occurred successively.
+
+```{r}
+plotdist(data_diff_between_eq$diff, demp = TRUE)
+```
+
+```{r}
+descdist(data_diff_between_eq$diff, boot = 10000)
+```
+
+```{r}
+# add all data points to 0.1 for avoiding zero division errors
+data_diff_between_eq$diff <- data_diff_between_eq$diff + 0.01
+
+#lam0 <- quantile(data_diff_between_eq$diff, p=0.632)
+
+#Fh <- ppoints(sort(data_diff_between_eq$diff))
+#k0 <- lm(log(-log(1-Fh))~log(data_diff_between_eq$diff))$coefficients[2]
+
+wei.fit <- fitdist(data_diff_between_eq$diff, "weibull")
+```
+
+```{r}
+print(wei.fit$convergence)
+```
+
+```{r}
+summary(wei.fit)
+```
+
+```{r}
+plot(wei.fit)
+```
+
+Let's calculate mean occurence period of earthquakes which have magnitudes equal or bigger than 5 (simulation and theoretical mean):
+
+```{r}
+shape.v <- as.numeric(wei.fit$estimate[1])
+scale.v <- as.numeric(wei.fit$estimate[2])
+
+simulated_data <- rweibull(100000, shape = shape.v, scale = scale.v)
+print("Simulated mean:")
+print(mean(simulated_data))
+print("Theoretical mean:")
+print(scale.v * gamma(1 + (1 / shape.v)))
+```
+
+It is expected to have another earthquake having magnitude equal to 5 or above are average
+
+```{r}
+print(scale.v * gamma(1 + (1 / shape.v)))
+```
+
+days later than the preceding one.
+
+Let's plot the CDF:
+
+```{r}
+plot(ecdf(simulated_data), xlim=c(0, 6000))
+```
 
 ## References
 
 -   Earthquake historical data was downloaded from: <http://deprem.afad.gov.tr/depremkatalogu>
 
 -   Map shape file was downloaded from: <https://gadm.org/>
+
+-   Weibull distribution in earthquake probability modelling: <https://www.researchgate.net/publication/26485414_Probabilistic_Prediction_of_the_Next_Earthquake_in_The_Nafz_North_Anatolian_Fault_Zone_Turkey_Kuzey_Anadolu_Fay_Zonunda_Nafz_Gelecek_Depremlerin_Olasiliksal_Tahmini>
+
+-   Weibull distribution fitting: <https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r>
