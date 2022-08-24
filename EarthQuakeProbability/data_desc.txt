@@ -1,0 +1,4 @@
+Data is taken directly from AFAD Earthquake catalog (http://deprem.afad.gov.tr/depremkatalogu).
+
+Data is filtered for North Anatolian Fault Zone (NAFZ) earthquakes with magnitude greater than 5.0.
+
