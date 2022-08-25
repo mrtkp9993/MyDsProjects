@@ -2,12 +2,14 @@
 title: "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone"
 execute:
   echo: false
+  warning: false
+  error: false
 format: 
    html:
      df-print: paged
 ---
 
-```{r message=FALSE}
+```{r}
 library(readxl)
 library(sf)
 library(raster)
@@ -42,7 +44,7 @@ Let's look and visualize the historical earthquake data.
 data_with_coordinates
 ```
 
-```{r warning=FALSE}
+```{r}
 tur_shp <- st_read("gadm41_TUR.gpkg", layer = "ADM_ADM_0")
 spdf <- SpatialPointsDataFrame(coords = data_with_coordinates[c(3,2)], data = data_with_coordinates)
 
@@ -121,19 +123,15 @@ print("Theoretical mean:")
 print(scale.v * gamma(1 + (1 / shape.v)))
 ```
 
-It is expected to have another earthquake having magnitude equal to 5 or above are average
-
-```{r}
-print(scale.v * gamma(1 + (1 / shape.v)))
-```
-
-days later than the preceding one.
+It is expected to have another earthquake having magnitude equal to 5 or above are average `r round(scale.v * gamma(1 + (1 / shape.v)))` days later than the preceding one.
 
 Let's plot the CDF:
 
 ```{r}
 plot(ecdf(simulated_data), xlim=c(0, 6000))
 ```
+
+If we look the data, the last earthquake was occurred at 2006-10-24, so 5753 days passed since last earthquake was occurred. The risk of an earthquake happening today is `r round(ecdf(simulated_data)(5753), digits=2)*100` %.
 
 ## References
 
