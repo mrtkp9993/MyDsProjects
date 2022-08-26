@@ -25,13 +25,20 @@
     "href": "index.html",
     "title": "My Data Science Projects",
     "section": "",
-    "text": "Aug 26, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAug 25, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\nNo matching items"
+    "text": "Aug 26, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAug 25, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "StockClustering/Analysis.html",
     "href": "StockClustering/Analysis.html",
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
     "section": "",
-    "text": "No matching items"
+    "text": "We have following features for BIST30 stocks:\nWe need to standardize the features:\nWe will use K-means method. Let’s plot elbow plot:\nWe have four clusters, let’s fit model and see results:\nCluster contents:\nLet’s look the mean return statistics of each cluster:"
+  },
+  {
+    "objectID": "StockClustering/Analysis.html#references",
+    "href": "StockClustering/Analysis.html#references",
+    "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
+    "section": "References",
+    "text": "References\n\nhttps://www.investopedia.com/terms/c/cluster_analysis.asp\nhttps://www.investopedia.com/terms/f/factor-investing.asp"
   }
 ]

@@ -13,4 +13,78 @@ format:
 listing: true
 ---
 
-Test page - Project work in progress
+We have following features for BIST30 stocks:
+
+-   Momentum 3-months, 6-months, 1-year
+
+-   Volatility 1-year, 2-year, 3-year
+
+-   Price-To-Book Ratio
+
+-   Market Capitalization
+
+-   Return On Equity
+
+-   Earnings Growth
+
+```{r}
+library(readr)
+data <- read_csv("data.csv")
+data
+```
+
+We need to standardize the features:
+
+```{r}
+library(scales)
+
+cols <- 5:ncol(data)
+
+data_scaled <- lapply(data[, cols], function(x) if(is.numeric(x)) rescale(x, to=c(0,1)) else x)
+data_scaled <- as.data.frame(data_scaled)
+data_scaled <- cbind(data[,1:4], data_scaled)
+data_scaled
+```
+
+We will use K-means method. Let's plot elbow plot:
+
+![](images/paste-1622CD6D.png){width="400"}
+
+We have four clusters, let's fit model and see results:
+
+![](images/paste-4FEA4B21.png){width="400"}
+
+![](images/paste-99DEFD23.png){width="400"}
+
+![](images/paste-C458DE5D.png){width="400"}
+
+Cluster contents:
+
+```{r}
+library(dplyr)
+
+data_clustered <- read_csv("data_clustered.csv")
+
+data_clustered[,c(1,15)]
+```
+
+Let's look the mean return statistics of each cluster:
+
+```{r}
+data_clustered %>%
+  group_by(predicted_cluster) %>%
+  summarise(
+    mean_1_year_return = mean(return1y),
+    std_1_year_return = sd(return1y),
+    mean_2_year_return = mean(return2y),
+    std_2_year_return = sd(return2y),
+    mean_3_year_return = mean(return3y),
+    std_3_year_return = sd(return3y),
+    )
+```
+
+## References
+
+-   <https://www.investopedia.com/terms/c/cluster_analysis.asp>
+
+-   <https://www.investopedia.com/terms/f/factor-investing.asp>
