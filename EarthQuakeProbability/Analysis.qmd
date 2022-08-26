@@ -1,12 +1,16 @@
 ---
 title: "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone"
+date: 08/25/2022
+author: Murat Koptur
 execute:
+  freeze: auto
   echo: false
   warning: false
   error: false
 format: 
    html:
      df-print: paged
+listing: true
 ---
 
 ```{r}

@@ -1,3 +1,18 @@
 project:
   type: website
   output-dir: docs
+
+website: 
+  title: "My Data Science Projects"
+  navbar: 
+    right: 
+      - href: https://www.linkedin.com/in/muratkoptur/
+        text: LinkedIn
+      - href: https://github.com/mrtkp9993
+        text: GitHub
+      - href: https://muratkoptur.com
+        text: Personal Website
+        
+format:
+  html:
+    include-after-body: footer.html

@@ -1,0 +1,8 @@
+---
+listing:
+  contents: 
+    - EarthQuakeProbability/Analysis.qmd
+    - StockClustering/Analysis.qmd
+  type: default
+  sort: "date desc"
+---

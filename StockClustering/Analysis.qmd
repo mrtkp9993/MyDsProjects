@@ -1,0 +1,16 @@
+---
+title: "Stock Return and Fundamental Clustering & Portfolio Selection"
+date: 08/26/2022
+author: Murat Koptur
+execute:
+  freeze: auto
+  echo: false
+  warning: false
+  error: false
+format: 
+   html:
+     df-print: paged
+listing: true
+---
+
+Test page - Project work in progress

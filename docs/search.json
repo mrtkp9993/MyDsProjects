@@ -19,5 +19,19 @@
     "title": "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone",
     "section": "References",
     "text": "References\n\nEarthquake historical data was downloaded from: http://deprem.afad.gov.tr/depremkatalogu\nMap shape file was downloaded from: https://gadm.org/\nWeibull distribution in earthquake probability modelling: https://www.researchgate.net/publication/26485414_Probabilistic_Prediction_of_the_Next_Earthquake_in_The_Nafz_North_Anatolian_Fault_Zone_Turkey_Kuzey_Anadolu_Fay_Zonunda_Nafz_Gelecek_Depremlerin_Olasiliksal_Tahmini\nWeibull distribution fitting: https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My Data Science Projects",
+    "section": "",
+    "text": "Aug 26, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAug 25, 2022\n\n\nMurat Koptur\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "StockClustering/Analysis.html",
+    "href": "StockClustering/Analysis.html",
+    "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
+    "section": "",
+    "text": "No matching items"
   }
 ]
