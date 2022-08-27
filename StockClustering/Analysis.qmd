@@ -52,11 +52,27 @@ We will use K-means method. Let's plot elbow plot:
 
 We have four clusters, let's fit model and see results:
 
-![](images/paste-4FEA4B21.png){width="400"}
+| Clusters | N    | R$^{2}$ | AIC       | BIC       | Silhouette |
+|----------|------|---------|-----------|-----------|------------|
+| $4$      | $30$ | $0.606$ | $194.190$ | $250.240$ | $0.310$    |
 
-![](images/paste-99DEFD23.png){width="400"}
+| Cluster                                           | $1$      | $2$      | $3$      | $4$     |
+|-------------------------------|----------|----------|----------|----------|
+| Size                                              | $17$     | $2$      | $9$      | $2$     |
+| Explained proportion within-cluster heterogeneity | $0.616$  | $0.127$  | $0.192$  | $0.065$ |
+| Within sum of squares                             | $70.320$ | $14.532$ | $21.962$ | $7.376$ |
+| Silhouette score                                  | $0.267$  | $0.029$  | $0.419$  | $0.449$ |
 
-![](images/paste-C458DE5D.png){width="400"}
+|                         | Value    |
+|-------------------------|----------|
+| Maximum diameter        | $5.696$  |
+| Minimum separation      | $1.664$  |
+| Pearson's γ             | $0.593$  |
+| Dunn index              | $0.292$  |
+| Entropy                 | $1.044$  |
+| Calinski-Harabasz index | $13.343$ |
+
+There is no negative silhouette score, but second cluster's score is near to zero. It indicates that seperetion is not well.
 
 Cluster contents:
 
@@ -82,6 +98,8 @@ data_clustered %>%
     std_3_year_return = sd(return3y),
     )
 ```
+
+Mean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks.
 
 ## References
 

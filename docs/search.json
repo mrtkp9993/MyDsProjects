@@ -32,7 +32,7 @@
     "href": "StockClustering/Analysis.html",
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
     "section": "",
-    "text": "We have following features for BIST30 stocks:\nWe need to standardize the features:\nWe will use K-means method. Let’s plot elbow plot:\nWe have four clusters, let’s fit model and see results:\nCluster contents:\nLet’s look the mean return statistics of each cluster:"
+    "text": "We have following features for BIST30 stocks:\nWe need to standardize the features:\nWe will use K-means method. Let’s plot elbow plot:\nWe have four clusters, let’s fit model and see results:\nThere is no negative silhouette score, but second cluster’s score is near to zero. It indicates that seperetion is not well.\nCluster contents:\nLet’s look the mean return statistics of each cluster:\nMean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks."
   },
   {
     "objectID": "StockClustering/Analysis.html#references",
