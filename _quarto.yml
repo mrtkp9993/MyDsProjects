@@ -12,7 +12,14 @@ website:
         text: GitHub
       - href: https://muratkoptur.com
         text: Personal Website
-        
-format:
-  html:
-    include-after-body: footer.html
+  open-graph: true
+  google-analytics: "G-TQSZS8HRH9"
+  cookie-consent: true
+  body-footer: |
+    ---\
+    Thanks for reading. If you enjoyed, please share it.\
+    Support my work from here [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/).
+
+theme:
+  light: simplex
+  dark: darkly
