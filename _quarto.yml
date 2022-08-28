@@ -27,3 +27,7 @@ theme:
 comments: 
   utterances: 
     repo: mrtkp9993/MyDsProjects
+    
+format: 
+  html:
+    include-in-header: header.html
