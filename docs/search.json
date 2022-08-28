@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "EarthQuakeProbability/Analysis.html",
+    "href": "EarthQuakeProbability/Analysis.html",
+    "title": "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone",
+    "section": "",
+    "text": "—\nThanks for reading. If you enjoyed, please share it.\nSupport my work from here GitHub Sponsors."
+  },
+  {
     "objectID": "EarthQuakeProbability/Analysis.html#eda",
     "href": "EarthQuakeProbability/Analysis.html#eda",
     "title": "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone",
@@ -32,7 +39,7 @@
     "href": "StockClustering/Analysis.html",
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
     "section": "",
-    "text": "We have following features for BIST30 stocks:\nWe need to standardize the features:\nWe will use K-means method. Let’s plot elbow plot:\nWe have four clusters, let’s fit model and see results:\nThere is no negative silhouette score, but second cluster’s score is near to zero. It indicates that seperetion is not well.\nCluster contents:\nLet’s look the mean return statistics of each cluster:\nMean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks."
+    "text": "We have following features for BIST30 stocks:\nWe need to standardize the features:\nWe will use K-means method. Let’s plot elbow plot:\nWe have four clusters, let’s fit model and see results:\nThere is no negative silhouette score, but second cluster’s score is near to zero. It indicates that seperetion is not well.\nCluster contents:\nLet’s look the mean return statistics of each cluster:\nMean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks.\n—\nThanks for reading. If you enjoyed, please share it.\nSupport my work from here GitHub Sponsors."
   },
   {
     "objectID": "StockClustering/Analysis.html#references",
@@ -40,12 +47,5 @@
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
     "section": "References",
     "text": "References\n\nhttps://www.investopedia.com/terms/c/cluster_analysis.asp\nhttps://www.investopedia.com/terms/f/factor-investing.asp"
-  },
-  {
-    "objectID": "EarthQuakeProbability/Analysis.html",
-    "href": "EarthQuakeProbability/Analysis.html",
-    "title": "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone",
-    "section": "",
-    "text": "—\nThanks for reading. If you enjoyed this post, please share it.\nSupport my work from here GitHub Sponsors."
   }
 ]

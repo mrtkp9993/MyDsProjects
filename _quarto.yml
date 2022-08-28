@@ -23,3 +23,7 @@ website:
 theme:
   light: simplex
   dark: darkly
+
+comments: 
+  utterances: 
+    repo: mrtkp9993/MyDsProjects
