@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Murat Koptur">
+<meta name="dcterms.date" content="2022-08-28">
+
+<title>My Data Science Projects - Don’t impute all missing data: Missing Data Patterns</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: [],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TQSZS8HRH9"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6702378382603826" crossorigin="anonymous"></script>
+
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="My Data Science Projects - Don’t impute all missing data: Missing Data Patterns">
+<meta property="og:description" content="A missing data pattern is the structure of observed and missing values in a data set.">
+<meta property="og:site-name" content="My Data Science Projects">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">My Data Science Projects</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/muratkoptur/">LinkedIn</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/mrtkp9993">GitHub</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://muratkoptur.com">Personal Website</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Don’t impute all missing data: Missing Data Patterns</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Murat Koptur </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 28, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="missing-data-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="missing-data-patterns">Missing Data Patterns</h2>
+<p>A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one’s propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.</p>
+<p><img src="images/paste-82A43477.png" class="img-fluid" width="400"></p>
+<p>The missing values in panel a have been isolated on a single variable in the univariate pattern. This pattern could appear, for example, in an experimental setting where outcome scores for a subset of participants are missing. Panel b depicts a monotone missing data pattern from a longitudinal study in which individuals who have missing data at one measurement event always have missing data at subsequent measurements. The general pattern in panel c is that missing values are scattered all through the entire data matrix. Panel d depicts a planned missing data pattern in which three variables are intentionally left blank for a large number of respondents. Panel e depicts a pattern in which a latent variable is absent across the entire sample.</p>
+<p>One final configuration needs special consideration because it may introduce estimation issues for modern missing data-handling procedures. Because the data provide insufficient support for estimation, I refer to the configuration in panel f as an underidentified missing pattern. This pattern frequently occurs when two categorical variables have unbalanced group sizes and missing data, resulting in very low or even zero cell counts in a cross-tabulation table. Prior to conducting a missing data analysis, it is critical to screen for this configuration.</p>
+</section>
+<section id="missing-data-mechanisms" class="level2">
+<h2 class="anchored" data-anchor-id="missing-data-mechanisms">Missing Data Mechanisms</h2>
+<p>According to Rubin, there are three different missing data mechanisms:</p>
+<ol type="1">
+<li>Missing Completely at Random (MCAR): Values in a data set are missing completely at random (MCAR) if the events that lead to any particular data-item being missing are independent both of observable variables and of unobservable parameters of interest, and occur entirely at random. When data are MCAR, one can do listwise deletion and perfom analysis; the analysis performed on the data is unbiased; however, data are rarely MCAR.</li>
+<li>Missing at Random (MAR): Missing at random (MAR) occurs when the missingness is not random, but where missingness can be fully accounted for by variables where there is complete information. Since MAR is an assumption that is impossible to verify statistically, we must rely on its substantive reasonableness. Depending on the analysis method, these data can still induce parameter bias in analyses due to the contingent emptiness of cells. However, if the parameter is estimated with Full Information Maximum Likelihood, MAR will provide asymptotically unbiased estimates.</li>
+<li>Missing not at Random (MNAR): Missing not at random (MNAR) (also known as nonignorable nonresponse) is data that is neither MAR nor MCAR (i.e.&nbsp;the value of the variable that’s missing is related to the reason it’s missing). One can try to include as many predictors as possible in a model to get MNAR closer to MAR.</li>
+</ol>
+<p>Also, one can perform multiple imputation (MI) methods in MCAR and MAR cases.</p>
+</section>
+<section id="how-to-test" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-test">How to test?</h2>
+<section id="distinguish-between-mnar-and-mar" class="level3">
+<h3 class="anchored" data-anchor-id="distinguish-between-mnar-and-mar">Distinguish between MNAR and MAR</h3>
+<p>There is no statistical test for this, but you can:</p>
+<ul>
+<li>Use domain knowledge about variables;</li>
+<li>Collect more data for explaning missingness;</li>
+<li>Do literature search</li>
+</ul>
+<p>for determining the missing data mechanisim.</p>
+</section>
+<section id="distinguish-between-mcar-and-mar" class="level3">
+<h3 class="anchored" data-anchor-id="distinguish-between-mcar-and-mar">Distinguish between MCAR and MAR</h3>
+<p>Generally, two methods are preferred:</p>
+<ol type="1">
+<li>Little’s MCAR test: Maximum likelihood chi-square test for missing completely at random. <span class="math inline">\(H_0\)</span> is that the data is MCAR.</li>
+<li>Dummy variable approach for MCAR: One can create a dummy variable for whether a variable is missing (1 = missing, 0 = observed) and run t-tests (continuous) and chi-square (categorical) tests between this dummy and other variables to see if the missingness is related to the values of other variables.</li>
+</ol>
+</section>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<p>Example dataset from Fox, Negrete-Yankelevich and Sosa (2015):</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["y"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["x_complete"],"name":[2],"type":["fct"],"align":["left"]},{"label":["x_mcar"],"name":[3],"type":["fct"],"align":["left"]},{"label":["x_mar"],"name":[4],"type":["fct"],"align":["left"]},{"label":["x_mnar"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"31.5","2":"1","3":"1","4":"NA","5":"1"},{"1":"33.5","2":"2","3":"NA","4":"NA","5":"2"},{"1":"34.4","2":"3","3":"3","4":"NA","5":"3"},{"1":"35.1","2":"1","3":"NA","4":"1","5":"1"},{"1":"35.4","2":"2","3":"2","4":"2","5":"2"},{"1":"36.7","2":"4","3":"4","4":"4","5":"NA"},{"1":"37.8","2":"2","3":"2","4":"2","5":"3"},{"1":"38.8","2":"4","3":"4","4":"4","5":"NA"},{"1":"40.3","2":"3","3":"3","4":"3","5":"3"},{"1":"41.5","2":"4","3":"NA","4":"4","5":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Descriptives:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["label"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["missing_n"],"name":[4],"type":["int"],"align":["right"]},{"label":["missing_percent"],"name":[5],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[6],"type":["chr"],"align":["left"]},{"label":["sd"],"name":[7],"type":["chr"],"align":["left"]},{"label":["min"],"name":[8],"type":["chr"],"align":["left"]},{"label":["quartile_25"],"name":[9],"type":["chr"],"align":["left"]},{"label":["median"],"name":[10],"type":["chr"],"align":["left"]},{"label":["quartile_75"],"name":[11],"type":["chr"],"align":["left"]},{"label":["max"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"y","2":"<dbl>","3":"10","4":"0","5":"0.0","6":"36.5","7":"3.1","8":"31.5","9":"34.6","10":"36.0","11":"38.5","12":"41.5","_rn_":"y"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["label"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["missing_n"],"name":[4],"type":["int"],"align":["right"]},{"label":["missing_percent"],"name":[5],"type":["chr"],"align":["left"]},{"label":["levels_n"],"name":[6],"type":["int"],"align":["right"]},{"label":["levels"],"name":[7],"type":["chr"],"align":["left"]},{"label":["levels_count"],"name":[8],"type":["chr"],"align":["left"]},{"label":["levels_percent"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"x_complete","2":"<fct>","3":"10","4":"0","5":"0.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\"","8":"2, 3, 2, 3","9":"20, 30, 20, 30","_rn_":"x_complete"},{"1":"x_mcar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"1, 2, 2, 2, 3","9":"10, 20, 20, 20, 30","_rn_":"x_mcar"},{"1":"x_mar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"1, 2, 1, 3, 3","9":"10, 20, 10, 30, 30","_rn_":"x_mar"},{"1":"x_mnar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"2, 2, 3, 0, 3","9":"20, 20, 30,  0, 30","_rn_":"x_mnar"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Plot of missingness:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Missingness patterns:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  y x_complete x_mcar x_mar x_mnar  
+3 1          1      1     1      1 0
+2 1          1      1     1      0 1
+2 1          1      1     0      1 1
+1 1          1      0     1      1 1
+1 1          1      0     1      0 2
+1 1          1      0     0      1 2
+  0          0      3     3      3 9</code></pre>
+</div>
+</div>
+<p>There are six missingness pattern on the data.</p>
+<p>Compare:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And lastly, we perform Little’s MCAR tests:</p>
+<ul>
+<li><p>MCAR case:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"0.01947167","2":"1","3":"0.8890227","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Fail to reject null hypothesis, data is MCAR.</p></li>
+<li><p>MAR case:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"5.517514","2":"1","3":"0.018827","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Reject null, data is not MCAR.</p></li>
+<li><p>MNAR case:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"3.042448","2":"1","3":"0.0811135","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Fail to reject null, data is MCAR (which is wrong).</p></li>
+</ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><p>Enders, C. (2010). <em>Applied Missing Data Analysis</em>.</p></li>
+<li><p>RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581</p></li>
+<li><p>Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data</p></li>
+<li><p>Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722</p></li>
+<li><p>Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&amp;version=1</p></li>
+<li><p>Fox, G., Negrete-Yankelevich, S., &amp; Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.</p></li>
+</ul>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><p>—<br>
+Thanks for reading. If you enjoyed, please share it.<br>
+Support my work from here <a href="https://github.com/sponsors/mrtkp9993/">GitHub Sponsors</a>.</p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="mrtkp9993/MyDsProjects" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
+
+
+
+</body></html>

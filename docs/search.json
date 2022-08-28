@@ -35,6 +35,41 @@
     "text": "—\nThanks for reading. If you enjoyed, please share it.\nSupport my work from here GitHub Sponsors."
   },
   {
+    "objectID": "MissingData/Analysis.html",
+    "href": "MissingData/Analysis.html",
+    "title": "Don’t impute all missing data: Missing Data Patterns",
+    "section": "",
+    "text": "A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one’s propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.\n\nThe missing values in panel a have been isolated on a single variable in the univariate pattern. This pattern could appear, for example, in an experimental setting where outcome scores for a subset of participants are missing. Panel b depicts a monotone missing data pattern from a longitudinal study in which individuals who have missing data at one measurement event always have missing data at subsequent measurements. The general pattern in panel c is that missing values are scattered all through the entire data matrix. Panel d depicts a planned missing data pattern in which three variables are intentionally left blank for a large number of respondents. Panel e depicts a pattern in which a latent variable is absent across the entire sample.\nOne final configuration needs special consideration because it may introduce estimation issues for modern missing data-handling procedures. Because the data provide insufficient support for estimation, I refer to the configuration in panel f as an underidentified missing pattern. This pattern frequently occurs when two categorical variables have unbalanced group sizes and missing data, resulting in very low or even zero cell counts in a cross-tabulation table. Prior to conducting a missing data analysis, it is critical to screen for this configuration.\n—\nThanks for reading. If you enjoyed, please share it.\nSupport my work from here GitHub Sponsors."
+  },
+  {
+    "objectID": "MissingData/Analysis.html#missing-data-mechanisms",
+    "href": "MissingData/Analysis.html#missing-data-mechanisms",
+    "title": "Don’t impute all missing data: Missing Data Patterns",
+    "section": "Missing Data Mechanisms",
+    "text": "Missing Data Mechanisms\nAccording to Rubin, there are three different missing data mechanisms:\n\nMissing Completely at Random (MCAR): Values in a data set are missing completely at random (MCAR) if the events that lead to any particular data-item being missing are independent both of observable variables and of unobservable parameters of interest, and occur entirely at random. When data are MCAR, one can do listwise deletion and perfom analysis; the analysis performed on the data is unbiased; however, data are rarely MCAR.\nMissing at Random (MAR): Missing at random (MAR) occurs when the missingness is not random, but where missingness can be fully accounted for by variables where there is complete information. Since MAR is an assumption that is impossible to verify statistically, we must rely on its substantive reasonableness. Depending on the analysis method, these data can still induce parameter bias in analyses due to the contingent emptiness of cells. However, if the parameter is estimated with Full Information Maximum Likelihood, MAR will provide asymptotically unbiased estimates.\nMissing not at Random (MNAR): Missing not at random (MNAR) (also known as nonignorable nonresponse) is data that is neither MAR nor MCAR (i.e. the value of the variable that’s missing is related to the reason it’s missing). One can try to include as many predictors as possible in a model to get MNAR closer to MAR.\n\nAlso, one can perform multiple imputation (MI) methods in MCAR and MAR cases."
+  },
+  {
+    "objectID": "MissingData/Analysis.html#how-to-test",
+    "href": "MissingData/Analysis.html#how-to-test",
+    "title": "Don’t impute all missing data: Missing Data Patterns",
+    "section": "How to test?",
+    "text": "How to test?\n\nDistinguish between MNAR and MAR\nThere is no statistical test for this, but you can:\n\nUse domain knowledge about variables;\nCollect more data for explaning missingness;\nDo literature search\n\nfor determining the missing data mechanisim.\n\n\nDistinguish between MCAR and MAR\nGenerally, two methods are preferred:\n\nLittle’s MCAR test: Maximum likelihood chi-square test for missing completely at random. \\(H_0\\) is that the data is MCAR.\nDummy variable approach for MCAR: One can create a dummy variable for whether a variable is missing (1 = missing, 0 = observed) and run t-tests (continuous) and chi-square (categorical) tests between this dummy and other variables to see if the missingness is related to the values of other variables."
+  },
+  {
+    "objectID": "MissingData/Analysis.html#examples",
+    "href": "MissingData/Analysis.html#examples",
+    "title": "Don’t impute all missing data: Missing Data Patterns",
+    "section": "Examples",
+    "text": "Examples\nExample dataset from Fox, Negrete-Yankelevich and Sosa (2015):\n\n\n\n\n  \n\n\n\nDescriptives:\n\n\n\n\n  \n\n\n\n\n\n  \n\n\n\nPlot of missingness:\n\n\n\n\n\nMissingness patterns:\n\n\n\n\n\n  y x_complete x_mcar x_mar x_mnar  \n3 1          1      1     1      1 0\n2 1          1      1     1      0 1\n2 1          1      1     0      1 1\n1 1          1      0     1      1 1\n1 1          1      0     1      0 2\n1 1          1      0     0      1 2\n  0          0      3     3      3 9\n\n\nThere are six missingness pattern on the data.\nCompare:\n\n\n\n\n\nAnd lastly, we perform Little’s MCAR tests:\n\nMCAR case:\n\n\n\n\n  \n\n\n\nFail to reject null hypothesis, data is MCAR.\nMAR case:\n\n\n\n\n  \n\n\n\nReject null, data is not MCAR.\nMNAR case:\n\n\n\n\n  \n\n\n\nFail to reject null, data is MCAR (which is wrong)."
+  },
+  {
+    "objectID": "MissingData/Analysis.html#references",
+    "href": "MissingData/Analysis.html#references",
+    "title": "Don’t impute all missing data: Missing Data Patterns",
+    "section": "References",
+    "text": "References\n\nEnders, C. (2010). Applied Missing Data Analysis.\nRUBIN, D. B. (1976). Inference and missing data (Vol. 63, Issue 3, pp. 581–592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581\nMissing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data\nLittle, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp. 1198–1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722\nJanz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&version=1\nFox, G., Negrete-Yankelevich, S., & Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application."
+  },
+  {
     "objectID": "StockClustering/Analysis.html",
     "href": "StockClustering/Analysis.html",
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
