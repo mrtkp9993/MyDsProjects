@@ -1,0 +1,70 @@
+---
+title: "Don't Try to Forecast Everything: Predictability of Time Series"
+date: 09/01/2022
+author: Murat Koptur
+draft: true
+execute:
+  freeze: auto
+  echo: false
+  warning: false
+  error: false
+format: 
+   html:
+     df-print: paged
+listing: true
+---
+
+Most of time series analyses start with investigating series, autocorrelation and 
+partial autocorrelation plots. Then one estimates different time series models
+(like ARIMA, GARCH, State-space models) and performs model checks.
+
+But no one asks whether that series is predictable or not.
+
+We'll look at a few handy tools that give more information about our time series.
+
+```{r}
+library(DChaos)
+library(TSstudio)
+```
+
+
+## Data
+
+We'll use some example time series:
+
+* Monthly Airline Passenger Numbers 1949-1960 (AirPassengers)
+
+  ```{r}
+  data(AirPassengers)
+  ts_plot(AirPassengers)
+  ```
+  
+* Level of Lake Huron 1875-1972 (LakeHuron)
+
+  ```{r}
+  data(LakeHuron)
+  ts_plot(LakeHuron)
+  ```
+  
+* Simulated time-series data from the Logistic map with chaos
+
+  ```{r}
+  LogisticTs <- logistic.sim(a=4, s=0.5, n=100)
+  ts_plot(LogisticTs)
+  ```
+Let's look the tools.
+
+## Lyapunov Exponent
+
+
+
+## References
+
+* DChaos, https://cran.r-project.org/web/packages/DChaos/index.html
+* statcomp, https://cran.r-project.org/web/packages/statcomp/index.html
+* pracma, https://cran.r-project.org/web/packages/pracma/index.html
+* tseriesChaos, https://cran.r-project.org/web/packages/tseriesChaos/index.html
+* Daniel F. McCaffrey , Stephen Ellner , A. Ronald Gallant & Douglas W. Nychka (1992) Estimating the
+Lyapunov Exponent of a Chaotic System with Nonparametric Regression, Journal of the American Statistical Association,
+87:419, 682-695
+
