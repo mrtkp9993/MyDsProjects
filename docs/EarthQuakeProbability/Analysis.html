@@ -198,14 +198,9 @@ cookieconsent.run({
 <div class="cell">
 
 </div>
-<div class="cell">
-
-</div>
 <section id="eda" class="level2">
 <h2 class="anchored" data-anchor-id="eda">EDA</h2>
 <p>Let’s look and visualize the historical earthquake data.</p>
-<section id="spatial-data" class="level3">
-<h3 class="anchored" data-anchor-id="spatial-data">Spatial data</h3>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -217,32 +212,15 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `ADM_ADM_0' from data source 
-  `C:\Users\murat\Desktop\projects\MyDsProjects\EarthQuakeProbability\gadm41_TUR.gpkg' 
-  using driver `GPKG'
-Simple feature collection with 1 feature and 2 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 25.66514 ymin: 35.81543 xmax: 44.83499 ymax: 42.10666
-Geodetic CRS:  WGS 84</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
 <section id="time-span-between-earthquake-occurrences" class="level3">
 <h3 class="anchored" data-anchor-id="time-span-between-earthquake-occurrences">Time Span between Earthquake Occurrences</h3>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>      diff        
- Min.   :   0.00  
- 1st Qu.:   5.75  
- Median :  88.00  
- Mean   : 358.88  
- 3rd Qu.: 387.25  
- Max.   :3933.00  </code></pre>
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -250,17 +228,12 @@ Geodetic CRS:  WGS 84</code></pre>
 <p><img src="Analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
 <section id="earthquake-count-by-year" class="level3">
 <h3 class="anchored" data-anchor-id="earthquake-count-by-year">Earthquake Count By Year</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -270,71 +243,96 @@ Geodetic CRS:  WGS 84</code></pre>
 <p>Let’s fit Weibull distribution to distribution of days between two earthquakes occurred successively.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>summary statistics
-------
-min:  0   max:  3933 
-median:  88 
-mean:  358.8796 
-estimated sd:  664.7659 
-estimated skewness:  3.002915 
-estimated kurtosis:  13.22284 </code></pre>
-</div>
-</div>
-<div class="cell">
-
-</div>
+<p>Check convergence, 0 means procedure was converged:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Fitting of the distribution ' weibull ' by maximum likelihood 
-Parameters : 
-         estimate  Std. Error
-shape   0.3647605  0.02945412
-scale 124.4717945 34.36191532
-Loglikelihood:  -618.5651   AIC:  1241.13   BIC:  1246.494 
-Correlation matrix:
-          shape     scale
-shape 1.0000000 0.2931453
-scale 0.2931453 1.0000000</code></pre>
-</div>
-</div>
+<p>Results:</p>
+<ul>
+<li><p>Estimate</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th>x</th>
+<th style="text-align: right;">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">shape</td>
+<td>0.3647605</td>
+<td style="text-align: right;">0.0294541</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">scale</td>
+<td>124.4717945</td>
+<td style="text-align: right;">34.3619153</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Fit quality:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">loglik</td>
+<td style="text-align: right;">-618.5651</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">aic</td>
+<td style="text-align: right;">1241.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bic</td>
+<td style="text-align: right;">1246.494</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>Plots:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
+</div></li>
+</ul>
 <p>Let’s calculate mean occurence period of earthquakes which have magnitudes equal or bigger than 5 (simulation and theoretical mean):</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Simulated mean:"</code></pre>
+
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 535.668</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Theoretical mean:"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 545.0535</code></pre>
-</div>
-</div>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Simulated mean</td>
+<td style="text-align: right;">535.6679525</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Theoretical mean</td>
+<td style="text-align: right;">545.0535056</td>
+</tr>
+</tbody>
+</table>
 <p>It is expected to have another earthquake having magnitude equal to 5 or above are average 545 days later than the preceding one.</p>
 <p>Let’s plot the CDF:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="Analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>If we look the data, the last earthquake was occurred at 2006-10-24, so 5753 days passed since last earthquake was occurred. The risk of an earthquake happening today is 98 %.</p>

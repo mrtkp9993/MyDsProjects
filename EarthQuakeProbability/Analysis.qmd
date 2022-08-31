@@ -28,6 +28,7 @@ set.seed(1234)
 ```
 
 ```{r}
+#| include: false
 data_with_coordinates <- read_excel("data.xlsx", 
     sheet = "earth", col_types = c("date", 
         "numeric", "numeric", "numeric", 
@@ -36,30 +37,24 @@ data_diff_between_eq <- read_excel("data.xlsx",
     sheet = "diff")
 data_count_by_year <- read_excel("data.xlsx", 
     sheet = "byyear")
+
+tur_shp <- st_read("gadm41_TUR.gpkg", layer = "ADM_ADM_0")
+spdf <- SpatialPointsDataFrame(coords = data_with_coordinates[c(3,2)], data = data_with_coordinates)
 ```
 
 ## EDA
 
 Let's look and visualize the historical earthquake data.
 
-### Spatial data
-
 ```{r}
 data_with_coordinates
 ```
 
 ```{r}
-tur_shp <- st_read("gadm41_TUR.gpkg", layer = "ADM_ADM_0")
-spdf <- SpatialPointsDataFrame(coords = data_with_coordinates[c(3,2)], data = data_with_coordinates)
-
 tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnitude", alpha=0.4)
 ```
 
 ### Time Span between Earthquake Occurrences
-
-```{r}
-summary(data_diff_between_eq)
-```
 
 ```{r}
 p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density()
@@ -86,11 +81,11 @@ Let's fit Weibull distribution to distribution of days between two earthquakes o
 plotdist(data_diff_between_eq$diff, demp = TRUE)
 ```
 
-```{r}
+```{r include=FALSE}
 descdist(data_diff_between_eq$diff, boot = 10000)
 ```
 
-```{r}
+```{r include=FALSE}
 # add all data points to 0.1 for avoiding zero division errors
 data_diff_between_eq$diff <- data_diff_between_eq$diff + 0.01
 
@@ -101,18 +96,38 @@ data_diff_between_eq$diff <- data_diff_between_eq$diff + 0.01
 
 wei.fit <- fitdist(data_diff_between_eq$diff, "weibull")
 ```
+Check convergence, 0 means procedure was converged:
 
 ```{r}
 print(wei.fit$convergence)
 ```
 
-```{r}
-summary(wei.fit)
+```{r include=FALSE}
+lapply(wei.fit, knitr::kable)
 ```
 
-```{r}
-plot(wei.fit)
-```
+Results:
+
+* Estimate
+
+  |      |           x|          sd|
+  |:-----|------------|-----------:|
+  |shape |   0.3647605|   0.0294541|
+  |scale | 124.4717945|  34.3619153|
+  
+* Fit quality:
+
+  |       |       value|
+  |:------|-----------:|
+  |loglik |   -618.5651|
+  |aic    |     1241.13|
+  |bic    |    1246.494|
+  
+* Plots:
+  
+  ```{r}
+  plot(wei.fit)
+  ```   
 
 Let's calculate mean occurence period of earthquakes which have magnitudes equal or bigger than 5 (simulation and theoretical mean):
 
@@ -121,11 +136,12 @@ shape.v <- as.numeric(wei.fit$estimate[1])
 scale.v <- as.numeric(wei.fit$estimate[2])
 
 simulated_data <- rweibull(100000, shape = shape.v, scale = scale.v)
-print("Simulated mean:")
-print(mean(simulated_data))
-print("Theoretical mean:")
-print(scale.v * gamma(1 + (1 / shape.v)))
 ```
+
+|                   |                                 value|
+|:------------------|-------------------------------------:|
+|Simulated mean     |              `r mean(simulated_data)`|
+|Theoretical mean   |`r scale.v * gamma(1 + (1 / shape.v))`|
 
 It is expected to have another earthquake having magnitude equal to 5 or above are average `r round(scale.v * gamma(1 + (1 / shape.v)))` days later than the preceding one.
 
