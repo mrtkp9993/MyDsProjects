@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/TimeSeriesPredictability/Analysis.html",
       "/MissingData/Analysis.html",
       "/StockClustering/Analysis.html",
       "/EarthQuakeProbability/Analysis.html"

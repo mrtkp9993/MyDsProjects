@@ -82,5 +82,61 @@
     "title": "Stock Return and Fundamental Clustering & Portfolio Selection",
     "section": "References",
     "text": "References\n\nhttps://www.investopedia.com/terms/c/cluster_analysis.asp\nhttps://www.investopedia.com/terms/f/factor-investing.asp"
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html",
+    "href": "TimeSeriesPredictability/Analysis.html",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "",
+    "text": "Most of time series analyses start with investigating series, autocorrelation and partial autocorrelation plots. Then one estimates different time series models (like ARIMA, GARCH, State-space models) and performs model checks.\nBut no one asks whether that series is predictable or not.\nWe’ll look at a few handy tools that give more information about our time series.\n—\nThanks for reading. If you enjoyed, please share it.\nSupport my work from here GitHub Sponsors."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#data",
+    "href": "TimeSeriesPredictability/Analysis.html#data",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Data",
+    "text": "Data\nWe’ll use some example time series:\n\nMonthly Airline Passenger Numbers 1949-1960 (AirPassengers) [6]\n\n\n\n\n\n\nLevel of Lake Huron 1875-1972 (LakeHuron) [6]\n\n\n\n\n\n\nSimulated time-series data from the Logistic map with chaos [1]\n\n\n\n\n\n\nLet’s look the tools."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#lyapunov-exponent",
+    "href": "TimeSeriesPredictability/Analysis.html#lyapunov-exponent",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Lyapunov Exponent",
+    "text": "Lyapunov Exponent\nLyapunov exponent of a dynamical system is a quantity that characterizes the rate of separation of infinitesimally close trajectories. Quantitatively, two trajectories in phase space with initial separation vector \\(\\delta Z_0\\) diverge at a rate given by\n\\[\n|\\delta Z(t)|\\approx e^{\\lambda t}|\\delta Z_0|\n\\]\nwhere \\(\\lambda\\) is the Lyapunov exponent. The rate of separation can be different for different orientations of initial separation vector. Thus, there is a spectrum of Lyapunov exponents. It is common to refer to the largest one as the maximal Lyapunov exponent (MLE), because it determines a notion of predictability for a dynamical system [7].\n\n\nI’ll not go into detail on how to calculate the maximal Lyapunov exponent, we’ll look at practical implications.\nA positive MLE is usually taken as an indication that the system is chaotic [7]."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#hurst-exponent",
+    "href": "TimeSeriesPredictability/Analysis.html#hurst-exponent",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Hurst Exponent",
+    "text": "Hurst Exponent\nThe Hurst exponent is referred to as the “index of dependence” or “index of long-range dependence”. It quantifies the relative tendency of a time series either to regress strongly to the mean or to cluster in a direction:\n\nTrending (Persistent) series: If \\(0.5 < H \\leq 1\\) , then series has long-term positive autocorrelation, so a high value in the series will probably be followed by another high value and the future will also tend to be high;\nRandom walk series: if \\(H = 0.5\\), then series is a completely uncorrelated series, so it can go either way (up or down);\nMean-reverting (Anti-persistent) series: if \\(0 \\leq H < 0.5\\), then series has mean-reversion, so a high value in the series will probably be followed by a low value and vice versa [8]."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#detrended-fluctuation-analysis",
+    "href": "TimeSeriesPredictability/Analysis.html#detrended-fluctuation-analysis",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Detrended Fluctuation Analysis",
+    "text": "Detrended Fluctuation Analysis\nDFA is a method for determining the statistical self-affinity of a signal. It is the generalization of Hurst exponent, it means [10]:\n\nfor \\(0<\\alpha<0.5\\), then the series is anti-correlated;\nfor \\(\\alpha=0.5\\), then the series is uncorrelated and corresponds to white noise;\nfor \\(0.5<\\alpha<1\\), then the series is correlated;\nfor \\(\\alpha\\approx1\\), then the series corresponds to pink noise;\nfor \\(\\alpha>1\\), then the series is nonstationary and unbounded;\nfor \\(\\alpha\\approx1.5\\), then the series corresponds to Brownian noise."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#variance-ratio-test",
+    "href": "TimeSeriesPredictability/Analysis.html#variance-ratio-test",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Variance Ratio Test",
+    "text": "Variance Ratio Test\nThis test is often used to test the hypothesis that a given time series is a collection of i.i.d. observations or that it follows a martingale difference sequence.\nWe will use Chow and Denning’s multiple variance ratio test. There are two tests:\n\nCD1 - Test for i.i.d. series,\nCD2 - Test for uncorrelated series with possible heteroskedasticity.\n\nIf test statistics are bigger than critical values, the null hypothesis is rejected which means the series is not a random walk."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#statistics-of-the-series",
+    "href": "TimeSeriesPredictability/Analysis.html#statistics-of-the-series",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "Statistics of the series",
+    "text": "Statistics of the series\n\nAirPassengers data\nResults:\n\nLyapunov exponent spectrum:\n\n\nCall:\nLyapunov exponent spectrum \n\nCoefficients:\n             Estimate Std. Error   z value      Pr(>|z|)\nExponent 1 -0.8398548  0.2333552 -28.33887 5.739062e-177\nExponent 2 -1.5136329  0.1937088 -61.52719  0.000000e+00\n---\nProcedure: QR decomposition by bootstrap blocking method \nEmbedding dimension: 2, Time-delay: 1, No. hidden units: 10\nSample size: 129, Block length: 62, No. blocks: 1000\n\n\nThere are two statistically significant exponent estimates. The largest one is -0.84 which is negative, which means the series is not chaotic.\nHurst exponent is 0.8206234; it is bigger than 0.5, so series is trending.\nDFA is estimated as 1.2988566; it is nonstationary and unbounded.\nVariance ratio test:\n\n\n$Holding.Periods\n[1]  2  4  5  8 10 27\n\n$CD1\n[1] 24.48521\n\n$CD2\n[1] 21.22941\n\n$Critical.Values_10_5_1_percent\n[1] 2.378000 2.631038 3.142756\n\n\nBoth of test statistics are bigger than critical values, so the series is not a random walk.\n\n\n\nLakeHuron data\nResults:\n\nLyapunov exponent spectrum:\n\n\nCall:\nLyapunov exponent spectrum \n\nCoefficients:\n             Estimate Std. Error    z value Pr(>|z|)\nExponent 1 -0.2245224 0.03079226  -56.00722        0\nExponent 2 -0.6465142 0.01144893 -433.74968        0\nExponent 3 -0.6696687 0.01006248 -511.18811        0\nExponent 4 -1.6931702 0.02747627 -473.33519        0\n---\nProcedure: QR decomposition by bootstrap blocking method \nEmbedding dimension: 4, Time-delay: 1, No. hidden units: 2\nSample size: 94, Block length: 59, No. blocks: 1000\n\n\nThere are four statistically significant exponent estimates. The largest one is -0.22 which is negative, which means the series is not chaotic.\nHurst exponent is 0.7364948; it is bigger than 0.5, so series is trending.\nDFA is estimated as 1.1128455; it is nonstationary and unbounded.\nVariance ratio test:\n\n\n$Holding.Periods\n[1]  2  4  5  8 10  3\n\n$CD1\n[1] 11.45734\n\n$CD2\n[1] 9.407748\n\n$Critical.Values_10_5_1_percent\n[1] 2.378000 2.631038 3.142756\n\n\nBoth of test statistics are bigger than critical values, so the series is not a random walk.\n\n\n\nSimulated time-series data from the Logistic map with chaos\nResults:\n\nLyapunov exponent spectrum:\n\n\nCall:\nLyapunov exponent spectrum \n\nCoefficients:\n            Estimate Std. Error   z value Pr(>|z|)\nExponent 1 -1.291195  0.1580609 -63.27662        0\n---\nProcedure: QR decomposition by bootstrap blocking method \nEmbedding dimension: 1, Time-delay: 1, No. hidden units: 2\nSample size: 99, Block length: 60, No. blocks: 1000\n\n\nThere is one statistically significant exponent estimate, -1.29 which is negative, which means the series is not chaotic which is a questionable result.\nHurst exponent is 0.6255664; it is bigger than 0.5, so series is trending.\nDFA is estimated as 0.758476; it is correlated.\nVariance ratio test:\n\n\n$Holding.Periods\n[1]  2  4  5  8 10 10\n\n$CD1\n[1] 1.193817\n\n$CD2\n[1] 1.295116\n\n$Critical.Values_10_5_1_percent\n[1] 2.378000 2.631038 3.142756\n\n\nBoth of test statistics are smaller than critical values, so the series is a random walk."
+  },
+  {
+    "objectID": "TimeSeriesPredictability/Analysis.html#references",
+    "href": "TimeSeriesPredictability/Analysis.html#references",
+    "title": "Don’t Try to Forecast Everything: Predictability of Time Series",
+    "section": "References",
+    "text": "References\n\nDChaos, https://cran.r-project.org/web/packages/DChaos/index.html\nstatcomp, https://cran.r-project.org/web/packages/statcomp/index.html\npracma, https://cran.r-project.org/web/packages/pracma/index.html\ntseriesChaos, https://cran.r-project.org/web/packages/tseriesChaos/index.html\nDaniel F. McCaffrey , Stephen Ellner , A. Ronald Gallant & Douglas W. Nychka (1992) Estimating the Lyapunov Exponent of a Chaotic System with Nonparametric Regression, Journal of the American Statistical Association, 87:419, 682-695\nboot, https://www.rdocumentation.org/packages/boot/versions/1.3-28/topics/boot.\nContributors to Wikimedia projects. “Lyapunov exponent - Wikipedia.” 7 July 2022, en.wikipedia.org/w/index.php?title=Lyapunov_exponent&oldid=1096875011.\nContributors to Wikimedia projects. “Hurst exponent - Wikipedia.” 12 June 2022, en.wikipedia.org/w/index.php?title=Hurst_exponent&oldid=1092814465.\nDFA, https://cran.r-project.org/package=DFA\nContributors to Wikimedia projects. “Detrended fluctuation analysis - Wikipedia.” 19 June 2022, https://en.wikipedia.org/w/index.php?title=Detrended_fluctuation_analysis&oldid=1093832537.\nnonlinearTseries, https://cran.r-project.org/web/packages/nonlinearTseries/index.html."
   }
 ]

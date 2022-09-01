@@ -2,7 +2,6 @@
 title: "Don't Try to Forecast Everything: Predictability of Time Series"
 date: 09/01/2022
 author: Murat Koptur
-draft: true
 execute:
   freeze: auto
   echo: false
@@ -61,7 +60,7 @@ We'll use some example time series:
 -   Simulated time-series data from the Logistic map with chaos \[1\]
 
     ```{r}
-    LogisticTs <- logistic.sim(a=4, s=0.5, n=100)
+    LogisticTs <- logistic.sim(a=3.6, s=0.5, n=100)
     ts_plot(LogisticTs)
     ```
 
@@ -138,6 +137,14 @@ This test is often used to test the hypothesis that a given time series
 is a collection of i.i.d. observations or that it follows a martingale
 difference sequence.
 
+We will use Chow and Denning's multiple variance ratio test. There are two tests:
+
+* CD1 - Test for i.i.d. series,
+* CD2 - Test for uncorrelated series with possible heteroskedasticity.
+
+If test statistics are bigger than critical values, the null hypothesis is 
+rejected which means the series is not a random walk.
+
 ## Statistics of the series
 
 ### AirPassengers data
@@ -175,7 +182,84 @@ Results:
     ```{r}
     vrt_air
     ```
+    Both of test statistics are bigger than critical values, so the series is 
+    not a random walk.
+
+### LakeHuron data
+
+```{r include=FALSE}
+lya_lak = lyapunov(LakeHuron)
+hur_lak = hurstexp(LakeHuron, display = FALSE)
+dfa_lak = dfa(LakeHuron)
+est_lak = estimate(dfa_lak, do.plot = FALSE)
+
+holding_per2 = round(Auto.VR(LakeHuron)$stat)
+vrt_lak = Chow.Denning(LakeHuron, c(2,4,5,8,10,holding_per2))
+```
+
+Results:
+
+-   Lyapunov exponent spectrum:
+
+    ```{r}
+    summary(lya_lak)
+    ```
+
+    There are four statistically significant exponent estimates. The
+    largest one is -0.22 which is negative, which means the series is
+    not chaotic.
+
+-   Hurst exponent is `r hur_lak$Hs`; it is bigger than 0.5, so series
+    is trending.
+
+-   DFA is estimated as `r est_lak[1]`; it is nonstationary and
+    unbounded.
+
+-   Variance ratio test:
+
+    ```{r}
+    vrt_lak
+    ```
     
+    Both of test statistics are bigger than critical values, so the series is 
+    not a random walk.
+    
+### Simulated time-series data from the Logistic map with chaos
+
+```{r include=FALSE}
+lya_log = lyapunov(LogisticTs)
+hur_log = hurstexp(LogisticTs, display = FALSE)
+dfa_log = dfa(LogisticTs)
+est_log = estimate(dfa_log, do.plot = FALSE)
+
+holding_per3 = round(Auto.VR(LogisticTs)$stat)
+vrt_log = Chow.Denning(LogisticTs, c(2,4,5,8,10,holding_per3))
+```
+
+Results:
+
+-   Lyapunov exponent spectrum:
+
+    ```{r}
+    summary(lya_log)
+    ```
+
+    There is one statistically significant exponent estimate, -1.29 which is negative, which means the series is
+    not chaotic which is a questionable result.
+
+-   Hurst exponent is `r hur_log$Hs`; it is bigger than 0.5, so series
+    is trending.
+
+-   DFA is estimated as `r est_log[1]`; it is correlated.
+
+-   Variance ratio test:
+
+    ```{r}
+    vrt_log
+    ```
+    
+    Both of test statistics are smaller than critical values, so the series is 
+    a random walk.
 
 ## References
 
