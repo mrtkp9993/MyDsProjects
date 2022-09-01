@@ -2,10 +2,10 @@ project:
   type: website
   output-dir: docs
 
-website: 
+website:
   title: "My Data Science Projects"
-  navbar: 
-    right: 
+  navbar:
+    right:
       - href: https://www.linkedin.com/in/muratkoptur/
         text: LinkedIn
       - href: https://github.com/mrtkp9993
@@ -24,10 +24,11 @@ theme:
   light: simplex
   dark: darkly
 
-comments: 
-  utterances: 
+comments:
+  utterances:
     repo: mrtkp9993/MyDsProjects
-    
-format: 
+
+format:
   html:
     include-in-header: header.html
+    include-after-body: footer.html

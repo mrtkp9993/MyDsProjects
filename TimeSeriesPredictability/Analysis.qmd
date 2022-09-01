@@ -12,59 +12,194 @@ format:
    html:
      df-print: paged
 listing: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-Most of time series analyses start with investigating series, autocorrelation and 
-partial autocorrelation plots. Then one estimates different time series models
-(like ARIMA, GARCH, State-space models) and performs model checks.
+Most of time series analyses start with investigating series,
+autocorrelation and partial autocorrelation plots. Then one estimates
+different time series models (like ARIMA, GARCH, State-space models) and
+performs model checks.
 
 But no one asks whether that series is predictable or not.
 
-We'll look at a few handy tools that give more information about our time series.
+We'll look at a few handy tools that give more information about our
+time series.
 
 ```{r}
+set.seed(1234)
+
 library(DChaos)
+library(statcomp)
+library(pracma)
+library(tseriesChaos)
+library(vrtest)
+library(DFA)
+library(nonlinearTseries)
 library(TSstudio)
 ```
-
 
 ## Data
 
 We'll use some example time series:
 
-* Monthly Airline Passenger Numbers 1949-1960 (AirPassengers)
+-   Monthly Airline Passenger Numbers 1949-1960 (AirPassengers) \[6\]
 
-  ```{r}
-  data(AirPassengers)
-  ts_plot(AirPassengers)
-  ```
-  
-* Level of Lake Huron 1875-1972 (LakeHuron)
+    ```{r}
+    data(AirPassengers)
+    ts_plot(AirPassengers)
+    ```
 
-  ```{r}
-  data(LakeHuron)
-  ts_plot(LakeHuron)
-  ```
-  
-* Simulated time-series data from the Logistic map with chaos
+-   Level of Lake Huron 1875-1972 (LakeHuron) \[6\]
 
-  ```{r}
-  LogisticTs <- logistic.sim(a=4, s=0.5, n=100)
-  ts_plot(LogisticTs)
-  ```
-Let's look the tools.
+    ```{r}
+    data(LakeHuron)
+    ts_plot(LakeHuron)
+    ```
+
+-   Simulated time-series data from the Logistic map with chaos \[1\]
+
+    ```{r}
+    LogisticTs <- logistic.sim(a=4, s=0.5, n=100)
+    ts_plot(LogisticTs)
+    ```
+
+    Let's look the tools.
 
 ## Lyapunov Exponent
 
+Lyapunov exponent of a dynamical system is a quantity that characterizes
+the rate of separation of infinitesimally close trajectories.
+Quantitatively, two trajectories in phase space with initial separation
+vector $\delta Z_0$ diverge at a rate given by
 
+$$
+|\delta Z(t)|\approx e^{\lambda t}|\delta Z_0|
+$$
+
+where $\lambda$ is the Lyapunov exponent. The rate of separation can be
+different for different orientations of initial separation vector. Thus,
+there is a spectrum of Lyapunov exponents. It is common to refer to the
+largest one as the maximal Lyapunov exponent (MLE), because it
+determines a notion of predictability for a dynamical system \[7\].
+
+![](images/paste-DD2528C4.png)
+
+![](images/paste-875EA0B2.png)
+
+I'll not go into detail on how to calculate the maximal Lyapunov
+exponent, we'll look at practical implications.
+
+A positive MLE is usually taken as an indication that the system is
+chaotic \[7\].
+
+## Hurst Exponent
+
+The Hurst exponent is referred to as the "index of dependence" or "index
+of long-range dependence". It quantifies the relative tendency of a time
+series either to regress strongly to the mean or to cluster in a
+direction:
+
+-   Trending (Persistent) series: If $0.5 < H \leq 1$ , then series has
+    long-term positive autocorrelation, so a high value in the series
+    will probably be followed by another high value and the future will
+    also tend to be high;
+
+-   Random walk series: if $H = 0.5$, then series is a completely
+    uncorrelated series, so it can go either way (up or down);
+
+-   Mean-reverting (Anti-persistent) series: if $0 \leq H < 0.5$, then
+    series has mean-reversion, so a high value in the series will
+    probably be followed by a low value and vice versa \[8\].
+
+## Detrended Fluctuation Analysis
+
+DFA is a method for determining the statistical self-affinity of a
+signal. It is the generalization of Hurst exponent, it means \[10\]:
+
+-   for $0<\alpha<0.5$, then the series is anti-correlated;
+
+-   for $\alpha=0.5$, then the series is uncorrelated and corresponds to
+    white noise;
+
+-   for $0.5<\alpha<1$, then the series is correlated;
+
+-   for $\alpha\approx1$, then the series corresponds to pink noise;
+
+-   for $\alpha>1$, then the series is nonstationary and unbounded;
+
+-   for $\alpha\approx1.5$, then the series corresponds to Brownian
+    noise.
+
+## Variance Ratio Test
+
+This test is often used to test the hypothesis that a given time series
+is a collection of i.i.d. observations or that it follows a martingale
+difference sequence.
+
+## Statistics of the series
+
+### AirPassengers data
+
+```{r include=FALSE}
+lya_air = lyapunov(AirPassengers)
+hur_air = hurstexp(AirPassengers, display = FALSE)
+dfa_air = dfa(AirPassengers)
+est_air = estimate(dfa_air, do.plot = FALSE)
+
+holding_per = round(Auto.VR(AirPassengers)$stat)
+vrt_air = Chow.Denning(AirPassengers, c(2,4,5,8,10,holding_per))
+```
+
+Results:
+
+-   Lyapunov exponent spectrum:
+
+    ```{r}
+    summary(lya_air)
+    ```
+
+    There are two statistically significant exponent estimates. The
+    largest one is -0.84 which is negative, which means the series is
+    not chaotic.
+
+-   Hurst exponent is `r hur_air$Hs`; it is bigger than 0.5, so series
+    is trending.
+
+-   DFA is estimated as `r est_air[1]`; it is nonstationary and
+    unbounded.
+
+-   Variance ratio test:
+
+    ```{r}
+    vrt_air
+    ```
+    
 
 ## References
 
-* DChaos, https://cran.r-project.org/web/packages/DChaos/index.html
-* statcomp, https://cran.r-project.org/web/packages/statcomp/index.html
-* pracma, https://cran.r-project.org/web/packages/pracma/index.html
-* tseriesChaos, https://cran.r-project.org/web/packages/tseriesChaos/index.html
-* Daniel F. McCaffrey , Stephen Ellner , A. Ronald Gallant & Douglas W. Nychka (1992) Estimating the
-Lyapunov Exponent of a Chaotic System with Nonparametric Regression, Journal of the American Statistical Association,
-87:419, 682-695
-
+1.  DChaos, <https://cran.r-project.org/web/packages/DChaos/index.html>
+2.  statcomp,
+    <https://cran.r-project.org/web/packages/statcomp/index.html>
+3.  pracma, <https://cran.r-project.org/web/packages/pracma/index.html>
+4.  tseriesChaos,
+    <https://cran.r-project.org/web/packages/tseriesChaos/index.html>
+5.  Daniel F. McCaffrey , Stephen Ellner , A. Ronald Gallant &
+    Douglas W. Nychka (1992) Estimating the Lyapunov Exponent of a
+    Chaotic System with Nonparametric Regression, Journal of the
+    American Statistical Association, 87:419, 682-695
+6.  boot,
+    <https://www.rdocumentation.org/packages/boot/versions/1.3-28/topics/boot>.
+7.  Contributors to Wikimedia projects. "Lyapunov exponent - Wikipedia."
+    7 July 2022,
+    [en.wikipedia.org/w/index.php?title=Lyapunov_exponent&oldid=1096875011](en.wikipedia.org/w/index.php?title=Lyapunov_exponent&oldid=1096875011).
+8.  Contributors to Wikimedia projects. "Hurst exponent - Wikipedia." 12
+    June 2022,
+    [en.wikipedia.org/w/index.php?title=Hurst_exponent&oldid=1092814465](en.wikipedia.org/w/index.php?title=Hurst_exponent&oldid=1092814465).
+9.  DFA, <https://cran.r-project.org/package=DFA>
+10. Contributors to Wikimedia projects. "Detrended fluctuation
+    analysis - Wikipedia." 19 June 2022,
+    <https://en.wikipedia.org/w/index.php?title=Detrended_fluctuation_analysis&oldid=1093832537>.
+11. nonlinearTseries,
+    <https://cran.r-project.org/web/packages/nonlinearTseries/index.html>.
