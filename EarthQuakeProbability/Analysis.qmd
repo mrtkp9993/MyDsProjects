@@ -53,7 +53,9 @@ Let's look and visualize the historical earthquake data.
 data_with_coordinates
 ```
 
-```{r}
+![](images/paste-FACE8B18.png)
+
+```{r include=FALSE}
 tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnitude", alpha=0.4)
 ```
 
@@ -78,7 +80,8 @@ p3
 
 ## Modelling the probability
 
-Let's fit Weibull distribution to distribution of days between two earthquakes occurred successively.
+Let's fit Weibull distribution to distribution of days between two
+earthquakes occurred successively.
 
 ```{r}
 plotdist(data_diff_between_eq$diff, demp = TRUE)
@@ -99,6 +102,7 @@ data_diff_between_eq$diff <- data_diff_between_eq$diff + 0.01
 
 wei.fit <- fitdist(data_diff_between_eq$diff, "weibull")
 ```
+
 Check convergence, 0 means procedure was converged:
 
 ```{r}
@@ -111,28 +115,29 @@ lapply(wei.fit, knitr::kable)
 
 Results:
 
-* Estimate
+-   Estimate
 
-  |      |           x|          sd|
-  |:-----|------------|-----------:|
-  |shape |   0.3647605|   0.0294541|
-  |scale | 124.4717945|  34.3619153|
-  
-* Fit quality:
+    |       | x           |         sd |
+    |:------|-------------|-----------:|
+    | shape | 0.3647605   |  0.0294541 |
+    | scale | 124.4717945 | 34.3619153 |
 
-  |       |       value|
-  |:------|-----------:|
-  |loglik |   -618.5651|
-  |aic    |     1241.13|
-  |bic    |    1246.494|
-  
-* Plots:
-  
-  ```{r}
-  plot(wei.fit)
-  ```   
+-   Fit quality:
 
-Let's calculate mean occurence period of earthquakes which have magnitudes equal or bigger than 5 (simulation and theoretical mean):
+    |        |     value |
+    |:-------|----------:|
+    | loglik | -618.5651 |
+    | aic    |   1241.13 |
+    | bic    |  1246.494 |
+
+-   Plots:
+
+    ```{r}
+    plot(wei.fit)
+    ```
+
+Let's calculate mean occurence period of earthquakes which have
+magnitudes equal or bigger than 5 (simulation and theoretical mean):
 
 ```{r}
 shape.v <- as.numeric(wei.fit$estimate[1])
@@ -141,12 +146,14 @@ scale.v <- as.numeric(wei.fit$estimate[2])
 simulated_data <- rweibull(100000, shape = shape.v, scale = scale.v)
 ```
 
-|                   |                                 value|
-|:------------------|-------------------------------------:|
-|Simulated mean     |              `r mean(simulated_data)`|
-|Theoretical mean   |`r scale.v * gamma(1 + (1 / shape.v))`|
+|                  |                                  value |
+|:-----------------|---------------------------------------:|
+| Simulated mean   |               `r mean(simulated_data)` |
+| Theoretical mean | `r scale.v * gamma(1 + (1 / shape.v))` |
 
-It is expected to have another earthquake having magnitude equal to 5 or above are average `r round(scale.v * gamma(1 + (1 / shape.v)))` days later than the preceding one.
+It is expected to have another earthquake having magnitude equal to 5 or
+above are average `r round(scale.v * gamma(1 + (1 / shape.v)))` days
+later than the preceding one.
 
 Let's plot the CDF:
 
@@ -154,14 +161,23 @@ Let's plot the CDF:
 plot(ecdf(simulated_data), xlim=c(0, 6000))
 ```
 
-If we look the data, the last earthquake was occurred at 2006-10-24, so 5753 days passed since last earthquake was occurred. The risk of an earthquake happening today is `r round(ecdf(simulated_data)(5753), digits=2)*100` %.
+If we look the data, the last earthquake was occurred at 2006-10-24, so
+5753 days passed since last earthquake was occurred. The risk of an
+earthquake happening today is
+`r round(ecdf(simulated_data)(5753), digits=2)*100` %.
 
 ## References
 
--   Earthquake historical data was downloaded from: <http://deprem.afad.gov.tr/depremkatalogu>
+-   Earthquake historical data was downloaded from:
+    <http://deprem.afad.gov.tr/depremkatalogu>
 
 -   Map shape file was downloaded from: <https://gadm.org/>
 
--   Weibull distribution in earthquake probability modelling: <https://www.researchgate.net/publication/26485414_Probabilistic_Prediction_of_the_Next_Earthquake_in_The_Nafz_North_Anatolian_Fault_Zone_Turkey_Kuzey_Anadolu_Fay_Zonunda_Nafz_Gelecek_Depremlerin_Olasiliksal_Tahmini>
+-   Weibull distribution in earthquake probability modelling: Yilmaz,
+    Veysel & Erişoğlu, Murat & Çelik, H.. (2004). Probabilistic
+    Prediction of the Next Earthquake in The Nafz (North Anatolian Fault
+    Zone), Turkey = Kuzey Anadolu Fay Zonunda (Nafz) Gelecek Depremlerin
+    Olasılıksal Tahmini. Dogus University Journal. 5.
 
--   Weibull distribution fitting: <https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r>
+-   Weibull distribution fitting:
+    <https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r>
