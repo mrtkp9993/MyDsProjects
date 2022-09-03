@@ -6,4 +6,6 @@ listing:
   grid-columns: 2
   sort-ui: [title, date]
   filter-ui: [title, date]
+keywords: data science, statistics
+description-meta: Data science blog & projects.
 ---

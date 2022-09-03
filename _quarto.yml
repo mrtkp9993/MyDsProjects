@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "My Data Science Projects & Blog"
+  title: "My Data Science Blog & Projects"
   navbar:
     right:
       - href: https://www.linkedin.com/in/muratkoptur/

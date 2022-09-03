@@ -2,6 +2,8 @@
 title: "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian Fault Zone"
 date: 08/25/2022
 author: Murat Koptur
+keywords: data science, statistics, weibull distribution, distribution fitting, seismology, earthquakes
+description-meta: "Modelling distribution of days between two earthquakes occurred successively."
 execute:
   freeze: auto
   echo: false
