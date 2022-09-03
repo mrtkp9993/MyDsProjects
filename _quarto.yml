@@ -12,6 +12,7 @@ website:
         text: GitHub
       - href: https://muratkoptur.com
         text: Personal Website
+  reader-mode: true
   open-graph: true
   google-analytics: "G-TQSZS8HRH9"
   cookie-consent: true
