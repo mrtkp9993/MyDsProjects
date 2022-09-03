@@ -4,6 +4,7 @@ project:
 
 website:
   title: "My Data Science Blog & Projects"
+  description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
   navbar:
     right:
       - href: https://www.linkedin.com/in/muratkoptur/
@@ -13,7 +14,14 @@ website:
       - href: https://muratkoptur.com
         text: Personal Website
   reader-mode: true
-  open-graph: true
+  open-graph:
+    image: "og-image.png"
+    description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
+  twitter-card:
+    description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
+    image: "og-image.png"
+    creator: "@mrtkp9993"
+    site: "@mrtkp9993"
   google-analytics: "G-TQSZS8HRH9"
   cookie-consent: true
   body-footer: |
