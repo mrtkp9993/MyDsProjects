@@ -15,11 +15,11 @@ website:
         text: Personal Website
   reader-mode: true
   open-graph:
-    image: "/MyDsProjects/og-image.png"
+    image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
     description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
   twitter-card:
     description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
-    image: "/MyDsProjects/og-image.png"
+    image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
     creator: "@mrtkp9993"
     site: "@mrtkp9993"
   google-analytics: "G-TQSZS8HRH9"
