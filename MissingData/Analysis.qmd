@@ -57,6 +57,7 @@ Generally, two methods are preferred:
 Example dataset from Fox, Negrete-Yankelevich and Sosa (2015):
 
 ```{r}
+#| echo: fenced
 library(readr)
 library(naniar)
 
@@ -72,6 +73,7 @@ ex_data
 Descriptives:
 
 ```{r}
+#| echo: fenced
 library(finalfit)
 
 res <- ff_glimpse(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"))
@@ -83,12 +85,14 @@ res$Categorical
 Plot of missingness:
 
 ```{r}
+#| echo: fenced
 missing_plot(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"))
 ```
 
 Missingness patterns:
 
 ```{r}
+#| echo: fenced
 missing_pattern(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"))
 ```
 
@@ -97,6 +101,7 @@ There are six missingness pattern on the data.
 Compare:
 
 ```{r}
+#| echo: fenced
 missing_pairs(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"), position = "fill")
 ```
 
@@ -105,6 +110,7 @@ And lastly, we perform Little's MCAR tests:
 -   MCAR case:
 
     ```{r}
+    #| echo: fenced
     mcar_test(data.frame(x = ex_data$x_mcar, y = ex_data$y))
     ```
 
@@ -113,6 +119,7 @@ And lastly, we perform Little's MCAR tests:
 -   MAR case:
 
     ```{r}
+    #| echo: fenced
     mcar_test(data.frame(x = ex_data$x_mar, y = ex_data$y))
     ```
 
@@ -121,10 +128,13 @@ And lastly, we perform Little's MCAR tests:
 -   MNAR case:
 
     ```{r}
+    #| echo: fenced
     mcar_test(data.frame(x = ex_data$x_mnar, y = ex_data$y))
     ```
 
     Fail to reject null, data is MCAR (which is wrong).
+    
+Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData>
 
 ## References
 

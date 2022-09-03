@@ -62,11 +62,13 @@ tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnit
 ### Time Span between Earthquake Occurrences
 
 ```{r}
+#| echo: fenced
 p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density()
 p
 ```
 
 ```{r}
+#| echo: fenced
 p2 <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_boxplot()
 p2
 ```
@@ -74,6 +76,7 @@ p2
 ### Earthquake Count By Year
 
 ```{r}
+#| echo: fenced
 p3 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
 p3
 ```
@@ -84,6 +87,7 @@ Let's fit Weibull distribution to distribution of days between two
 earthquakes occurred successively.
 
 ```{r}
+#| echo: fenced
 plotdist(data_diff_between_eq$diff, demp = TRUE)
 ```
 
@@ -91,14 +95,12 @@ plotdist(data_diff_between_eq$diff, demp = TRUE)
 descdist(data_diff_between_eq$diff, boot = 10000)
 ```
 
-```{r include=FALSE}
+Fit the distribution:
+
+```{r}
+#| echo: fenced
 # add all data points to 0.1 for avoiding zero division errors
 data_diff_between_eq$diff <- data_diff_between_eq$diff + 0.01
-
-#lam0 <- quantile(data_diff_between_eq$diff, p=0.632)
-
-#Fh <- ppoints(sort(data_diff_between_eq$diff))
-#k0 <- lm(log(-log(1-Fh))~log(data_diff_between_eq$diff))$coefficients[2]
 
 wei.fit <- fitdist(data_diff_between_eq$diff, "weibull")
 ```
@@ -106,6 +108,7 @@ wei.fit <- fitdist(data_diff_between_eq$diff, "weibull")
 Check convergence, 0 means procedure was converged:
 
 ```{r}
+#| echo: fenced
 print(wei.fit$convergence)
 ```
 
@@ -140,6 +143,7 @@ Let's calculate mean occurence period of earthquakes which have
 magnitudes equal or bigger than 5 (simulation and theoretical mean):
 
 ```{r}
+#| echo: fenced
 shape.v <- as.numeric(wei.fit$estimate[1])
 scale.v <- as.numeric(wei.fit$estimate[2])
 
@@ -158,6 +162,7 @@ later than the preceding one.
 Let's plot the CDF:
 
 ```{r}
+#| echo: fenced
 plot(ecdf(simulated_data), xlim=c(0, 6000))
 ```
 
@@ -165,6 +170,9 @@ If we look the data, the last earthquake was occurred at 2006-10-24, so
 5753 days passed since last earthquake was occurred. The risk of an
 earthquake happening today is
 `r round(ecdf(simulated_data)(5753), digits=2)*100` %.
+
+Full source code:
+<https://github.com/mrtkp9993/MyDsProjects/tree/main/EarthQuakeProbability>
 
 ## References
 

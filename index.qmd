@@ -1,5 +1,9 @@
 ---
 listing:
-  type: default
+  type: grid
   sort: "date desc"
+  fields: [image, date, title, author]
+  grid-columns: 2
+  sort-ui: [title, date]
+  filter-ui: [title, date]
 ---

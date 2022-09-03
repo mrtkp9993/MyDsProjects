@@ -260,6 +260,8 @@ Results:
     
     Both of test statistics are smaller than critical values, so the series is 
     a random walk.
+    
+Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/TimeSeriesPredictability>
 
 ## References
 

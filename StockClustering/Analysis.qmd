@@ -36,6 +36,7 @@ data
 We need to standardize the features:
 
 ```{r}
+#| echo: fenced
 library(scales)
 
 cols <- 5:ncol(data)
@@ -100,6 +101,8 @@ data_clustered %>%
 ```
 
 Mean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks.
+
+Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/StockClustering>
 
 ## References
 

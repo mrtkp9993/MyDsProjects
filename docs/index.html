@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>My Data Science Projects</title>
+<title>My Data Science Projects &amp; Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,9 +69,9 @@ ul.task-list{list-style: none;}
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-date"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -137,11 +137,11 @@ cookieconsent.run({
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta property="og:title" content="My Data Science Projects">
+<meta property="og:title" content="My Data Science Projects &amp; Blog">
 <meta property="og:description" content="—
 Thanks for reading. If you enjoyed, please share it.
 Support my work from here GitHub Sponsors.">
-<meta property="og:site-name" content="My Data Science Projects">
+<meta property="og:site-name" content="My Data Science Projects &amp; Blog">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -151,7 +151,7 @@ Support my work from here GitHub Sponsors.">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">My Data Science Projects</span>
+    <span class="navbar-title">My Data Science Projects &amp; Blog</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -190,119 +190,117 @@ Support my work from here GitHub Sponsors.">
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1661979600000" data-listing-file-modified-sort="1662054144900" data-listing-reading-time-sort="5.875">
-<div class="thumbnail">
-<p><a href="./TimeSeriesPredictability/Analysis.html"> <img src="./TimeSeriesPredictability/images/paste-DD2528C4.png" class="thumnail-image"> </a></p>
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
 </div>
-<div class="body">
-<a href="./TimeSeriesPredictability/Analysis.html">
-<h3 class="no-anchor listing-title">
+<div class="list grid quarto-listing-cols-2">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1661979600000" data-listing-file-modified-sort="1662190959644" data-listing-reading-time-sort="5.91">
+<a href="./TimeSeriesPredictability/Analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./TimeSeriesPredictability/images/paste-DD2528C4.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Don’t Try to Forecast Everything: Predictability of Time Series
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Murat Koptur
 </div>
-<div class="listing-description">
-Most of time series analyses start with investigating series, autocorrelation and partial autocorrelation plots. Then one estimates different time series models (like ARIMA, GARCH, State-space models) and performs model checks.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./TimeSeriesPredictability/Analysis.html">
 <div class="listing-date">
 Sep 1, 2022
 </div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-listing-date-sort="1661634000000" data-listing-file-modified-sort="1662190103089" data-listing-reading-time-sort="4.98">
+<a href="./MissingData/Analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./MissingData/images/paste-82A43477.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Don’t impute all missing data: Missing Data Patterns
+</h5>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Murat Koptur
 </div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1661634000000" data-listing-file-modified-sort="1661715609419" data-listing-reading-time-sort="4.805">
-<div class="thumbnail">
-<p><a href="./MissingData/Analysis.html"> <img src="./MissingData/images/paste-82A43477.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./MissingData/Analysis.html">
-<h3 class="no-anchor listing-title">
-Don’t impute all missing data: Missing Data Patterns
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one’s propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./MissingData/Analysis.html">
 <div class="listing-date">
 Aug 28, 2022
 </div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-listing-date-sort="1661461200000" data-listing-file-modified-sort="1662190014121" data-listing-reading-time-sort="2.97">
+<a href="./StockClustering/Analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./StockClustering/images/paste-1622CD6D.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Stock Return and Fundamental Clustering &amp; Portfolio Selection
+</h5>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Murat Koptur
 </div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1661461200000" data-listing-file-modified-sort="1661584455661" data-listing-reading-time-sort="2.95">
-<div class="thumbnail">
-<p><a href="./StockClustering/Analysis.html"> <img src="./StockClustering/images/paste-1622CD6D.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./StockClustering/Analysis.html">
-<h3 class="no-anchor listing-title">
-Stock Return and Fundamental Clustering &amp; Portfolio Selection
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-We have following features for BIST30 stocks:
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./StockClustering/Analysis.html">
 <div class="listing-date">
 Aug 26, 2022
 </div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-listing-date-sort="1661374800000" data-listing-file-modified-sort="1662189871315" data-listing-reading-time-sort="2.925">
+<a href="./EarthQuakeProbability/Analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./EarthQuakeProbability/images/paste-FACE8B18.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Modelling the probability of earthquakes (M &gt;= 5.0) in North Anatolian Fault Zone
+</h5>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Murat Koptur
 </div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1661374800000" data-listing-file-modified-sort="1662100684774" data-listing-reading-time-sort="2.865">
-<div class="thumbnail">
-<p><a href="./EarthQuakeProbability/Analysis.html"> <img src="./EarthQuakeProbability/images/paste-FACE8B18.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./EarthQuakeProbability/Analysis.html">
-<h3 class="no-anchor listing-title">
-Modelling the probability of earthquakes (M &gt;= 5.0) in North Anatolian Fault Zone
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Let’s look and visualize the historical earthquake data.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./EarthQuakeProbability/Analysis.html">
 <div class="listing-date">
 Aug 25, 2022
 </div>
-<div class="listing-author">
-Murat Koptur
+</div>
+</div>
 </div>
 </a>
-</div>
 </div>
 </div>
 <div class="listing-no-matching d-none">
