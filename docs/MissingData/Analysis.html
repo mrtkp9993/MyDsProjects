@@ -301,11 +301,13 @@ cookieconsent.run({
 <section id="missing-data-mechanisms" class="level2">
 <h2 class="anchored" data-anchor-id="missing-data-mechanisms">Missing Data Mechanisms</h2>
 <p>According to Rubin, there are three different missing data mechanisms:</p>
+<blockquote class="blockquote">
 <ol type="1">
 <li>Missing Completely at Random (MCAR): Values in a data set are missing completely at random (MCAR) if the events that lead to any particular data-item being missing are independent both of observable variables and of unobservable parameters of interest, and occur entirely at random. When data are MCAR, one can do listwise deletion and perfom analysis; the analysis performed on the data is unbiased; however, data are rarely MCAR.</li>
 <li>Missing at Random (MAR): Missing at random (MAR) occurs when the missingness is not random, but where missingness can be fully accounted for by variables where there is complete information. Since MAR is an assumption that is impossible to verify statistically, we must rely on its substantive reasonableness. Depending on the analysis method, these data can still induce parameter bias in analyses due to the contingent emptiness of cells. However, if the parameter is estimated with Full Information Maximum Likelihood, MAR will provide asymptotically unbiased estimates.</li>
 <li>Missing not at Random (MNAR): Missing not at random (MNAR) (also known as nonignorable nonresponse) is data that is neither MAR nor MCAR (i.e.&nbsp;the value of the variable that’s missing is related to the reason it’s missing). One can try to include as many predictors as possible in a model to get MNAR closer to MAR.</li>
 </ol>
+</blockquote>
 <p>Also, one can perform multiple imputation (MI) methods in MCAR and MAR cases.</p>
 </section>
 <section id="how-to-test" class="level2">
