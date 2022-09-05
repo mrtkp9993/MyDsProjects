@@ -1,0 +1,16 @@
+---
+title: "Murat Koptur"
+about:
+  template: trestles
+  image: "profile.jpg"
+  links:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/muratkoptur/
+        text: LinkedIn
+      - icon: github
+        href: https://github.com/mrtkp9993
+        text: GitHub
+---
+
+I'm a mathematician and data scientist from Turkey. When not playing with data,
+I'm enjoying spending time playing music and working on art paintings.

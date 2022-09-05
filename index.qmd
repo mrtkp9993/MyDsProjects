@@ -1,5 +1,6 @@
 ---
 listing:
+  contents: "**/Analysis.qmd"
   type: grid
   sort: "date desc"
   fields: [image, date, title, author]

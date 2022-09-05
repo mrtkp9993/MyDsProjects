@@ -7,12 +7,8 @@ website:
   description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
   navbar:
     right:
-      - href: https://www.linkedin.com/in/muratkoptur/
-        text: LinkedIn
-      - href: https://github.com/mrtkp9993
-        text: GitHub
-      - href: https://muratkoptur.com
-        text: Personal Website
+      - href: "about.qmd"
+        text: About Me
   reader-mode: true
   open-graph:
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
@@ -29,6 +25,10 @@ website:
     Thanks for reading. If you enjoyed, please share it.\
     Support my work from here [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/).\
     You can support me also on [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
+
+resources:
+  - "ogimg.png"
+  - "profile.png"
 
 theme:
   light: simplex
