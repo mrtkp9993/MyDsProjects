@@ -285,15 +285,15 @@ cookieconsent.run({
 
 </header>
 
-<section id="missing-data-patterns" class="level2">
-<h2 class="anchored" data-anchor-id="missing-data-patterns">Missing Data Patterns</h2>
+<section id="missing-data-patterns" class="level1">
+<h1>Missing Data Patterns</h1>
 <p>A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one’s propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.</p>
 <p><img src="images/paste-82A43477.png" class="img-fluid" width="400"></p>
 <p>The missing values in panel a have been isolated on a single variable in the univariate pattern. This pattern could appear, for example, in an experimental setting where outcome scores for a subset of participants are missing. Panel b depicts a monotone missing data pattern from a longitudinal study in which individuals who have missing data at one measurement event always have missing data at subsequent measurements. The general pattern in panel c is that missing values are scattered all through the entire data matrix. Panel d depicts a planned missing data pattern in which three variables are intentionally left blank for a large number of respondents. Panel e depicts a pattern in which a latent variable is absent across the entire sample.</p>
 <p>One final configuration needs special consideration because it may introduce estimation issues for modern missing data-handling procedures. Because the data provide insufficient support for estimation, I refer to the configuration in panel f as an underidentified missing pattern. This pattern frequently occurs when two categorical variables have unbalanced group sizes and missing data, resulting in very low or even zero cell counts in a cross-tabulation table. Prior to conducting a missing data analysis, it is critical to screen for this configuration.</p>
 </section>
-<section id="missing-data-mechanisms" class="level2">
-<h2 class="anchored" data-anchor-id="missing-data-mechanisms">Missing Data Mechanisms</h2>
+<section id="missing-data-mechanisms" class="level1">
+<h1>Missing Data Mechanisms</h1>
 <p>According to Rubin, there are three different missing data mechanisms:</p>
 <blockquote class="blockquote">
 <ol type="1">
@@ -304,10 +304,10 @@ cookieconsent.run({
 </blockquote>
 <p>Also, one can perform multiple imputation (MI) methods in MCAR and MAR cases.</p>
 </section>
-<section id="how-to-test" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-test">How to test?</h2>
-<section id="distinguish-between-mnar-and-mar" class="level3">
-<h3 class="anchored" data-anchor-id="distinguish-between-mnar-and-mar">Distinguish between MNAR and MAR</h3>
+<section id="how-to-test" class="level1">
+<h1>How to test?</h1>
+<section id="distinguish-between-mnar-and-mar" class="level2">
+<h2 class="anchored" data-anchor-id="distinguish-between-mnar-and-mar">Distinguish between MNAR and MAR</h2>
 <p>There is no statistical test for this, but you can:</p>
 <ul>
 <li>Use domain knowledge about variables;</li>
@@ -316,8 +316,8 @@ cookieconsent.run({
 </ul>
 <p>for determining the missing data mechanisim.</p>
 </section>
-<section id="distinguish-between-mcar-and-mar" class="level3">
-<h3 class="anchored" data-anchor-id="distinguish-between-mcar-and-mar">Distinguish between MCAR and MAR</h3>
+<section id="distinguish-between-mcar-and-mar" class="level2">
+<h2 class="anchored" data-anchor-id="distinguish-between-mcar-and-mar">Distinguish between MCAR and MAR</h2>
 <p>Generally, two methods are preferred:</p>
 <ol type="1">
 <li>Little’s MCAR test: Maximum likelihood chi-square test for missing completely at random. <span class="math inline">\(H_0\)</span> is that the data is MCAR.</li>
@@ -325,8 +325,8 @@ cookieconsent.run({
 </ol>
 </section>
 </section>
-<section id="examples" class="level2">
-<h2 class="anchored" data-anchor-id="examples">Examples</h2>
+<section id="examples" class="level1">
+<h1>Examples</h1>
 <p>Example dataset from Fox, Negrete-Yankelevich and Sosa (2015):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -461,16 +461,14 @@ cookieconsent.run({
 </ul>
 <p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData</a></p>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><p>Enders, C. (2010). <em>Applied Missing Data Analysis</em>.</p></li>
-<li><p>RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581</p></li>
-<li><p>Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data</p></li>
-<li><p>Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722</p></li>
-<li><p>Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&amp;version=1</p></li>
-<li><p>Fox, G., Negrete-Yankelevich, S., &amp; Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.</p></li>
-</ul>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><span class="math inline">\(^1\)</span> Enders, C. (2010). <em>Applied Missing Data Analysis</em>.</p>
+<p><span class="math inline">\(^2\)</span> RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581</p>
+<p><span class="math inline">\(^3\)</span> Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data</p>
+<p><span class="math inline">\(^4\)</span> Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722</p>
+<p><span class="math inline">\(^5\)</span> Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&amp;version=1</p>
+<p><span class="math inline">\(^6\)</span> Fox, G., Negrete-Yankelevich, S., &amp; Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.</p>
 
 
 

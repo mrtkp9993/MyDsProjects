@@ -47,7 +47,7 @@ tur_shp <- st_read("gadm41_TUR.gpkg", layer = "ADM_ADM_0")
 spdf <- SpatialPointsDataFrame(coords = data_with_coordinates[c(3,2)], data = data_with_coordinates)
 ```
 
-## EDA
+# Visualization of earthquake data
 
 Let's look and visualize the historical earthquake data.
 
@@ -61,7 +61,7 @@ data_with_coordinates
 tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnitude", alpha=0.4)
 ```
 
-### Time Span between Earthquake Occurrences
+## Time Span between Earthquake Occurrences
 
 ```{r}
 #| echo: fenced
@@ -75,7 +75,7 @@ p2 <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_boxplot()
 p2
 ```
 
-### Earthquake Count By Year
+## Earthquake Count By Year
 
 ```{r}
 #| echo: fenced
@@ -83,7 +83,7 @@ p3 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
 p3
 ```
 
-## Modelling the probability
+# Modelling the probability
 
 Let's fit Weibull distribution to distribution of days between two
 earthquakes occurred successively.
@@ -176,18 +176,18 @@ earthquake happening today is
 Full source code:
 <https://github.com/mrtkp9993/MyDsProjects/tree/main/EarthQuakeProbability>
 
-## References
+# References
 
--   Earthquake historical data was downloaded from:
+$^1$   Earthquake historical data was downloaded from:
     <http://deprem.afad.gov.tr/depremkatalogu>
 
--   Map shape file was downloaded from: <https://gadm.org/>
+$^2$  Map shape file was downloaded from: <https://gadm.org/>
 
--   Weibull distribution in earthquake probability modelling: Yilmaz,
+$^3$   Weibull distribution in earthquake probability modelling: Yilmaz,
     Veysel & Erişoğlu, Murat & Çelik, H.. (2004). Probabilistic
     Prediction of the Next Earthquake in The Nafz (North Anatolian Fault
     Zone), Turkey = Kuzey Anadolu Fay Zonunda (Nafz) Gelecek Depremlerin
     Olasılıksal Tahmini. Dogus University Journal. 5.
 
--   Weibull distribution fitting:
+$^4$   Weibull distribution fitting:
     <https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r>

@@ -15,7 +15,7 @@ format:
 listing: true
 ---
 
-## Missing Data Patterns
+# Missing Data Patterns
 
 A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one's propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.
 
@@ -25,7 +25,7 @@ The missing values in panel a have been isolated on a single variable in the uni
 
 One final configuration needs special consideration because it may introduce estimation issues for modern missing data-handling procedures. Because the data provide insufficient support for estimation, I refer to the configuration in panel f as an underidentified missing pattern. This pattern frequently occurs when two categorical variables have unbalanced group sizes and missing data, resulting in very low or even zero cell counts in a cross-tabulation table. Prior to conducting a missing data analysis, it is critical to screen for this configuration.
 
-## Missing Data Mechanisms
+# Missing Data Mechanisms
 
 According to Rubin, there are three different missing data mechanisms:
 
@@ -35,9 +35,9 @@ According to Rubin, there are three different missing data mechanisms:
 
 Also, one can perform multiple imputation (MI) methods in MCAR and MAR cases.
 
-## How to test?
+# How to test?
 
-### Distinguish between MNAR and MAR
+## Distinguish between MNAR and MAR
 
 There is no statistical test for this, but you can:
 
@@ -47,14 +47,14 @@ There is no statistical test for this, but you can:
 
 for determining the missing data mechanisim.
 
-### Distinguish between MCAR and MAR
+## Distinguish between MCAR and MAR
 
 Generally, two methods are preferred:
 
 1.  Little's MCAR test: Maximum likelihood chi-square test for missing completely at random. $H_0$ is that the data is MCAR.
 2.  Dummy variable approach for MCAR: One can create a dummy variable for whether a variable is missing (1 = missing, 0 = observed) and run t-tests (continuous) and chi-square (categorical) tests between this dummy and other variables to see if the missingness is related to the values of other variables.
 
-## Examples
+# Examples
 
 Example dataset from Fox, Negrete-Yankelevich and Sosa (2015):
 
@@ -138,16 +138,16 @@ And lastly, we perform Little's MCAR tests:
     
 Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData>
 
-## References
+# References
 
--   Enders, C. (2010). *Applied Missing Data Analysis*.
+$^1$   Enders, C. (2010). *Applied Missing Data Analysis*.
 
--   RUBIN, D. B. (1976). *Inference and missing data* (Vol. 63, Issue 3, pp. 581--592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581
+$^2$   RUBIN, D. B. (1976). *Inference and missing data* (Vol. 63, Issue 3, pp. 581--592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581
 
--   Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data
+$^3$   Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data
 
--   Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp. 1198--1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722
+$^4$   Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp. 1198--1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722
 
--   Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&version=1
+$^5$   Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&version=1
 
--   Fox, G., Negrete-Yankelevich, S., & Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.
+$^6$   Fox, G., Negrete-Yankelevich, S., & Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.

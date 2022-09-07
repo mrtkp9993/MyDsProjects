@@ -10,6 +10,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/SysIdent/Analysis.html",
       "/ConceptDrift/Analysis.html",
       "/TimeSeriesPredictability/Analysis.html",
       "/MissingData/Analysis.html",
@@ -23,6 +24,10 @@
   },
   {
     "listing": "/StockClustering/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/SysIdent/Analysis.html",
     "items": []
   },
   {

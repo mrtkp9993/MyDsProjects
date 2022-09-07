@@ -288,8 +288,8 @@ cookieconsent.run({
 <div class="cell">
 
 </div>
-<section id="eda" class="level2">
-<h2 class="anchored" data-anchor-id="eda">EDA</h2>
+<section id="visualization-of-earthquake-data" class="level1">
+<h1>Visualization of earthquake data</h1>
 <p>Let’s look and visualize the historical earthquake data.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -302,8 +302,8 @@ cookieconsent.run({
 </div>
 </div>
 <p><img src="images/paste-FACE8B18.png" class="img-fluid"></p>
-<section id="time-span-between-earthquake-occurrences" class="level3">
-<h3 class="anchored" data-anchor-id="time-span-between-earthquake-occurrences">Time Span between Earthquake Occurrences</h3>
+<section id="time-span-between-earthquake-occurrences" class="level2">
+<h2 class="anchored" data-anchor-id="time-span-between-earthquake-occurrences">Time Span between Earthquake Occurrences</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_diff_between_eq, <span class="fu">aes</span>(<span class="at">x=</span>diff)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span>
@@ -323,8 +323,8 @@ cookieconsent.run({
 </div>
 </div>
 </section>
-<section id="earthquake-count-by-year" class="level3">
-<h3 class="anchored" data-anchor-id="earthquake-count-by-year">Earthquake Count By Year</h3>
+<section id="earthquake-count-by-year" class="level2">
+<h2 class="anchored" data-anchor-id="earthquake-count-by-year">Earthquake Count By Year</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_count_by_year, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>count)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
@@ -336,8 +336,8 @@ cookieconsent.run({
 </div>
 </section>
 </section>
-<section id="modelling-the-probability" class="level2">
-<h2 class="anchored" data-anchor-id="modelling-the-probability">Modelling the probability</h2>
+<section id="modelling-the-probability" class="level1">
+<h1>Modelling the probability</h1>
 <p>Let’s fit Weibull distribution to distribution of days between two earthquakes occurred successively.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -459,14 +459,12 @@ cookieconsent.run({
 <p>If we look the data, the last earthquake was occurred at 2006-10-24, so 5753 days passed since last earthquake was occurred. The risk of an earthquake happening today is 98 %.</p>
 <p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/EarthQuakeProbability" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/EarthQuakeProbability</a></p>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><p>Earthquake historical data was downloaded from: <a href="http://deprem.afad.gov.tr/depremkatalogu" class="uri">http://deprem.afad.gov.tr/depremkatalogu</a></p></li>
-<li><p>Map shape file was downloaded from: <a href="https://gadm.org/" class="uri">https://gadm.org/</a></p></li>
-<li><p>Weibull distribution in earthquake probability modelling: Yilmaz, Veysel &amp; Erişoğlu, Murat &amp; Çelik, H.. (2004). Probabilistic Prediction of the Next Earthquake in The Nafz (North Anatolian Fault Zone), Turkey = Kuzey Anadolu Fay Zonunda (Nafz) Gelecek Depremlerin Olasılıksal Tahmini. Dogus University Journal. 5.</p></li>
-<li><p>Weibull distribution fitting: <a href="https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r" class="uri">https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r</a></p></li>
-</ul>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><span class="math inline">\(^1\)</span> Earthquake historical data was downloaded from: <a href="http://deprem.afad.gov.tr/depremkatalogu" class="uri">http://deprem.afad.gov.tr/depremkatalogu</a></p>
+<p><span class="math inline">\(^2\)</span> Map shape file was downloaded from: <a href="https://gadm.org/" class="uri">https://gadm.org/</a></p>
+<p><span class="math inline">\(^3\)</span> Weibull distribution in earthquake probability modelling: Yilmaz, Veysel &amp; Erişoğlu, Murat &amp; Çelik, H.. (2004). Probabilistic Prediction of the Next Earthquake in The Nafz (North Anatolian Fault Zone), Turkey = Kuzey Anadolu Fay Zonunda (Nafz) Gelecek Depremlerin Olasılıksal Tahmini. Dogus University Journal. 5.</p>
+<p><span class="math inline">\(^4\)</span> Weibull distribution fitting: <a href="https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r" class="uri">https://stats.stackexchange.com/questions/230937/how-to-find-initial-values-for-weibull-mle-in-r</a></p>
 
 
 

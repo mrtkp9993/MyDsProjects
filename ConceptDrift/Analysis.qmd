@@ -18,6 +18,8 @@ editor:
     wrap: 72
 ---
 
+# Introduction
+
 Model drift is a huge problem for machine learning models in production.
 Model drift reveals itself as a significant increase in error rates for
 models. To reduce risk, it is essential to track model performance and
@@ -44,18 +46,18 @@ shapes:
 
 ![](images/paste-FB2D446A.png)
 
-## Methods for detecting model drift
+# Methods for detecting model drift
 
-### Kolmogorov-Smirnov (KS) Test & Chi-squared Test
+## Kolmogorov-Smirnov (KS) Test & Chi-squared Test
 
 These sets used for compare two statistical distributions. We can apply these
 tests to compare distributions of training data and post-training data.
 
-### Population Stability Index (PSI)
+## Population Stability Index (PSI)
 
 PSI is a measure for determining how much a population shifted over time.
 
-### Drift Detection Method / Early Drift Detection Method
+## Drift Detection Method / Early Drift Detection Method
 
 > Drift Detection Method (DDM) uses a binomial distribution to describe the 
 behavior of a random variable that gives the number of classification errors.
@@ -63,17 +65,17 @@ If the distribution of the samples is stationary, probability of
 misclassification will decrease as sample size increases. If the error rate of 
 the learning algorithm increases significantly, it suggests changes in the 
 distribution of classes, and thus providing the signal to update 
-the model [5].
+the model $^5$.
 
 > Early Drift Detection Method (EDDM) is a modification of DDM and improves the
-detection in presence of gradual concept drift [5].
+detection in presence of gradual concept drift $^5$.
 
-### Page-Hinkley method
+## Page-Hinkley method
 
 > This change detection method works by computing the observed values and their 
-mean up to the current moment [6].
+mean up to the current moment $^6$.
 
-### ADWIN 
+## ADWIN 
 
 > ADWIN (ADaptive WINdowing) is a popular drift detection method with mathematical 
 guarantees. ADWIN efficiently keeps a variable-length window of recent items; 
@@ -84,9 +86,9 @@ $W_1$ to confirm that they correspond to the same distribution. Concept drift is
 detected if the distribution equality no longer holds. Upon detecting a drift, 
 $W_0$ is replaced by $W_1$ and a new $W_0$ is initialized. ADWIN uses a 
 significance value $\delta\in(0,1)$ to determine if the two sub-windows 
-correspond to the same distribution [8].
+correspond to the same distribution $^8$.
 
-## Examples
+# Examples
 
 Let's generate example data:
 
@@ -254,13 +256,20 @@ existing model.
 Full source code:
 <https://github.com/mrtkp9993/MyDsProjects/tree/main/ConceptDrift>
 
-## References
+# References
 
-1.  <https://pkghosh.wordpress.com/2020/12/24/concept-drift-detection-techniques-with-python-implementation-for-supervised-machine-learning-models/>
-2.  <https://datatron.com/what-is-model-drift/#:~:text=Concept%20drift%20is%20a%20type,s)%20change(s).>
-3.  <https://deepchecks.com/how-to-detect-concept-drift-with-machine-learning-monitoring/>
-4.  <https://www.analyticsvidhya.com/blog/2021/10/mlops-and-the-importance-of-data-drift-detection/>
-5.  <https://www.revistaespacios.com/a17v38n39/a17v38n39p16.pdf>
-6.  <https://scikit-multiflow.readthedocs.io/en/stable/api/generated/skmultiflow.drift_detection.PageHinkley.html>
-7.  <https://scikit-multiflow.readthedocs.io/en/stable/api/generated/skmultiflow.drift_detection.ADWIN.html#skmultiflow.drift_detection.ADWIN>
-8.  <https://riverml.xyz/dev/api/drift/ADWIN/>
+$^1$  <https://pkghosh.wordpress.com/2020/12/24/concept-drift-detection-techniques-with-python-implementation-for-supervised-machine-learning-models/>
+
+$^2$  <https://datatron.com/what-is-model-drift/#:~:text=Concept%20drift%20is%20a%20type,s)%20change(s).>
+
+$^3$  <https://deepchecks.com/how-to-detect-concept-drift-with-machine-learning-monitoring/>
+
+$^4$  <https://www.analyticsvidhya.com/blog/2021/10/mlops-and-the-importance-of-data-drift-detection/>
+
+$^5$  <https://www.revistaespacios.com/a17v38n39/a17v38n39p16.pdf>
+
+$^6$  <https://scikit-multiflow.readthedocs.io/en/stable/api/generated/skmultiflow.drift_detection.PageHinkley.html>
+
+$^7$  <https://scikit-multiflow.readthedocs.io/en/stable/api/generated/skmultiflow.drift_detection.ADWIN.html#skmultiflow.drift_detection.ADWIN>
+
+$^8$  <https://riverml.xyz/dev/api/drift/ADWIN/>
