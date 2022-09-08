@@ -4,7 +4,7 @@ project:
 
 website:
   title: "My Data Science Blog & Projects"
-  description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
+  description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   navbar:
     right:
       - href: "about.qmd"
@@ -12,9 +12,9 @@ website:
   reader-mode: true
   open-graph:
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
-    description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
+    description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   twitter-card:
-    description: "Murat Koptur - Data Scientst - Data Science Blog & Projects"
+    description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
     creator: "@mrtkp9993"
     site: "@mrtkp9993"
