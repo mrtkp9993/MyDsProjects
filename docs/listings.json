@@ -1,5 +1,9 @@
 [
   {
+    "listing": "/AnomalyOcsvm/Analysis.html",
+    "items": []
+  },
+  {
     "listing": "/ConceptDrift/Analysis.html",
     "items": []
   },
@@ -10,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/AnomalyOcsvm/Analysis.html",
       "/SysIdent/Analysis.html",
       "/ConceptDrift/Analysis.html",
       "/TimeSeriesPredictability/Analysis.html",

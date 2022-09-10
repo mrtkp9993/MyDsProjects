@@ -1,0 +1,177 @@
+---
+title: "Unsupervised Anomaly Detection with One-Class SVM"
+date: 09/10/2022
+author: Murat Koptur
+keywords: data science, statistics, machine learning, anomaly detection, svm
+description-meta: "How to identify anomalies with One-Class SVM."
+execute:
+  freeze: auto
+  warning: false
+  error: false
+format: 
+   html:
+     df-print: paged
+listing: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Introduction
+
+Anomaly detection (outlier detection, novelty detection) is the identification 
+of rare observations that differ substantially from the vast majority of the 
+data $^4$.
+
+I would like to point out an important distinction $^3$:
+
+* Outlier detection: The training data contains outliers. Estimators try to fit 
+the regions where the training data is the most concentrated.
+* Novelty detection: The training data does not contain outliers. Estimators try
+to detect whether a new observation is an outlier.
+
+In short, SVMs separates two classes using a hyperplane with the largest 
+possible margin. On other side, One-Class SVMs try to identify smallest 
+hypersphere which contains most of the data points$^4$.
+
+# Example
+
+Dataset was downloaded from ODDS $^{1,2}$. The original dataset contains labels
+but we'll not use them.
+
+```{python}
+#| include: false
+from scipy.io import arff
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import  plotly.express as px
+from sklearn.model_selection import train_test_split
+from pyod.models.ocsvm import OCSVM
+import numpy as np
+```
+
+```{python}
+data = arff.loadarff('seismic-bumps.arff')
+df = pd.DataFrame(data[0])
+
+for col in df:
+    if isinstance(df[col][0], bytes):
+        df[col] = df[col].str.decode("utf8")
+
+Markdown(tabulate(
+  df.head(), 
+  headers=df.columns
+))
+```
+
+Let's drop categorical columns and class column:
+
+```{python}
+df = df.loc[:, ~df.columns.isin(['seismic', 'seismoacoustic', 'shift', 'ghazard', 'class'])]
+
+Markdown(tabulate(
+  df.head(), 
+  headers=df.columns
+))
+```
+
+Split data to train and test sets:
+
+```{python}
+X_train, X_test = train_test_split(df, test_size = 0.2)
+```
+
+SVM tries to maximize distance between the hyperplane and the support vectors.
+If some features have very big values, they will dominate the other features. So
+it is important to rescale data while using distance based methods:
+
+```{python}
+#| tbl-cap: Scaled Train set
+scaler = MinMaxScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+Markdown(tabulate(
+  X_train_scaled[:5], 
+  headers=df.columns,
+))
+
+```
+
+```{python}
+#| tbl-cap: Scaled Test set
+Markdown(tabulate(
+  X_test_scaled[:5], 
+  headers=df.columns,
+))
+```
+
+Apply T-SNE for 2-d visualization:
+
+```{python}
+t_sne = TSNE(n_components=2, 
+             learning_rate = 'auto',
+             init='pca',
+             random_state=1234)
+             
+X_train_viz = t_sne.fit_transform(X_train_scaled)
+X_test_viz = t_sne.fit_transform(X_test_scaled)
+```
+
+```{python}
+px.scatter(x=X_train_viz[:,0], y=X_train_viz[:,1], title="Train set")
+```
+
+```{python}
+px.scatter(x=X_test_viz[:,0], y=X_test_viz[:,1], title="Test set")
+```
+
+Let's train and predict:
+
+```{python}
+# We assume that the proportion of outliers in the data set is 0.15
+clf = OCSVM(contamination=0.15)
+clf.fit(X_train_scaled)
+
+X_train_pred = clf.labels_  # binary labels (0: inliers, 1: outliers)
+X_train_scores = clf.decision_scores_  # raw outlier scores
+
+X_test_pred = clf.predict(X_test_scaled)  # outlier labels (0 or 1)
+X_test_scores = clf.decision_function(X_test_scaled)  # outlier scores
+```
+
+Replace prediction classes (0 & 1) with strings:
+
+```{python}
+labels = {0: 'inlier', 1: 'outlier'}
+
+X_train_pred = np.vectorize(labels.get)(X_train_pred)
+X_test_pred = np.vectorize(labels.get)(X_test_pred)
+```
+
+Visualize with T-SNE:
+
+```{python}
+px.scatter(x=X_train_viz[:,0], y=X_train_viz[:,1], title="Train set", color=X_train_pred)
+```
+
+```{python}
+px.scatter(x=X_test_viz[:,0], y=X_test_viz[:,1], title="Test set",  color=X_test_pred)
+```
+
+Full source code:
+<https://github.com/mrtkp9993/MyDsProjects/tree/main/AnomalyOcsvm>
+
+# References
+
+$^1$ <http://odds.cs.stonybrook.edu/seismic-dataset/>
+
+$^2$ Saket Sathe and Charu C. Aggarwal. LODES: Local Density meets Spectral Outlier Detection. SIAM Conference on Data Mining, 2016.
+
+$^3$ <https://scikit-learn.org/stable/modules/outlier_detection.html>
+
+$^4$ Contributors to Wikimedia projects. (2022, September 03). Anomaly detection - Wikipedia. Retrieved from <https://en.wikipedia.org/w/index.php?title=Anomaly_detection&oldid=1108262189>
