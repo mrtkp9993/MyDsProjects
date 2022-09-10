@@ -19,25 +19,28 @@ editor:
 
 # Introduction
 
-Anomaly detection (outlier detection, novelty detection) is the identification 
-of rare observations that differ substantially from the vast majority of the 
-data $^4$.
+Anomaly detection (outlier detection, novelty detection) is the
+identification of rare observations that differ substantially from the
+vast majority of the data $^4$.
 
 I would like to point out an important distinction $^3$:
 
-* Outlier detection: The training data contains outliers. Estimators try to fit 
-the regions where the training data is the most concentrated.
-* Novelty detection: The training data does not contain outliers. Estimators try
-to detect whether a new observation is an outlier.
+-   Outlier detection: The training data contains outliers. Estimators
+    try to fit the regions where the training data is the most
+    concentrated.
+-   Novelty detection: The training data does not contain outliers.
+    Estimators try to detect whether a new observation is an outlier.
 
-In short, SVMs separates two classes using a hyperplane with the largest 
-possible margin. On other side, One-Class SVMs try to identify smallest 
+In short, SVMs separates two classes using a hyperplane with the largest
+possible margin. On other side, One-Class SVMs try to identify smallest
 hypersphere which contains most of the data points$^4$.
+
+![Source: $^5$](images/paste-DBD557B8.png)
 
 # Example
 
-Dataset was downloaded from ODDS $^{1,2}$. The original dataset contains labels
-but we'll not use them.
+Dataset was downloaded from ODDS $^{1,2}$. The original dataset contains
+labels but we'll not use them.
 
 ```{python}
 #| include: false
@@ -85,9 +88,10 @@ Split data to train and test sets:
 X_train, X_test = train_test_split(df, test_size = 0.2)
 ```
 
-SVM tries to maximize distance between the hyperplane and the support vectors.
-If some features have very big values, they will dominate the other features. So
-it is important to rescale data while using distance based methods:
+SVM tries to maximize distance between the hyperplane and the support
+vectors. If some features have very big values, they will dominate the
+other features. So it is important to rescale data while using distance
+based methods:
 
 ```{python}
 #| tbl-cap: Scaled Train set
@@ -170,8 +174,15 @@ Full source code:
 
 $^1$ <http://odds.cs.stonybrook.edu/seismic-dataset/>
 
-$^2$ Saket Sathe and Charu C. Aggarwal. LODES: Local Density meets Spectral Outlier Detection. SIAM Conference on Data Mining, 2016.
+$^2$ Saket Sathe and Charu C. Aggarwal. LODES: Local Density meets
+Spectral Outlier Detection. SIAM Conference on Data Mining, 2016.
 
 $^3$ <https://scikit-learn.org/stable/modules/outlier_detection.html>
 
-$^4$ Contributors to Wikimedia projects. (2022, September 03). Anomaly detection - Wikipedia. Retrieved from <https://en.wikipedia.org/w/index.php?title=Anomaly_detection&oldid=1108262189>
+$^4$ Contributors to Wikimedia projects. (2022, September 03). Anomaly
+detection - Wikipedia. Retrieved from
+<https://en.wikipedia.org/w/index.php?title=Anomaly_detection&oldid=1108262189>
+
+$^5$ Yengi, Yeliz & Kavak, Adnan & Arslan, Huseyin. (2020). Physical
+Layer Detection of Malicious Relays in LTE-A Network Using Unsupervised
+Learning. IEEE Access. PP. 1-1. 10.1109/ACCESS.2020.3017045.
