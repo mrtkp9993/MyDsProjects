@@ -39,8 +39,7 @@ or more outputs. Anything that can be related to input and output data
 is a system example: electrical systems, mechanical systems, biological
 systems, financial systems, chemical systems...$^3$
 
-![Source:
-$^2$](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Blackbox.svg/400px-Blackbox.svg.png)
+![Source: $^2$](images/paste-20AD539F.png)
 
 Systems can be considered of two types, depending on whether they
 satisfy the principle of superposition:
@@ -123,8 +122,8 @@ nonlinear functions like $^1$:
 
     $$
     y(k)=F[\mathbf{x}(k)]=w_0+\sum_{i=1}^m w_i \phi_i(\mathbf{x}(k))+e(k)
-    $$ 
-    
+    $$
+
     where $\phi_i(\cdot)$ is the nonlinear activation function.
 
 -   Radial basis functions:
@@ -175,7 +174,8 @@ nonlinear functions like $^1$:
 
 ## Lorenz system
 
-The Lorenz system is a system of ordinary differential equations defined as:
+The Lorenz system is a system of ordinary differential equations defined
+as:
 
 $$
 \begin{align*}
@@ -183,11 +183,11 @@ $$
 \frac{dy}{dt} &= x(\rho-z)-y\\ 
 \frac{dz}{dt} &= xy - \beta z
 \end{align*}
-$$
-where $\sigma, \rho, \beta$ are model parameters.
+$$ where $\sigma, \rho, \beta$ are model parameters.
 
-Let's simulate the data with $\rho=28, \sigma=10, \beta=8/3$. Here is the time
-step $dt$ is $0.01$, final time $10$, initial values $(x_0,y_0,z_0)$ is $(0.1, 0.1, 0.1)$:
+Let's simulate the data with $\rho=28, \sigma=10, \beta=8/3$. Here is
+the time step $dt$ is $0.01$, final time $10$, initial values
+$(x_0,y_0,z_0)$ is $(0.1, 0.1, 0.1)$:
 
 ```{python}
 #| include: false
@@ -243,7 +243,8 @@ ax[2].set_title("z", loc="right")
 px.line_3d(x=z,y=y,z=x, title="Lorenz system") # xz axis inverted for sake of plot
 ```
 
-Divide data to train and validation sets, last 50 observations will be validation set:
+Divide data to train and validation sets, last 50 observations will be
+validation set:
 
 ```{python}
 test_size = 50
@@ -336,14 +337,14 @@ x1e = compute_cross_correlation(x_valid, xhat, x_valid)
 plot_residues_correlation(data=x1e, title="Residues", ylabel="$x_1e$")
 ```
 
-$y$ and $z$ components of the Lorenz model also can be estimated above. Now, let's
-add measurement noise to our data and try to estimate it.
+$y$ and $z$ components of the Lorenz model also can be estimated above.
+Now, let's add measurement noise to our data and try to estimate it.
 
 ## Noisy Lorenz System
 
-Now we will assume that we observed the data with independent and identically
-distributed measurement noise (we will assume that measurement noise is distributed
-as uniform on interval [-1, 1]):
+Now we will assume that we observed the data with independent and
+identically distributed measurement noise (we will assume that
+measurement noise is distributed as uniform on interval \[-1, 1\]):
 
 $$
 \text{Observed Data} = \text{Process Outcome} + \text{Measurement Noise}
@@ -371,7 +372,6 @@ ax[2].set_title("z", loc="right")
 
 px.line_3d(x=z,y=y,z=x, title="Noisy Lorenz system")
 ```
-
 
 Now apply same method and look results:
 
@@ -430,8 +430,8 @@ Plot prediction results:
 plot_results(y=x_valid[modelx.max_lag:], yhat=xhat[modelx.max_lag:])
 ```
 
-In the presence of noise, we added more lagged variables to the model and 
-we tried to approximate the nature of the process.
+In the presence of noise, we added more lagged variables to the model
+and we tried to approximate the nature of the process.
 
 Residual autocorrelation and cross-correlations:
 

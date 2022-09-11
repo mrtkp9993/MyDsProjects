@@ -3,14 +3,15 @@ project:
   output-dir: docs
 
 website:
+  site-url: "https://www.muratkoptur.com/MyDsProjects"
   title: "My Data Science Blog & Projects"
   description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   navbar:
     right:
       - href: "about.qmd"
         text: About Me
-  reader-mode: true
   open-graph:
+    title: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
     description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   twitter-card:
@@ -20,11 +21,19 @@ website:
     site: "@mrtkp9993"
   google-analytics: "G-TQSZS8HRH9"
   cookie-consent: true
-  body-footer: |
-    ---\
-    Thanks for reading. If you enjoyed, please share it.\
-    Support my work from here [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/).\
-    You can support me also on [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
+  page-footer:
+    left: |
+      ---\
+          Thanks for reading. If you enjoyed, please share it.\
+          Support my work from here [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/).\
+          You can support me also on [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/muratkoptur/
+      - icon: github
+        href: https://github.com/mrtkp9993
+      - icon: instagram
+        href: https://www.instagram.com/mrtkp9993/
 
 resources:
   - "ogimg.png"
@@ -35,10 +44,12 @@ theme:
   dark: darkly
 
 comments:
-  utterances:
-    repo: mrtkp9993/MyDsProjects
+  hypothesis:
+    theme: clean
+    openSidebar: false
 
 format:
   html:
+    page-layout: article
     include-in-header: header.html
     include-after-body: footer.html

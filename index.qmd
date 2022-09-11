@@ -3,10 +3,15 @@ listing:
   contents: "**/Analysis.qmd"
   type: grid
   sort: "date desc"
-  fields: [image, date, title, author]
-  grid-columns: 2
+  fields: [image, date, title]
+  grid-columns: 5
   sort-ui: [title, date]
   filter-ui: [title, date]
+  feed: true
+  page-size: 10
 keywords: data science, statistics
 description-meta: Data science blog & projects.
+format: 
+  html: 
+    page-layout: full
 ---

@@ -10,7 +10,11 @@ about:
       - icon: github
         href: https://github.com/mrtkp9993
         text: GitHub
+      - icon: instagram
+        href: https://www.instagram.com/mrtkp9993/
+        text: Instagram
+
 ---
 
 I'm a mathematician and data scientist from Turkey. When not playing with data,
-I'm enjoying spending time playing music and working on art paintings.
+I'm enjoying spending time playing music and working on digital art paintings.
