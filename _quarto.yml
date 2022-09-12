@@ -25,8 +25,6 @@ website:
     left: |
           Thanks for reading. If you enjoyed, please share it.\
           Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
-    center:
-      '<a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>'
     right:
       - icon: linkedin
         href: https://www.linkedin.com/in/muratkoptur/
@@ -52,3 +50,4 @@ format:
   html:
     page-layout: article
     include-in-header: header.html
+    include-after-body: footer.html
