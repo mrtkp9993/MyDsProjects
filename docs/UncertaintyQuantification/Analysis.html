@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Murat Koptur">
-<meta name="dcterms.date" content="2022-08-28">
-<meta name="keywords" content="data science, statistics, missing data">
-<meta name="description" content="How to handle the data with missing values?">
+<meta name="dcterms.date" content="2022-09-13">
+<meta name="keywords" content="data science, statistics, uncertainty quantification">
+<meta name="description" content="How to perform uncertainty quantification using polynomial chaos expansion.">
 
-<title>My Data Science Blog &amp; Projects - Don’t impute all missing data: Missing Data Patterns</title>
+<title>My Data Science Blog &amp; Projects - Uncertainty Quantification with Polynomial Chaos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -214,16 +214,13 @@ cookieconsent.run({
    
    window.__h82AlnkH6D91__("WyJwdWItNjcwMjM3ODM4MjYwMzgyNiIsW251bGwsbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9iL3B1Yi02NzAyMzc4MzgyNjAzODI2Il0sbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9lbC9BR1NLV3hVZ1pZQjdIR01rVXVfNE1pZEF5OWM4dGNuM3p1NTNZNlVzZmNwelk4QUwwLUhNVHNfOXFWUHY5Q0lFZWliR1lmRUlwUFhzZGh5OVpDOHVpUnBrcDF4NTlRXHUwMDNkXHUwMDNkP3RlXHUwMDNkVE9LRU5fRVhQT1NFRCIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFVfd3dSN2Z6RzFycWZvVjNEQTdPY1Z1M1JIVmQ3UEtoV1VBcEREWllUUm4yTFQ4cWZmUktHNDU1aDEyenYxSXlkT0J3U1NTQW1yTGtoNUhrVWNtV2ZaOFFcdTAwM2RcdTAwM2Q/YWJcdTAwM2QxXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFdtS1dxMHp4S1NLRHM5YnZmNVhUQ0wycE9BcEV5dkU5MXdkejN6dWhFalQ2M05leW9hZklPdDYwb1RRdmdOdEZZV2taMmJaSXlWdUlLTU1DRF8yT0xmd2dcdTAwM2RcdTAwM2Q/YWJcdTAwM2QyXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZtcFlDZjlFNWw1UTVfSjVNajBtYlpET2tOQVVURE9WM1lzQmF0Q3dtdFNtSmRUdzBYejhYTlFxQ3pwWEJBakFjdEJ0ZXUzWXJFN3B4QU5aUm8wa2h6VGdcdTAwM2RcdTAwM2Q/c2JmXHUwMDNkMiIsImRpdi1ncHQtYWQiLDIwLDEwMCwiY0hWaUxUWTNNREl6Tnpnek9ESTJNRE00TWpZXHUwMDNkIixbbnVsbCxudWxsLG51bGwsImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tLzBlbW4vZi9wL3B1Yi02NzAyMzc4MzgyNjAzODI2LmpzP3VzcXBcdTAwM2RDQW8iXSwiaHR0cHM6Ly9mdW5kaW5nY2hvaWNlc21lc3NhZ2VzLmdvb2dsZS5jb20vZWwvQUdTS1d4VXotSGJZSlVFaGtiVXkzeFUtQTRjd0VMNTJxUlNyNkxELUtUUkdwa1hfc0VVdzM0OHpMaTVId19uaUZMZGQwc1padVZfcVhNSWJadlVtLXMxejVFV2hMQVx1MDAzZFx1MDAzZCJd");</script>
 
-<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta property="og:title" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
 <meta property="og:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
 <meta property="og:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
 <meta property="og:site-name" content="My Data Science Blog &amp; Projects">
-<meta name="twitter:title" content="My Data Science Blog &amp; Projects - Don’t impute all missing data: Missing Data Patterns">
+<meta name="twitter:title" content="My Data Science Blog &amp; Projects - Uncertainty Quantification with Polynomial Chaos">
 <meta name="twitter:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
 <meta name="twitter:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
 <meta name="twitter:creator" content="@mrtkp9993">
@@ -268,7 +265,7 @@ cookieconsent.run({
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Don’t impute all missing data: Missing Data Patterns</h1>
+<h1 class="title">Uncertainty Quantification with Polynomial Chaos</h1>
 </div>
 
 
@@ -285,7 +282,7 @@ cookieconsent.run({
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 28, 2022</p>
+      <p class="date">September 13, 2022</p>
     </div>
   </div>
     
@@ -294,190 +291,161 @@ cookieconsent.run({
 
 </header>
 
-<section id="missing-data-patterns" class="level1">
-<h1>Missing Data Patterns</h1>
-<p>A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one’s propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.</p>
-<p><img src="images/paste-82A43477.png" class="img-fluid" width="400"></p>
-<p>The missing values in panel a have been isolated on a single variable in the univariate pattern. This pattern could appear, for example, in an experimental setting where outcome scores for a subset of participants are missing. Panel b depicts a monotone missing data pattern from a longitudinal study in which individuals who have missing data at one measurement event always have missing data at subsequent measurements. The general pattern in panel c is that missing values are scattered all through the entire data matrix. Panel d depicts a planned missing data pattern in which three variables are intentionally left blank for a large number of respondents. Panel e depicts a pattern in which a latent variable is absent across the entire sample.</p>
-<p>One final configuration needs special consideration because it may introduce estimation issues for modern missing data-handling procedures. Because the data provide insufficient support for estimation, I refer to the configuration in panel f as an underidentified missing pattern. This pattern frequently occurs when two categorical variables have unbalanced group sizes and missing data, resulting in very low or even zero cell counts in a cross-tabulation table. Prior to conducting a missing data analysis, it is critical to screen for this configuration.</p>
-</section>
-<section id="missing-data-mechanisms" class="level1">
-<h1>Missing Data Mechanisms</h1>
-<p>According to Rubin, there are three different missing data mechanisms:</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paste-B931C479.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="math inline">\(^4\)</span></figcaption><p></p>
+</figure>
+</div>
+<p>According to <span class="math inline">\(^2\)</span>, uncertainty quantification is defined as</p>
 <blockquote class="blockquote">
-<ol type="1">
-<li>Missing Completely at Random (MCAR): Values in a data set are missing completely at random (MCAR) if the events that lead to any particular data-item being missing are independent both of observable variables and of unobservable parameters of interest, and occur entirely at random. When data are MCAR, one can do listwise deletion and perfom analysis; the analysis performed on the data is unbiased; however, data are rarely MCAR.</li>
-<li>Missing at Random (MAR): Missing at random (MAR) occurs when the missingness is not random, but where missingness can be fully accounted for by variables where there is complete information. Since MAR is an assumption that is impossible to verify statistically, we must rely on its substantive reasonableness. Depending on the analysis method, these data can still induce parameter bias in analyses due to the contingent emptiness of cells. However, if the parameter is estimated with Full Information Maximum Likelihood, MAR will provide asymptotically unbiased estimates.</li>
-<li>Missing not at Random (MNAR): Missing not at random (MNAR) (also known as nonignorable nonresponse) is data that is neither MAR nor MCAR (i.e.&nbsp;the value of the variable that’s missing is related to the reason it’s missing). One can try to include as many predictors as possible in a model to get MNAR closer to MAR.</li>
-</ol>
+<p>The process of quantifying uncertainties associated with model calculations of true, physical QOIs, with the goals of accounting for all sources of uncertainty and quantifying the contributions of specific sources to the overall uncertainty.</p>
 </blockquote>
-<p>Also, one can perform multiple imputation (MI) methods in MCAR and MAR cases.</p>
+<p>and answers the question</p>
+<blockquote class="blockquote">
+<p>How do the various sources of error and uncertainty feed into uncertainty in the model-based prediction of the quantities of interest?</p>
+</blockquote>
 </section>
-<section id="how-to-test" class="level1">
-<h1>How to test?</h1>
-<section id="distinguish-between-mnar-and-mar" class="level2">
-<h2 class="anchored" data-anchor-id="distinguish-between-mnar-and-mar">Distinguish between MNAR and MAR</h2>
-<p>There is no statistical test for this, but you can:</p>
+<section id="types-of-uncertainties" class="level1">
+<h1>Types of uncertainties</h1>
 <ul>
-<li>Use domain knowledge about variables;</li>
-<li>Collect more data for explaning missingness;</li>
-<li>Do literature search</li>
+<li><p>Aleatoric (statistical) uncertainty refers to the notion of randomness, that is, the variability in the outcome of an experiment which is due to inherently random effects <span class="math inline">\(^6\)</span>.</p></li>
+<li><p>Epistemic uncertainty refers to uncertainty caused by a lack of knowledge, i.e., to the epistemic state of the agent <span class="math inline">\(^6\)</span>.</p></li>
 </ul>
-<p>for determining the missing data mechanisim.</p>
+<p>In real life applications, both kinds of uncertainties are present.</p>
 </section>
-<section id="distinguish-between-mcar-and-mar" class="level2">
-<h2 class="anchored" data-anchor-id="distinguish-between-mcar-and-mar">Distinguish between MCAR and MAR</h2>
-<p>Generally, two methods are preferred:</p>
-<ol type="1">
-<li>Little’s MCAR test: Maximum likelihood chi-square test for missing completely at random. <span class="math inline">\(H_0\)</span> is that the data is MCAR.</li>
-<li>Dummy variable approach for MCAR: One can create a dummy variable for whether a variable is missing (1 = missing, 0 = observed) and run t-tests (continuous) and chi-square (categorical) tests between this dummy and other variables to see if the missingness is related to the values of other variables.</li>
-</ol>
+<section id="types-of-problems" class="level1">
+<h1>Types of problems</h1>
+<p>There are two major types of problems in uncertainty quantification: one is the forward propagation of uncertainty (where the various sources of uncertainty are propagated through the model to predict the overall uncertainty in the system response) and the other is the inverse assessment of model uncertainty and parameter uncertainty (where the model parameters are calibrated simultaneously using test data) <span class="math inline">\(^1\)</span>.</p>
+<p>Polynomial chaos is a method for quantifiying uncertainties on forward problems. Its convergence is better than Monte Carlo methods <span class="math inline">\(^3\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paste-4B607140.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="math inline">\(^3\)</span></figcaption><p></p>
+</figure>
+</div>
 </section>
+<section id="polynomial-chaos-expansion-pce" class="level1">
+<h1>Polynomial Chaos Expansion (PCE)</h1>
+<p>Consider a problem in space <span class="math inline">\(x\)</span> and time <span class="math inline">\(t\)</span> where the aim is to quantify the uncertainty in response <span class="math inline">\(Y\)</span>, computed bu a forward model <span class="math inline">\(f\)</span>, which depends on uncertain input parameters <span class="math inline">\(Q\)</span>:</p>
+<p><span class="math display">\[
+Y = f(x,t,Q)
+\]</span></p>
+<p>We want to quantify uncertainty in <span class="math inline">\(Y\)</span>, but we know nothing about its density distribution <span class="math inline">\(p_Y\)</span>. The goal is to either build the density <span class="math inline">\(p_Y\)</span> or revelant density properties of <span class="math inline">\(Y\)</span> using the density <span class="math inline">\(p_Q\)</span> and the forward model <span class="math inline">\(f\)</span> <span class="math inline">\(^5\)</span>.</p>
+<p>A general polynomial approximation can be defined as</p>
+<p><span class="math display">\[
+\hat{f}(x,t,Q)=\sum_{n\in I_N}c_n(x,t)\Phi_n(Q),\quad I_N=\{0,\ldots N\}
+\]</span></p>
+<p>where <span class="math inline">\(\{c_n\}_{n\in I_N}\)</span> are coefficients and <span class="math inline">\(\{\Phi_n\}_{n\in I_N}\)</span> are polynomials. If <span class="math inline">\(\hat{f}\)</span> is a good approximation of <span class="math inline">\(f\)</span>, it is possible to either infer statistical properties of <span class="math inline">\(\hat{f}\)</span> analytically or through numerical computations where <span class="math inline">\(\hat{f}\)</span> is used as a surrogate for <span class="math inline">\(f\)</span> <span class="math inline">\(^5\)</span>.</p>
+<p>A polynomial chaos expansion is defined as a polynomial approximation, where the polynomials <span class="math inline">\(\{\Phi_n\}_{n\in I_N}\)</span> are orthogonal on a custom weighted function space <span class="math inline">\(L_Q\)</span>:</p>
+<p><span class="math display">\[
+\begin{align*}
+\langle \Phi_n,\Phi_m \rangle =&amp; \mathbb{E}\Phi_n(Q)\Phi_m(Q) \\
+=&amp; \int\ldots\int \Phi_n(q)\Phi_m(q)p_Q(q)dq=0,\quad n\neq m
+\end{align*}
+\]</span></p>
+<section id="logistic-growth-model-example" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-growth-model-example">Logistic Growth Model Example</h2>
+<p>Logistic growth model is defined as</p>
+<p><span class="math display">\[
+\frac{dX}{dt}=rX(1-\frac{X}{K})
+\]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the growth rate and <span class="math inline">\(K\)</span> is the population capacity (horizontal asymptote).</p>
+<p>Let’s define the model and visualize it for some parameters and the initial condition <span class="math inline">\(X_0=50\)</span>:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> numpy.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logistic_model(x, t, r, K):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r <span class="op">*</span> x <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> x <span class="op">/</span> K)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Logistic model with different params'</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>axs <span class="op">=</span> axs.ravel()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, params <span class="kw">in</span> <span class="bu">enumerate</span>([(<span class="fl">0.7</span>, <span class="dv">60</span>), (<span class="fl">1.1</span>, <span class="dv">60</span>), (<span class="fl">0.7</span>, <span class="dv">300</span>), (<span class="fl">1.1</span>, <span class="dv">300</span>)]):</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  sol <span class="op">=</span> odeint(logistic_model, x0, t, args<span class="op">=</span>params)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  axs[i].plot(t, sol[:, <span class="dv">0</span>], <span class="st">'b'</span>, label<span class="op">=</span><span class="st">'x(t)'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  axs[i].legend(loc<span class="op">=</span><span class="st">'best'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  axs[i].set_xlabel(<span class="st">'t'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  axs[i].set_ylabel(<span class="st">'x'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  axs[i].grid()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  axs[i].plot()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Analysis_files/figure-html/cell-3-output-1.png" width="597" height="470"></p>
+</div>
+</div>
+<p>Now let’s assume that we have uncertainties over our parameters and assume that</p>
+<p><span class="math display">\[
+\begin{align*}
+r &amp;\sim \text{Log-Normal}(1, 0.1)\\
+K &amp;\sim \text{Uniform}(100, 200)
+\end{align*}
+\]</span> Let’s define our joint distribution:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rdist<span class="op">=</span> chaospy.LogNormal(<span class="dv">1</span>, <span class="fl">0.1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Kdist <span class="op">=</span> chaospy.Uniform(<span class="dv">100</span>, <span class="dv">200</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>joint <span class="op">=</span> chaospy.J(rdist, Kdist)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> numpy.mgrid[joint.lower[<span class="dv">0</span>]:joint.upper[<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span>, joint.lower[<span class="dv">1</span>]:joint.upper[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>contour <span class="op">=</span> plt.contourf(grid[<span class="dv">0</span>], grid[<span class="dv">1</span>], joint.pdf(grid), <span class="dv">50</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(<span class="op">*</span>joint.sample(<span class="dv">50</span>, seed<span class="op">=</span><span class="dv">1234</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.xlim(joint.lower[<span class="dv">0</span>], joint.upper[<span class="dv">0</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.ylim(joint.lower[<span class="dv">1</span>], joint.upper[<span class="dv">1</span>])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Analysis_files/figure-html/cell-4-output-1.png" width="575" height="409"></p>
+</div>
+</div>
+<p>Generate expension, sample the joint distribution, evaluate model at these points and plot:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>expansion <span class="op">=</span> chaospy.generate_expansion(order<span class="op">=</span><span class="dv">3</span>, dist<span class="op">=</span>joint)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and sample the joint distribution</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> joint.sample(<span class="dv">1000</span>, rule<span class="op">=</span><span class="st">"sobol"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and evulate solver at these samples</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>evaluations <span class="op">=</span> numpy.array([odeint(logistic_model, x0, t, args<span class="op">=</span>(sample[<span class="dv">0</span>], sample[<span class="dv">1</span>])) <span class="cf">for</span> sample <span class="kw">in</span> samples.T])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># and plot</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.plot(t, evaluations[:,:,<span class="dv">0</span>].T, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Analysis_files/figure-html/cell-5-output-1.png" width="575" height="404"></p>
+</div>
+</div>
+<p>Create polynomial approximation:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>approx_solver <span class="op">=</span> chaospy.fit_regression(expansion, samples, evaluations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate mean and deviance and plot:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> chaospy.E(approx_solver, joint)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>deviation <span class="op">=</span> chaospy.Std(approx_solver, joint)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.fill_between(t, expected[:,<span class="dv">0</span>]<span class="op">-</span><span class="dv">2</span><span class="op">*</span>deviation[:,<span class="dv">0</span>], expected[:,<span class="dv">0</span>]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>deviation[:,<span class="dv">0</span>], alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t, expected[:,<span class="dv">0</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Analysis_files/figure-html/cell-7-output-1.png" width="575" height="404"></p>
+</div>
+</div>
+<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification</a></p>
 </section>
-<section id="examples" class="level1">
-<h1>Examples</h1>
-<p>Example dataset from Fox, Negrete-Yankelevich and Sosa (2015):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ex_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ex_data.csv"</span>, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">x_complete =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>)), <span class="at">x_mcar =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>)), <span class="at">x_mar =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>)), <span class="at">x_mnar =</span> <span class="fu">col_factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>))))</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ex_data</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["y"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["x_complete"],"name":[2],"type":["fct"],"align":["left"]},{"label":["x_mcar"],"name":[3],"type":["fct"],"align":["left"]},{"label":["x_mar"],"name":[4],"type":["fct"],"align":["left"]},{"label":["x_mnar"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"31.5","2":"1","3":"1","4":"NA","5":"1"},{"1":"33.5","2":"2","3":"NA","4":"NA","5":"2"},{"1":"34.4","2":"3","3":"3","4":"NA","5":"3"},{"1":"35.1","2":"1","3":"NA","4":"1","5":"1"},{"1":"35.4","2":"2","3":"2","4":"2","5":"2"},{"1":"36.7","2":"4","3":"4","4":"4","5":"NA"},{"1":"37.8","2":"2","3":"2","4":"2","5":"3"},{"1":"38.8","2":"4","3":"4","4":"4","5":"NA"},{"1":"40.3","2":"3","3":"3","4":"3","5":"3"},{"1":"41.5","2":"4","3":"NA","4":"4","5":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Descriptives:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(finalfit)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ff_glimpse</span>(ex_data, <span class="at">dependent =</span> <span class="st">"y"</span>, <span class="at">explanatory =</span> <span class="fu">c</span>(<span class="st">"x_complete"</span>, <span class="st">"x_mcar"</span>, <span class="st">"x_mar"</span>, <span class="st">"x_mnar"</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>Continuous</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>Categorical</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["label"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["missing_n"],"name":[4],"type":["int"],"align":["right"]},{"label":["missing_percent"],"name":[5],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[6],"type":["chr"],"align":["left"]},{"label":["sd"],"name":[7],"type":["chr"],"align":["left"]},{"label":["min"],"name":[8],"type":["chr"],"align":["left"]},{"label":["quartile_25"],"name":[9],"type":["chr"],"align":["left"]},{"label":["median"],"name":[10],"type":["chr"],"align":["left"]},{"label":["quartile_75"],"name":[11],"type":["chr"],"align":["left"]},{"label":["max"],"name":[12],"type":["chr"],"align":["left"]}],"data":[{"1":"y","2":"<dbl>","3":"10","4":"0","5":"0.0","6":"36.5","7":"3.1","8":"31.5","9":"34.6","10":"36.0","11":"38.5","12":"41.5","_rn_":"y"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div><div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["label"],"name":[1],"type":["chr"],"align":["left"]},{"label":["var_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["missing_n"],"name":[4],"type":["int"],"align":["right"]},{"label":["missing_percent"],"name":[5],"type":["chr"],"align":["left"]},{"label":["levels_n"],"name":[6],"type":["int"],"align":["right"]},{"label":["levels"],"name":[7],"type":["chr"],"align":["left"]},{"label":["levels_count"],"name":[8],"type":["chr"],"align":["left"]},{"label":["levels_percent"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"x_complete","2":"<fct>","3":"10","4":"0","5":"0.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\"","8":"2, 3, 2, 3","9":"20, 30, 20, 30","_rn_":"x_complete"},{"1":"x_mcar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"1, 2, 2, 2, 3","9":"10, 20, 20, 20, 30","_rn_":"x_mcar"},{"1":"x_mar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"1, 2, 1, 3, 3","9":"10, 20, 10, 30, 30","_rn_":"x_mar"},{"1":"x_mnar","2":"<fct>","3":"7","4":"3","5":"30.0","6":"4","7":"\"1\", \"2\", \"3\", \"4\", \"(Missing)\"","8":"2, 2, 3, 0, 3","9":"20, 20, 30,  0, 30","_rn_":"x_mnar"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Plot of missingness:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">missing_plot</span>(ex_data, <span class="at">dependent =</span> <span class="st">"y"</span>, <span class="at">explanatory =</span> <span class="fu">c</span>(<span class="st">"x_complete"</span>, <span class="st">"x_mcar"</span>, <span class="st">"x_mar"</span>, <span class="st">"x_mnar"</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Missingness patterns:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">missing_pattern</span>(ex_data, <span class="at">dependent =</span> <span class="st">"y"</span>, <span class="at">explanatory =</span> <span class="fu">c</span>(<span class="st">"x_complete"</span>, <span class="st">"x_mcar"</span>, <span class="st">"x_mar"</span>, <span class="st">"x_mnar"</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  y x_complete x_mcar x_mar x_mnar  
-3 1          1      1     1      1 0
-2 1          1      1     1      0 1
-2 1          1      1     0      1 1
-1 1          1      0     1      1 1
-1 1          1      0     1      0 2
-1 1          1      0     0      1 2
-  0          0      3     3      3 9</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>There are six missingness pattern on the data.</p>
-<p>Compare:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">missing_pairs</span>(ex_data, <span class="at">dependent =</span> <span class="st">"y"</span>, <span class="at">explanatory =</span> <span class="fu">c</span>(<span class="st">"x_complete"</span>, <span class="st">"x_mcar"</span>, <span class="st">"x_mar"</span>, <span class="st">"x_mnar"</span>), <span class="at">position =</span> <span class="st">"fill"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>And lastly, we perform Little’s MCAR tests:</p>
-<ul>
-<li><p>MCAR case:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcar_test</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> ex_data<span class="sc">$</span>x_mcar, <span class="at">y =</span> ex_data<span class="sc">$</span>y))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"0.01947167","2":"1","3":"0.8890227","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Fail to reject null hypothesis, data is MCAR.</p></li>
-<li><p>MAR case:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcar_test</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> ex_data<span class="sc">$</span>x_mar, <span class="at">y =</span> ex_data<span class="sc">$</span>y))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"5.517514","2":"1","3":"0.018827","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Reject null, data is not MCAR.</p></li>
-<li><p>MNAR case:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mcar_test</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> ex_data<span class="sc">$</span>x_mnar, <span class="at">y =</span> ex_data<span class="sc">$</span>y))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["statistic"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["missing.patterns"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"3.042448","2":"1","3":"0.0811135","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Fail to reject null, data is MCAR (which is wrong).</p></li>
-</ul>
-<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingData</a></p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<p><span class="math inline">\(^1\)</span> Enders, C. (2010). <em>Applied Missing Data Analysis</em>.</p>
-<p><span class="math inline">\(^2\)</span> RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). <a href="https://doi.org/10.1093/biomet/63.3.581" class="uri">https://doi.org/10.1093/biomet/63.3.581</a></p>
-<p><span class="math inline">\(^3\)</span> Missing data - Wikipedia. (2016, May 13). <a href="https://en.wikipedia.org/wiki/Missing_data" class="uri">https://en.wikipedia.org/wiki/Missing_data</a></p>
-<p><span class="math inline">\(^4\)</span> Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. <a href="https://doi.org/10.1080/01621459.1988.10478722" class="uri">https://doi.org/10.1080/01621459.1988.10478722</a></p>
-<p><span class="math inline">\(^5\)</span> Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from <a href="https://osf.io/updyq/?action=download&amp;version=1" class="uri">https://osf.io/updyq/?action=download&amp;version=1</a></p>
-<p><span class="math inline">\(^6\)</span> Fox, G., Negrete-Yankelevich, S., &amp; Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.</p>
+<p><span class="math inline">\(^1\)</span> Contributors to Wikimedia projects. (2022, July 27). Uncertainty quantification - Wikipedia. Retrieved from <a href="https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551" class="uri">https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551</a></p>
+<p><span class="math inline">\(^2\)</span> Council, N. R., Engineering and Physical Sciences, D. O., Mathematical Sciences and Their Applications, B. O., &amp; Mathematical Foundations of Verification, Validation, and Uncertainty Quantification, C. O. (2012). Assessing the Reliability of Complex Models. In Mathematical and Statistical Foundations of Verification, Validation, and Uncertainty Quantification.</p>
+<p><span class="math inline">\(^3\)</span> <a href="https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf" class="uri">https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf</a></p>
+<p><span class="math inline">\(^4\)</span> <a href="https://www.intechopen.com/media/chapter/54982/media/F1.png" class="uri">https://www.intechopen.com/media/chapter/54982/media/F1.png</a></p>
+<p><span class="math inline">\(^5\)</span> Feinberg, J., &amp; Langtangen, H. P. (2015). Chaospy: An open source tool for designing methods of uncertainty quantification. Journal of Computational Science, 11, 46–57. <a href="https://doi.org/10.1016/j.jocs.2015.08.008" class="uri">https://doi.org/10.1016/j.jocs.2015.08.008</a></p>
+<p><span class="math inline">\(^6\)</span> <a href="https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf" class="uri">https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf</a></p>
 
 
 

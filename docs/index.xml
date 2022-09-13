@@ -10,7 +10,171 @@
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
 <description>Murat Koptur - Data Scientist - Data Science Blog & Projects</description>
 <generator>quarto-1.2.90</generator>
-<lastBuildDate>Fri, 09 Sep 2022 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 12 Sep 2022 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Uncertainty Quantification with Polynomial Chaos</title>
+  <dc:creator>Murat Koptur</dc:creator>
+  <link>https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/images/paste-B931C479.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <img src="https://latex.codecogs.com/png.latex?%5E4"></figcaption><p></p>
+</figure>
+</div>
+<p>According to <img src="https://latex.codecogs.com/png.latex?%5E2">, uncertainty quantification is defined as</p>
+<blockquote class="blockquote">
+<p>The process of quantifying uncertainties associated with model calculations of true, physical QOIs, with the goals of accounting for all sources of uncertainty and quantifying the contributions of specific sources to the overall uncertainty.</p>
+</blockquote>
+<p>and answers the question</p>
+<blockquote class="blockquote">
+<p>How do the various sources of error and uncertainty feed into uncertainty in the model-based prediction of the quantities of interest?</p>
+</blockquote>
+</section>
+<section id="types-of-uncertainties" class="level1">
+<h1>Types of uncertainties</h1>
+<ul>
+<li><p>Aleatoric (statistical) uncertainty refers to the notion of randomness, that is, the variability in the outcome of an experiment which is due to inherently random effects <img src="https://latex.codecogs.com/png.latex?%5E6">.</p></li>
+<li><p>Epistemic uncertainty refers to uncertainty caused by a lack of knowledge, i.e., to the epistemic state of the agent <img src="https://latex.codecogs.com/png.latex?%5E6">.</p></li>
+</ul>
+<p>In real life applications, both kinds of uncertainties are present.</p>
+</section>
+<section id="types-of-problems" class="level1">
+<h1>Types of problems</h1>
+<p>There are two major types of problems in uncertainty quantification: one is the forward propagation of uncertainty (where the various sources of uncertainty are propagated through the model to predict the overall uncertainty in the system response) and the other is the inverse assessment of model uncertainty and parameter uncertainty (where the model parameters are calibrated simultaneously using test data) <img src="https://latex.codecogs.com/png.latex?%5E1">.</p>
+<p>Polynomial chaos is a method for quantifiying uncertainties on forward problems. Its convergence is better than Monte Carlo methods <img src="https://latex.codecogs.com/png.latex?%5E3">.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/images/paste-4B607140.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <img src="https://latex.codecogs.com/png.latex?%5E3"></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="polynomial-chaos-expansion-pce" class="level1">
+<h1>Polynomial Chaos Expansion (PCE)</h1>
+<p>Consider a problem in space <img src="https://latex.codecogs.com/png.latex?x"> and time <img src="https://latex.codecogs.com/png.latex?t"> where the aim is to quantify the uncertainty in response <img src="https://latex.codecogs.com/png.latex?Y">, computed bu a forward model <img src="https://latex.codecogs.com/png.latex?f">, which depends on uncertain input parameters <img src="https://latex.codecogs.com/png.latex?Q">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AY%20=%20f(x,t,Q)%0A"></p>
+<p>We want to quantify uncertainty in <img src="https://latex.codecogs.com/png.latex?Y">, but we know nothing about its density distribution <img src="https://latex.codecogs.com/png.latex?p_Y">. The goal is to either build the density <img src="https://latex.codecogs.com/png.latex?p_Y"> or revelant density properties of <img src="https://latex.codecogs.com/png.latex?Y"> using the density <img src="https://latex.codecogs.com/png.latex?p_Q"> and the forward model <img src="https://latex.codecogs.com/png.latex?f"> <img src="https://latex.codecogs.com/png.latex?%5E5">.</p>
+<p>A general polynomial approximation can be defined as</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%7Bf%7D(x,t,Q)=%5Csum_%7Bn%5Cin%20I_N%7Dc_n(x,t)%5CPhi_n(Q),%5Cquad%20I_N=%5C%7B0,%5Cldots%20N%5C%7D%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5C%7Bc_n%5C%7D_%7Bn%5Cin%20I_N%7D"> are coefficients and <img src="https://latex.codecogs.com/png.latex?%5C%7B%5CPhi_n%5C%7D_%7Bn%5Cin%20I_N%7D"> are polynomials. If <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bf%7D"> is a good approximation of <img src="https://latex.codecogs.com/png.latex?f">, it is possible to either infer statistical properties of <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bf%7D"> analytically or through numerical computations where <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bf%7D"> is used as a surrogate for <img src="https://latex.codecogs.com/png.latex?f"> <img src="https://latex.codecogs.com/png.latex?%5E5">.</p>
+<p>A polynomial chaos expansion is defined as a polynomial approximation, where the polynomials <img src="https://latex.codecogs.com/png.latex?%5C%7B%5CPhi_n%5C%7D_%7Bn%5Cin%20I_N%7D"> are orthogonal on a custom weighted function space <img src="https://latex.codecogs.com/png.latex?L_Q">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0A%5Clangle%20%5CPhi_n,%5CPhi_m%20%5Crangle%20=&amp;%20%5Cmathbb%7BE%7D%5CPhi_n(Q)%5CPhi_m(Q)%20%5C%5C%0A=&amp;%20%5Cint%5Cldots%5Cint%20%5CPhi_n(q)%5CPhi_m(q)p_Q(q)dq=0,%5Cquad%20n%5Cneq%20m%0A%5Cend%7Balign*%7D%0A"></p>
+<section id="logistic-growth-model-example" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-growth-model-example">Logistic Growth Model Example</h2>
+<p>Logistic growth model is defined as</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7BdX%7D%7Bdt%7D=rX(1-%5Cfrac%7BX%7D%7BK%7D)%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?r"> is the growth rate and <img src="https://latex.codecogs.com/png.latex?K"> is the population capacity (horizontal asymptote).</p>
+<p>Let’s define the model and visualize it for some parameters and the initial condition <img src="https://latex.codecogs.com/png.latex?X_0=50">:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">t <span class="op" style="color: #5E5E5E;">=</span> numpy.linspace(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">10</span>, <span class="dv" style="color: #AD0000;">100</span>)</span>
+<span id="cb1-2">x0 <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">50</span></span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="kw" style="color: #003B4F;">def</span> logistic_model(x, t, r, K):</span>
+<span id="cb1-5">    <span class="cf" style="color: #003B4F;">return</span> r <span class="op" style="color: #5E5E5E;">*</span> x <span class="op" style="color: #5E5E5E;">*</span> (<span class="dv" style="color: #AD0000;">1</span> <span class="op" style="color: #5E5E5E;">-</span> x <span class="op" style="color: #5E5E5E;">/</span> K)</span>
+<span id="cb1-6">  </span>
+<span id="cb1-7">fig, axs <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb1-8">fig.suptitle(<span class="st" style="color: #20794D;">'Logistic model with different params'</span>)</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">axs <span class="op" style="color: #5E5E5E;">=</span> axs.ravel()</span>
+<span id="cb1-11"></span>
+<span id="cb1-12"><span class="cf" style="color: #003B4F;">for</span> i, params <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">enumerate</span>([(<span class="fl" style="color: #AD0000;">0.7</span>, <span class="dv" style="color: #AD0000;">60</span>), (<span class="fl" style="color: #AD0000;">1.1</span>, <span class="dv" style="color: #AD0000;">60</span>), (<span class="fl" style="color: #AD0000;">0.7</span>, <span class="dv" style="color: #AD0000;">300</span>), (<span class="fl" style="color: #AD0000;">1.1</span>, <span class="dv" style="color: #AD0000;">300</span>)]):</span>
+<span id="cb1-13">  sol <span class="op" style="color: #5E5E5E;">=</span> odeint(logistic_model, x0, t, args<span class="op" style="color: #5E5E5E;">=</span>params)</span>
+<span id="cb1-14">  axs[i].plot(t, sol[:, <span class="dv" style="color: #AD0000;">0</span>], <span class="st" style="color: #20794D;">'b'</span>, label<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'x(t)'</span>)</span>
+<span id="cb1-15">  axs[i].legend(loc<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'best'</span>)</span>
+<span id="cb1-16">  axs[i].set_xlabel(<span class="st" style="color: #20794D;">'t'</span>)</span>
+<span id="cb1-17">  axs[i].set_ylabel(<span class="st" style="color: #20794D;">'x'</span>)</span>
+<span id="cb1-18">  axs[i].grid()</span>
+<span id="cb1-19">  axs[i].plot()</span>
+<span id="cb1-20">    </span>
+<span id="cb1-21">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis_files/figure-html/cell-3-output-1.png" width="597" height="470"></p>
+</div>
+</div>
+<p>Now let’s assume that we have uncertainties over our parameters and assume that</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0Ar%20&amp;%5Csim%20%5Ctext%7BLog-Normal%7D(1,%200.1)%5C%5C%0AK%20&amp;%5Csim%20%5Ctext%7BUniform%7D(100,%20200)%0A%5Cend%7Balign*%7D%0A"> Let’s define our joint distribution:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">rdist<span class="op" style="color: #5E5E5E;">=</span> chaospy.LogNormal(<span class="dv" style="color: #AD0000;">1</span>, <span class="fl" style="color: #AD0000;">0.1</span>)</span>
+<span id="cb2-2">Kdist <span class="op" style="color: #5E5E5E;">=</span> chaospy.Uniform(<span class="dv" style="color: #AD0000;">100</span>, <span class="dv" style="color: #AD0000;">200</span>)</span>
+<span id="cb2-3">joint <span class="op" style="color: #5E5E5E;">=</span> chaospy.J(rdist, Kdist)</span>
+<span id="cb2-4"></span>
+<span id="cb2-5">grid <span class="op" style="color: #5E5E5E;">=</span> numpy.mgrid[joint.lower[<span class="dv" style="color: #AD0000;">0</span>]:joint.upper[<span class="dv" style="color: #AD0000;">0</span>]<span class="op" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">1</span>, joint.lower[<span class="dv" style="color: #AD0000;">1</span>]:joint.upper[<span class="dv" style="color: #AD0000;">1</span>]<span class="op" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb2-6">contour <span class="op" style="color: #5E5E5E;">=</span> plt.contourf(grid[<span class="dv" style="color: #AD0000;">0</span>], grid[<span class="dv" style="color: #AD0000;">1</span>], joint.pdf(grid), <span class="dv" style="color: #AD0000;">50</span>)</span>
+<span id="cb2-7">plt.scatter(<span class="op" style="color: #5E5E5E;">*</span>joint.sample(<span class="dv" style="color: #AD0000;">50</span>, seed<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1234</span>))</span>
+<span id="cb2-8">plt.xlim(joint.lower[<span class="dv" style="color: #AD0000;">0</span>], joint.upper[<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb2-9">plt.ylim(joint.lower[<span class="dv" style="color: #AD0000;">1</span>], joint.upper[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb2-10">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis_files/figure-html/cell-4-output-1.png" width="575" height="409"></p>
+</div>
+</div>
+<p>Generate expension, sample the joint distribution, evaluate model at these points and plot:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">expansion <span class="op" style="color: #5E5E5E;">=</span> chaospy.generate_expansion(order<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">3</span>, dist<span class="op" style="color: #5E5E5E;">=</span>joint)</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;"># and sample the joint distribution</span></span>
+<span id="cb3-4">samples <span class="op" style="color: #5E5E5E;">=</span> joint.sample(<span class="dv" style="color: #AD0000;">1000</span>, rule<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"sobol"</span>)</span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="co" style="color: #5E5E5E;"># and evulate solver at these samples</span></span>
+<span id="cb3-7">evaluations <span class="op" style="color: #5E5E5E;">=</span> numpy.array([odeint(logistic_model, x0, t, args<span class="op" style="color: #5E5E5E;">=</span>(sample[<span class="dv" style="color: #AD0000;">0</span>], sample[<span class="dv" style="color: #AD0000;">1</span>])) <span class="cf" style="color: #003B4F;">for</span> sample <span class="kw" style="color: #003B4F;">in</span> samples.T])</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;"># and plot</span></span>
+<span id="cb3-10">plt.plot(t, evaluations[:,:,<span class="dv" style="color: #AD0000;">0</span>].T, alpha<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.1</span>)</span>
+<span id="cb3-11">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis_files/figure-html/cell-5-output-1.png" width="575" height="404"></p>
+</div>
+</div>
+<p>Create polynomial approximation:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">approx_solver <span class="op" style="color: #5E5E5E;">=</span> chaospy.fit_regression(expansion, samples, evaluations)</span></code></pre></div>
+</div>
+<p>Calculate mean and deviance and plot:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">expected <span class="op" style="color: #5E5E5E;">=</span> chaospy.E(approx_solver, joint)</span>
+<span id="cb5-2">deviation <span class="op" style="color: #5E5E5E;">=</span> chaospy.Std(approx_solver, joint)</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">plt.fill_between(t, expected[:,<span class="dv" style="color: #AD0000;">0</span>]<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span>deviation[:,<span class="dv" style="color: #AD0000;">0</span>], expected[:,<span class="dv" style="color: #AD0000;">0</span>]<span class="op" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span>deviation[:,<span class="dv" style="color: #AD0000;">0</span>], alpha<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.4</span>)</span>
+<span id="cb5-5">plt.plot(t, expected[:,<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb5-6">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis_files/figure-html/cell-7-output-1.png" width="575" height="404"></p>
+</div>
+</div>
+<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification</a></p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><img src="https://latex.codecogs.com/png.latex?%5E1"> Contributors to Wikimedia projects. (2022, July 27). Uncertainty quantification - Wikipedia. Retrieved from <a href="https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551" class="uri">https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E2"> Council, N. R., Engineering and Physical Sciences, D. O., Mathematical Sciences and Their Applications, B. O., &amp; Mathematical Foundations of Verification, Validation, and Uncertainty Quantification, C. O. (2012). Assessing the Reliability of Complex Models. In Mathematical and Statistical Foundations of Verification, Validation, and Uncertainty Quantification.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E3"> <a href="https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf" class="uri">https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E4"> <a href="https://www.intechopen.com/media/chapter/54982/media/F1.png" class="uri">https://www.intechopen.com/media/chapter/54982/media/F1.png</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E5"> Feinberg, J., &amp; Langtangen, H. P. (2015). Chaospy: An open source tool for designing methods of uncertainty quantification. Journal of Computational Science, 11, 46–57. <a href="https://doi.org/10.1016/j.jocs.2015.08.008" class="uri">https://doi.org/10.1016/j.jocs.2015.08.008</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E6"> <a href="https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf" class="uri">https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf</a></p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div> ]]></description>
+  <guid>https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html</guid>
+  <pubDate>Mon, 12 Sep 2022 21:00:00 GMT</pubDate>
+  <media:content url="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/images/paste-B931C479.png" medium="image" type="image/png" height="58" width="144"/>
+</item>
 <item>
   <title>Unsupervised Anomaly Detection with One-Class SVM</title>
   <dc:creator>Murat Koptur</dc:creator>
@@ -1914,10 +2078,10 @@ No matching items
 <section id="references" class="level1">
 <h1>References</h1>
 <p><img src="https://latex.codecogs.com/png.latex?%5E1"> Enders, C. (2010). <em>Applied Missing Data Analysis</em>.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5E2"> RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5E3"> Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5E4"> Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5E5"> Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&amp;version=1</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E2"> RUBIN, D. B. (1976). <em>Inference and missing data</em> (Vol. 63, Issue 3, pp.&nbsp;581–592). Oxford University Press (OUP). <a href="https://doi.org/10.1093/biomet/63.3.581" class="uri">https://doi.org/10.1093/biomet/63.3.581</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E3"> Missing data - Wikipedia. (2016, May 13). <a href="https://en.wikipedia.org/wiki/Missing_data" class="uri">https://en.wikipedia.org/wiki/Missing_data</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E4"> Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp.&nbsp;1198–1202). Informa UK Limited. <a href="https://doi.org/10.1080/01621459.1988.10478722" class="uri">https://doi.org/10.1080/01621459.1988.10478722</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E5"> Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from <a href="https://osf.io/updyq/?action=download&amp;version=1" class="uri">https://osf.io/updyq/?action=download&amp;version=1</a></p>
 <p><img src="https://latex.codecogs.com/png.latex?%5E6"> Fox, G., Negrete-Yankelevich, S., &amp; Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.</p>
 
 

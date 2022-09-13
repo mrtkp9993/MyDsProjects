@@ -142,12 +142,12 @@ Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/MissingDa
 
 $^1$   Enders, C. (2010). *Applied Missing Data Analysis*.
 
-$^2$   RUBIN, D. B. (1976). *Inference and missing data* (Vol. 63, Issue 3, pp. 581--592). Oxford University Press (OUP). https://doi.org/10.1093/biomet/63.3.581
+$^2$   RUBIN, D. B. (1976). *Inference and missing data* (Vol. 63, Issue 3, pp. 581--592). Oxford University Press (OUP). <https://doi.org/10.1093/biomet/63.3.581>
 
-$^3$   Missing data - Wikipedia. (2016, May 13). https://en.wikipedia.org/wiki/Missing_data
+$^3$   Missing data - Wikipedia. (2016, May 13). <https://en.wikipedia.org/wiki/Missing_data>
 
-$^4$   Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp. 1198--1202). Informa UK Limited. https://doi.org/10.1080/01621459.1988.10478722
+$^4$   Little, R. J. A. (1988). A Test of Missing Completely at Random for Multivariate Data with Missing Values (Vol. 83, Issue 404, pp. 1198--1202). Informa UK Limited. <https://doi.org/10.1080/01621459.1988.10478722>
 
-$^5$   Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from https://osf.io/updyq/?action=download&version=1
+$^5$   Janz, N. (n.d.). Advanced Handling of Missing Data. Retrieved August 28, 2022, from <https://osf.io/updyq/?action=download&version=1>
 
 $^6$   Fox, G., Negrete-Yankelevich, S., & Sosa, V. (2015). Ecological Statistics: Contemporary Theory and Application.

@@ -14,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/UncertaintyQuantification/Analysis.html",
       "/AnomalyOcsvm/Analysis.html",
       "/SysIdent/Analysis.html",
       "/ConceptDrift/Analysis.html",
@@ -37,6 +38,10 @@
   },
   {
     "listing": "/TimeSeriesPredictability/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/UncertaintyQuantification/Analysis.html",
     "items": []
   }
 ]

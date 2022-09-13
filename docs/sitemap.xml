@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/about.html</loc>
-    <lastmod>2022-09-12T11:20:16.799Z</lastmod>
+    <lastmod>2022-09-13T16:00:46.180Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/AnomalyOcsvm/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:20.174Z</lastmod>
+    <lastmod>2022-09-13T16:00:49.481Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/ConceptDrift/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:22.711Z</lastmod>
+    <lastmod>2022-09-13T16:00:52.078Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/EarthQuakeProbability/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:24.321Z</lastmod>
+    <lastmod>2022-09-13T16:00:53.877Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/index.html</loc>
-    <lastmod>2022-09-12T11:20:26.107Z</lastmod>
+    <lastmod>2022-09-13T16:00:56.479Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/MissingData/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:27.668Z</lastmod>
+    <lastmod>2022-09-13T16:00:58.265Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/StockClustering/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:29.230Z</lastmod>
+    <lastmod>2022-09-13T16:00:59.997Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/SysIdent/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:31.593Z</lastmod>
+    <lastmod>2022-09-13T16:01:02.230Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/TimeSeriesPredictability/Analysis.html</loc>
-    <lastmod>2022-09-12T11:20:33.118Z</lastmod>
+    <lastmod>2022-09-13T16:01:03.788Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html</loc>
+    <lastmod>2022-09-13T16:01:05.530Z</lastmod>
   </url>
 </urlset>
