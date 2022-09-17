@@ -10,7 +10,259 @@
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
 <description>Murat Koptur - Data Scientist - Data Science Blog & Projects</description>
 <generator>quarto-1.2.90</generator>
-<lastBuildDate>Mon, 12 Sep 2022 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 16 Sep 2022 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Time Series Classification with Random Forests</title>
+  <dc:creator>Murat Koptur</dc:creator>
+  <link>https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>First, let’s look the methodology behind the idea.</p>
+<p>Suppose that <img src="https://latex.codecogs.com/png.latex?N"> training time series examples <img src="https://latex.codecogs.com/png.latex?%5C%7Be_1,e_2,%5Cldots,e_N%5C%7D"> and the corresponding class labels <img src="https://latex.codecogs.com/png.latex?%5C%7By_1,%5Cldots,y_N%5C%7D,%5Cquad%20y_i%5Cin%5C%7B1,2,%5Cldots,C%5C%7D"> where <img src="https://latex.codecogs.com/png.latex?C"> is the class count, are given. The task is to predict the class labels for test examples. Here, for simplicity, we assume the values of time series are measured at equally-spaced intervals and training and test time series examples are of the same length <img src="https://latex.codecogs.com/png.latex?M"> <img src="https://latex.codecogs.com/png.latex?%5E1">.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/images/paste-B898F7B3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://www.sciencedirect.com/science/article/pii/B9780128119686000097" class="uri">https://www.sciencedirect.com/science/article/pii/B9780128119686000097</a></figcaption><p></p>
+</figure>
+</div>
+<p>Time series classification methods can be divided into two categories: Instance-based and feature-based. Instance-based methods like nearest-neighbor classifiers with Euclidean distance (NNEuclidean) or dynamic time warping (NNDTW) try to classify test examples based on its similarity to the training examples <img src="https://latex.codecogs.com/png.latex?%5E1">.</p>
+<p>Feature-based methods build models on temporal features like <img src="https://latex.codecogs.com/png.latex?%5E3">:</p>
+<ul>
+<li>Singular Value Decomposition (SVD),</li>
+<li>Discrete Fourier Transform (DFT),</li>
+<li>Coefficients of the decomposition into Chebysev Polynominals,</li>
+<li>Discrete Wavelet Transform (DWT),</li>
+<li>Piecewise Linear Approximation,</li>
+<li>ARMA coefficients,</li>
+<li>Symbolic representations like Symbolic Aggregate approXimation (SAX).</li>
+</ul>
+</section>
+<section id="interval-features" class="level1">
+<h1>Interval Features</h1>
+<p>Interval features are computed from a time series interval, e.g, “the interval between time 5 and 15”. Let <img src="https://latex.codecogs.com/png.latex?K"> be the number of feature types and <img src="https://latex.codecogs.com/png.latex?f_K(%5Ccdot),%5Cquad%20k=1,2,%5Cldots,K"> be the <img src="https://latex.codecogs.com/png.latex?k%5E%7Bth%7D"> type. Here the authors of the paper <img src="https://latex.codecogs.com/png.latex?%5E1"> considers three types: <img src="https://latex.codecogs.com/png.latex?f_1%20=%20%5Ctext%7Bmean%7D">, <img src="https://latex.codecogs.com/png.latex?f_2%20=%20%5Ctext%7Bstandard%20deviation%7D">, and <img src="https://latex.codecogs.com/png.latex?f_3=%5Ctext%7Bslope%7D">.</p>
+<p>We dont’t go details of the algorithm here, we’ll focus on examples.</p>
+</section>
+<section id="examples" class="level1">
+<h1>Examples</h1>
+<p>Datasets were downloaded from <img src="https://latex.codecogs.com/png.latex?%5E4">.</p>
+<section id="atrial-fibrillation" class="level2">
+<h2 class="anchored" data-anchor-id="atrial-fibrillation">Atrial Fibrillation</h2>
+<blockquote class="blockquote">
+<p>This is a physionet dataset of two-channel ECG recordings has been created from data used in the Computers in Cardiology Challenge 2004, an open competition with the goal of developing automated methods for predicting spontaneous termination of atrial fibrillation (AF). The raw instances were 5 second segments of atrial fibrillation, containing two ECG signals, each sampled at 128 samples per second. The Multivate data organises these channels such that each is one dimension. The class labels are: n, s and t. class n is described as a non termination artiral fibrilation(that is, it did not terminate for at least one hour after the original recording of the data). class s is described as an atrial fibrilation that self terminates at least one minuet after the recording process. class t is descirbed as terminating immediatly, that is within one second of the recording ending. PhysioNet Reference: Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng CK, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; (Link Here) 2000 (June 13). PMID: 10851218; doi: 10.1161/01.CIR.101.23.e215 Publication: Moody GB. Spontaneous Termination of Atrial Fibrillation: A Challenge from PhysioNet and Computers in Cardiology 2004. Computers in Cardiology 31:101-104 (2004) <img src="https://latex.codecogs.com/png.latex?%5E5">.</p>
+</blockquote>
+<p>Let’s read dataset:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">X_tr, y_tr <span class="op" style="color: #5E5E5E;">=</span> load_from_tsfile_to_dataframe(<span class="st" style="color: #20794D;">"data/AtrialFibrillation_TRAIN.ts"</span>)</span>
+<span id="cb1-2">X_ts, y_ts <span class="op" style="color: #5E5E5E;">=</span> load_from_tsfile_to_dataframe(<span class="st" style="color: #20794D;">"data/AtrialFibrillation_TEST.ts"</span>)</span></code></pre></div>
+</div>
+<p>Take a look:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">Markdown(tabulate(</span>
+<span id="cb2-2">  X_tr.head(<span class="dv" style="color: #AD0000;">1</span>), </span>
+<span id="cb2-3">  headers<span class="op" style="color: #5E5E5E;">=</span>X_tr.columns</span>
+<span id="cb2-4">))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: left;">dim_0</th>
+<th style="text-align: left;">dim_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td style="text-align: left;">0 -0.34086</td>
+<td style="text-align: left;">0 0.14820</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">1 -0.38038</td>
+<td style="text-align: left;">1 0.13338</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: left;">2 -0.34580</td>
+<td style="text-align: left;">2 0.10868</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">3 -0.36556</td>
+<td style="text-align: left;">3 0.09386</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: left;">4 -0.34580</td>
+<td style="text-align: left;">4 0.07410</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: left;">635 -0.04446</td>
+<td style="text-align: left;">635 -0.03458</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">636 -0.04940</td>
+<td style="text-align: left;">636 -0.05928</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: left;">637 -0.02964</td>
+<td style="text-align: left;">637 -0.06916</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">638 -0.01976</td>
+<td style="text-align: left;">638 -0.06916</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td style="text-align: left;">639 0.00000</td>
+<td style="text-align: left;">639 -0.07410</td>
+</tr>
+<tr class="even">
+<td></td>
+<td style="text-align: left;">Length: 640, dtype: float64</td>
+<td style="text-align: left;">Length: 640, dtype: float64</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">Markdown(tabulate(</span>
+<span id="cb3-2">  y_tr, </span>
+<span id="cb3-3">  headers<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Labels"</span></span>
+<span id="cb3-4">))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p>L</p>
+<hr>
+<p>n n n n n s s s s s t t t t t</p>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">fig, axes <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(nrows<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">2</span>, ncols<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">X_tr.iloc[<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">0</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb4-4">X_tr.iloc[<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">1</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb4-5"></span>
+<span id="cb4-6">fig.tight_layout()</span>
+<span id="cb4-7">fig.subplots_adjust(top<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.88</span>)</span>
+<span id="cb4-8">fig.suptitle(<span class="st" style="color: #20794D;">"non termination artiral fibrilation"</span>)</span>
+<span id="cb4-9">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis_files/figure-html/cell-6-output-1.png" width="662" height="474"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">fig, axes <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(nrows<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">2</span>, ncols<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">X_tr.iloc[<span class="dv" style="color: #AD0000;">6</span>,<span class="dv" style="color: #AD0000;">0</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb5-4">X_tr.iloc[<span class="dv" style="color: #AD0000;">6</span>,<span class="dv" style="color: #AD0000;">1</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb5-5"></span>
+<span id="cb5-6">fig.tight_layout()</span>
+<span id="cb5-7">fig.subplots_adjust(top<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.88</span>)</span>
+<span id="cb5-8">fig.suptitle(<span class="st" style="color: #20794D;">"an atrial fibrilation that self terminates"</span>)</span>
+<span id="cb5-9">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis_files/figure-html/cell-7-output-1.png" width="662" height="474"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">fig, axes <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(nrows<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">2</span>, ncols<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb6-2"></span>
+<span id="cb6-3">X_tr.iloc[<span class="dv" style="color: #AD0000;">12</span>,<span class="dv" style="color: #AD0000;">0</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">0</span>])</span>
+<span id="cb6-4">X_tr.iloc[<span class="dv" style="color: #AD0000;">12</span>,<span class="dv" style="color: #AD0000;">1</span>].plot(ax<span class="op" style="color: #5E5E5E;">=</span>axes[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb6-5"></span>
+<span id="cb6-6">fig.tight_layout()</span>
+<span id="cb6-7">fig.subplots_adjust(top<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.88</span>)</span>
+<span id="cb6-8">fig.suptitle(<span class="st" style="color: #20794D;">"terminating immediatly"</span>)</span>
+<span id="cb6-9">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis_files/figure-html/cell-8-output-1.png" width="662" height="474"></p>
+</div>
+</div>
+<p>Our data is multivariate. We’ll use <code>ColumnConcatenator</code> which concatenates each dimension and converts multivariate time series to univariate time series.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">cc <span class="op" style="color: #5E5E5E;">=</span> ColumnConcatenator()</span>
+<span id="cb7-2">X_tr <span class="op" style="color: #5E5E5E;">=</span> cc.fit_transform(X_tr)</span>
+<span id="cb7-3">X_ts <span class="op" style="color: #5E5E5E;">=</span> cc.fit_transform(X_ts)</span></code></pre></div>
+</div>
+<p>Let’s train classifier:</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">clf <span class="op" style="color: #5E5E5E;">=</span> TimeSeriesForestClassifier(min_interval<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">200</span>, n_estimators<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">10000</span>, n_jobs<span class="op" style="color: #5E5E5E;">=-</span><span class="dv" style="color: #AD0000;">1</span>, random_state<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">1234</span>)</span>
+<span id="cb8-2">clf.fit(X_tr, y_tr)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>TimeSeriesForestClassifier(min_interval=200, n_estimators=10000, n_jobs=-1,
+                           random_state=1234)</code></pre>
+</div>
+</div>
+<p>Predict test data and check accuracy:</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">y_pr <span class="op" style="color: #5E5E5E;">=</span> clf.predict(X_ts)</span>
+<span id="cb10-2"><span class="bu" style="color: null;">print</span>(classification_report(y_ts, y_pr))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              precision    recall  f1-score   support
+
+           n       1.00      0.40      0.57         5
+           s       0.50      0.60      0.55         5
+           t       0.29      0.40      0.33         5
+
+    accuracy                           0.47        15
+   macro avg       0.60      0.47      0.48        15
+weighted avg       0.60      0.47      0.48        15
+</code></pre>
+</div>
+</div>
+<p>Visualize confusion matrix:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">cm <span class="op" style="color: #5E5E5E;">=</span> confusion_matrix(y_ts, y_pr, labels<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'n'</span>, <span class="st" style="color: #20794D;">'s'</span>, <span class="st" style="color: #20794D;">'t'</span>])</span>
+<span id="cb12-2">ax <span class="op" style="color: #5E5E5E;">=</span> sn.heatmap(pd.DataFrame(cm), annot<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, square<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, cbar<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>, fmt<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'g'</span>)</span>
+<span id="cb12-3">plt.xlabel(<span class="st" style="color: #20794D;">"Predicted"</span>) </span>
+<span id="cb12-4">plt.ylabel(<span class="st" style="color: #20794D;">"Actual"</span>) </span>
+<span id="cb12-5">ax.invert_yaxis()</span>
+<span id="cb12-6">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis_files/figure-html/cell-12-output-1.png" width="422" height="422"></p>
+</div>
+</div>
+<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/TimeSeriesClassification" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/TimeSeriesClassification</a></p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><img src="https://latex.codecogs.com/png.latex?%5E1"> Deng, H., Runger, G., Tuv, E., &amp; Vladimir, M. (2013). A Time Series Forest for Classification and Feature Extraction. arXiv. <a href="https://doi.org/10.48550/arXiv.1302.2277" class="uri">https://doi.org/10.48550/arXiv.1302.2277</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E2"> Johann Faouzi and Hicham Janati. pyts: A python package for time series classification. Journal of Machine Learning Research, 21(46):1−6, 2020.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E3"> Eruhimov, V., Martyanov, V., Tuv, E. (2007). Constructing High Dimensional Feature Space for Time Series Classification. In: Kok, J.N., Koronacki, J., Lopez de Mantaras, R., Matwin, S., Mladenič, D., Skowron, A. (eds) Knowledge Discovery in Databases: PKDD 2007. PKDD 2007. Lecture Notes in Computer Science(), vol 4702. Springer, Berlin, Heidelberg. <a href="https://doi.org/10.1007/978-3-540-74976-9_41" class="uri">https://doi.org/10.1007/978-3-540-74976-9_41</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E4"> <a href="https://www.timeseriesclassification.com/" class="uri">https://www.timeseriesclassification.com/</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E5"> <a href="https://www.timeseriesclassification.com/description.php?Dataset=AtrialFibrillation" class="uri">https://www.timeseriesclassification.com/description.php?Dataset=AtrialFibrillation</a></p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div> ]]></description>
+  <guid>https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis.html</guid>
+  <pubDate>Fri, 16 Sep 2022 21:00:00 GMT</pubDate>
+  <media:content url="https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/images/paste-B898F7B3.png" medium="image" type="image/png" height="59" width="144"/>
+</item>
 <item>
   <title>Uncertainty Quantification with Polynomial Chaos</title>
   <dc:creator>Murat Koptur</dc:creator>
