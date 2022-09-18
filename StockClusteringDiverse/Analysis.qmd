@@ -1,7 +1,6 @@
 ---
 title: "Diversified Portfolio with Stock Clustering"
-draft: true
-date: 09/20/2022
+date: 09/18/2022
 author: Murat Koptur
 keywords: data science, statistics, time series, clustering, portfolio management, stock portfolio, machine learning
 description-meta: "How to create diversified portfolio using clustering."
@@ -20,18 +19,21 @@ editor:
 
 # Introduction
 
-[Last time](https://muratkoptur.com/MyDsProjects/StockClustering/Analysis.html),
-we analyzed similar stocks in XU30 index and calculated each cluster's mean 
-return and risk. 
+[Last
+time](https://muratkoptur.com/MyDsProjects/StockClustering/Analysis.html),
+we analyzed similar stocks in XU30 index and calculated each cluster's
+mean return and risk.
 
-Similar method can be used to diversify portfolio and minimizing the risk: we'll
-again apply clustering methods to determine different subsets of stocks in the
-XU100 market. And we select one stock from each cluster and calculate their
-return and risk and try to beat the market.
+Similar method can be used to diversify portfolio and minimizing the
+risk: we'll again apply clustering methods to determine different
+subsets of stocks in the XU100 market. And we select one stock from each
+cluster and calculate their return and risk and try to beat the market.
 
-Note: We assume that the index components have not changed over the time. 
-For a more realistic calculation, the stocks added to and excluded from the 
-index should also be taken into account.
+Note: We assume that the index components have not changed over the
+time. For a more realistic calculation, the stocks added to and excluded
+from the index should also be taken into account.
+
+![Source: <https://www.pexels.com/tr-tr/fotograf/borsa-kurulu-210607/>](images/paste-6599A03E.png){width="500"}
 
 # Data
 
@@ -55,6 +57,13 @@ set.seed(1234)
 # stock_ohlc <- stock_list$V1 |> tq_get() 
 # saveRDS(stock_ohlc, file="stock_data.rds")
 stock_ohlc <- readRDS("stock_data.rds")
+
+# Fix the index data (XU100.IS)
+stock_ohlc$date <- as.Date(stock_ohlc$date, format = "%Y-%m-%d")
+stock_ohlc <- stock_ohlc %>% mutate(
+  adjusted = ifelse(
+    symbol == 'XU100.IS' & date < "2020-07-27", adjusted / 100, adjusted)
+)
 ```
 
 Visualize annual returns of 5 stocks which has most volume:
@@ -97,41 +106,42 @@ daily_returns <- stock_ohlc %>%
 Pivot the data:
 
 ```{r}
-daily_returns <- daily_returns %>% 
+daily_returns_p <- daily_returns %>% 
   pivot_wider(names_from = symbol, values_from = daily.returns)
 ```
 
 Check the NA counts:
 
 ```{r}
-colSums(is.na(daily_returns))
+colSums(is.na(daily_returns_p))
 ```
 
-Some stocks have only one day data, 30% or more missing data. We discard them 
-and subset the data:
+Some stocks have only one day data, 30% or more missing data. We discard
+them and subset the data:
 
 ```{r}
-daily_returns <- daily_returns %>%
+daily_returns_p <- daily_returns_p %>%
   select(where(~ sum(is.na(.x)) < 0.3 * 2764))
 
-indx <- complete.cases(daily_returns)
-daily_returns <- daily_returns[indx, ]
+indx <- complete.cases(daily_returns_p)
+daily_returns_p <- daily_returns_p[indx, ]
 ```
 
 Check NA count again and date continuity:
 
 ```{r}
-print(sum(colSums(is.na(daily_returns))))
-print(daily_returns %>% select(date) %>% mutate(date_diff = date - lag(date)) %>% filter(date_diff > 3))
+print(sum(colSums(is.na(daily_returns_p))))
+print(daily_returns_p %>% select(date) %>% mutate(date_diff = date - lag(date)) %>% filter(date_diff > 3))
 ```
 
-I'll omit the gaps for sake of simplicity. Finally, split the market and stocks data:
+I'll omit the gaps for sake of simplicity. Finally, split the market and
+stocks data:
 
 ```{r}
-market_return <- tibble(date=daily_returns$date, 
-                        daily.return=daily_returns$XU100.IS)
-stock_returns <- tibble(date=daily_returns$date,
-                        daily_returns[,!(colnames(daily_returns) %in% c("date", "XU100.IS"))])
+market_return <- tibble(date=daily_returns_p$date, 
+                        daily.return=daily_returns_p$XU100.IS)
+stock_returns <- tibble(date=daily_returns_p$date,
+                        daily_returns_p[,!(colnames(daily_returns_p) %in% c("date", "XU100.IS"))])
 ```
 
 # Clustering
@@ -143,19 +153,137 @@ stock_returns_scaled <- stock_returns %>% select(!date) %>% mutate_each(funs(sca
 stock_returns_scaled[1:5, 1:5]
 ```
 
+Transpose the data:
+
+```{r}
+stock_returns_scaled <- data.frame(row.names = names(stock_returns_scaled), t(stock_returns_scaled))
+```
+
 Find optimum number of clusters for k-means:
 
 ```{r}
-# nb <- NbClust(stock_returns_scaled, method = "kmeans", max.nc = 10)
-# print(nb$Best.nc)
-# 
-# fviz_nbclust(nb, kmeans, method = "gap_stat")
+nb <- NbClust(stock_returns_scaled, method = "kmeans", min.nc = 3, max.nc = 7, index="gap")
+nb
 ```
 
+Optimal cluster count is three, let's fit and look cluster contents:
+
+```{r}
+km_model <- kmeans(stock_returns_scaled, 3)
+fviz_cluster(object = km_model,
+             data = stock_returns_scaled,
+             ellipse.type = "norm",
+             geom = "text",
+             palette = "jco",
+             main = "",
+             ggtheme = theme_minimal())
+```
+
+# Market Performance and Portfolio Construction
+
+We've XU100 daily returns as baseline.
+
+Let's select one stock from each cluster randomly two times and
+construct two different portfolios:
+
+```{r}
+# Select two stocks from each cluster randomly
+# data.frame(stock=names(km_model$cluster),
+#            cluster=km_model$cluster) %>%
+#   group_by(km_model$cluster) %>% sample_n(2)
+```
+
+In my run, it selected EGEEN and ECILC from cluster 1, FROTO and THYAO
+from cluster 2 and AKSA and TTRAK from cluster 3. Construct two
+different portfolios with them:
+
+```{r}
+stocks <- c("EGEEN.IS", "ECILC.IS", "FROTO.IS", "THYAO.IS", "AKSA.IS", "TTRAK.IS")
+
+weights <- c(
+    0.34, 0.33, 0.33, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.34, 0.33, 0.33
+)
+weights_table <-  tibble(stocks) %>%
+    tq_repeat_df(n = 2) %>%
+    bind_cols(tibble(weights)) %>%
+    group_by(portfolio)
+
+portfolio_returns <- daily_returns %>%
+    filter(date >= daily_returns_p$date[1]) %>%
+    tq_repeat_df(n = 2) %>%
+    tq_portfolio(assets_col  = symbol, 
+                 returns_col = daily.returns, 
+                 weights     = weights_table, 
+                 col_rename  = "portfolio.returns")
+head(portfolio_returns)
+```
+
+Merge daily return data:
+
+```{r}
+daily_returns_portfolios <- left_join(portfolio_returns, market_return, , by="date")
+daily_returns_portfolios
+```
+
+Calculate performances, risks, CAPM table:
+
+```{r}
+daily_returns_portfolios %>%
+    tq_performance(Ra = portfolio.returns, Rb = daily.return, performance_fun = table.CAPM)
+
+daily_returns_portfolios %>%
+    tq_performance(Ra = portfolio.returns, Rb = daily.return, performance_fun = table.DownsideRisk)
+
+daily_returns_portfolios %>%
+    tq_performance(Ra = portfolio.returns, Rb = NULL, performance_fun = table.AnnualizedReturns)
+```
+
+Visualize portfolio growths with 1000 TRY initial capital, let's add the
+index XU100 to the graph:
+
+```{r}
+stocks <- c("XU100.IS", "EGEEN.IS", "ECILC.IS", "FROTO.IS", "THYAO.IS", "AKSA.IS", "TTRAK.IS")
+
+weights <- c(
+    1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.34, 0.33, 0.33, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.34, 0.33, 0.33
+)
+weights_table <-  tibble(stocks) %>%
+    tq_repeat_df(n = 3) %>%
+    bind_cols(tibble(weights)) %>%
+    group_by(portfolio)
+
+portfolio_returns <- daily_returns %>%
+    filter(date >= daily_returns_p$date[1]) %>%
+    tq_repeat_df(n = 3) %>%
+    tq_portfolio(assets_col  = symbol, 
+                 returns_col = daily.returns, 
+                 weights     = weights_table, 
+                 col_rename  = "portfolio.returns")
+
+portfolio_growth_daily <- daily_returns %>%
+    filter(date >= daily_returns_p$date[1]) %>%
+    tq_repeat_df(n = 3) %>%
+    tq_portfolio(assets_col  = symbol, 
+                 returns_col = daily.returns, 
+                 weights     = weights_table, 
+                 col_rename   = "investment.growth",
+                 wealth.index = TRUE) %>%
+    mutate(investment.growth = investment.growth * 1000)
+
+portfolio_growth_daily %>%
+    ggplot(aes(x = date, y = investment.growth, color = factor(portfolio))) +
+    geom_line(size = 2) +
+    labs(title = "Portfolio Growth",
+         x = "", y = "Portfolio Value",
+         color = "Portfolio") +
+    geom_smooth(method = "loess") +
+    theme_tq() +
+    scale_color_tq() +
+    scale_y_continuous()
+```
 
 Full source code:
 <https://github.com/mrtkp9993/MyDsProjects/tree/main/StockClusteringDiverse>
-
-# References
-
-$^1$ 

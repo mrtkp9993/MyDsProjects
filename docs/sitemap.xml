@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/about.html</loc>
-    <lastmod>2022-09-18T11:39:58.809Z</lastmod>
+    <lastmod>2022-09-18T16:11:27.439Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/AnomalyOcsvm/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:02.358Z</lastmod>
+    <lastmod>2022-09-18T16:11:31.878Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/ConceptDrift/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:04.648Z</lastmod>
+    <lastmod>2022-09-18T16:11:35.912Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/EarthQuakeProbability/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:06.260Z</lastmod>
+    <lastmod>2022-09-18T16:11:38.454Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/index.html</loc>
-    <lastmod>2022-09-18T11:40:08.653Z</lastmod>
+    <lastmod>2022-09-18T16:11:42.031Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/MissingData/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:10.070Z</lastmod>
+    <lastmod>2022-09-18T16:11:43.996Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/StockClustering/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:11.687Z</lastmod>
+    <lastmod>2022-09-18T16:11:45.941Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.muratkoptur.com/MyDsProjects/StockClusteringDiverse/Analysis.html</loc>
+    <lastmod>2022-09-18T16:15:33.791Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/SysIdent/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:15.325Z</lastmod>
+    <lastmod>2022-09-18T16:15:37.226Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/TimeSeriesClassification/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:16.879Z</lastmod>
+    <lastmod>2022-09-18T16:15:40.110Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/TimeSeriesPredictability/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:18.226Z</lastmod>
+    <lastmod>2022-09-18T16:15:42.288Z</lastmod>
   </url>
   <url>
     <loc>https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html</loc>
-    <lastmod>2022-09-18T11:40:19.906Z</lastmod>
+    <lastmod>2022-09-18T16:15:44.301Z</lastmod>
   </url>
 </urlset>
