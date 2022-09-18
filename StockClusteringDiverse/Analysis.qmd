@@ -1,0 +1,161 @@
+---
+title: "Diversified Portfolio with Stock Clustering"
+draft: true
+date: 09/20/2022
+author: Murat Koptur
+keywords: data science, statistics, time series, clustering, portfolio management, stock portfolio, machine learning
+description-meta: "How to create diversified portfolio using clustering."
+execute:
+  freeze: auto
+  warning: false
+  error: false
+format: 
+   html:
+     df-print: paged
+listing: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Introduction
+
+[Last time](https://muratkoptur.com/MyDsProjects/StockClustering/Analysis.html),
+we analyzed similar stocks in XU30 index and calculated each cluster's mean 
+return and risk. 
+
+Similar method can be used to diversify portfolio and minimizing the risk: we'll
+again apply clustering methods to determine different subsets of stocks in the
+XU100 market. And we select one stock from each cluster and calculate their
+return and risk and try to beat the market.
+
+Note: We assume that the index components have not changed over the time. 
+For a more realistic calculation, the stocks added to and excluded from the 
+index should also be taken into account.
+
+# Data
+
+Read data:
+
+```{r}
+library(cluster)
+library(factoextra)
+library(dplyr)
+library(ggplot2)
+library(NbClust)
+library(quantmod)
+library(tibble)
+library(tidyquant)
+library(tidyr)
+
+set.seed(1234)
+
+# Delete the comment for downloading the data
+# stock_list <- read.table("bist100_stocks.txt") 
+# stock_ohlc <- stock_list$V1 |> tq_get() 
+# saveRDS(stock_ohlc, file="stock_data.rds")
+stock_ohlc <- readRDS("stock_data.rds")
+```
+
+Visualize annual returns of 5 stocks which has most volume:
+
+```{r}
+top_5_by_vol <- stock_ohlc %>% 
+  filter(symbol != "XU100.IS") %>%
+  group_by(symbol) %>% 
+  summarise(Volume = sum(volume)) %>% 
+  top_n(5)
+
+stock_ohlc %>% 
+  filter(symbol %in% top_5_by_vol$symbol) %>% 
+  group_by(symbol) %>% 
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "yearly", 
+               col_rename = "yearly.returns") %>%
+  ggplot(aes(x = year(date), y = yearly.returns, fill = symbol)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  labs(title = "5 Most Active XU100 Stocks", 
+       y = "Returns", x = "", color = "") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_tq() +
+  scale_fill_tq()
+```
+
+Calculate daily returns for each stock and the market:
+
+```{r}
+daily_returns <- stock_ohlc %>% 
+  group_by(symbol) %>%
+  tq_transmute(select = adjusted,
+               mutate_fun = periodReturn,
+               type = "log",
+               period = "daily",
+               col_rename = "daily.returns")
+```
+
+Pivot the data:
+
+```{r}
+daily_returns <- daily_returns %>% 
+  pivot_wider(names_from = symbol, values_from = daily.returns)
+```
+
+Check the NA counts:
+
+```{r}
+colSums(is.na(daily_returns))
+```
+
+Some stocks have only one day data, 30% or more missing data. We discard them 
+and subset the data:
+
+```{r}
+daily_returns <- daily_returns %>%
+  select(where(~ sum(is.na(.x)) < 0.3 * 2764))
+
+indx <- complete.cases(daily_returns)
+daily_returns <- daily_returns[indx, ]
+```
+
+Check NA count again and date continuity:
+
+```{r}
+print(sum(colSums(is.na(daily_returns))))
+print(daily_returns %>% select(date) %>% mutate(date_diff = date - lag(date)) %>% filter(date_diff > 3))
+```
+
+I'll omit the gaps for sake of simplicity. Finally, split the market and stocks data:
+
+```{r}
+market_return <- tibble(date=daily_returns$date, 
+                        daily.return=daily_returns$XU100.IS)
+stock_returns <- tibble(date=daily_returns$date,
+                        daily_returns[,!(colnames(daily_returns) %in% c("date", "XU100.IS"))])
+```
+
+# Clustering
+
+Let's standardize the data:
+
+```{r}
+stock_returns_scaled <- stock_returns %>% select(!date) %>% mutate_each(funs(scale))
+stock_returns_scaled[1:5, 1:5]
+```
+
+Find optimum number of clusters for k-means:
+
+```{r}
+# nb <- NbClust(stock_returns_scaled, method = "kmeans", max.nc = 10)
+# print(nb$Best.nc)
+# 
+# fviz_nbclust(nb, kmeans, method = "gap_stat")
+```
+
+
+Full source code:
+<https://github.com/mrtkp9993/MyDsProjects/tree/main/StockClusteringDiverse>
+
+# References
+
+$^1$ 
