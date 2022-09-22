@@ -6,7 +6,6 @@ keywords: data science, statistics, finance, stock markets, portfolio optimizati
 description-meta: "Better portfolio management & optimization with machine learning / clustering"
 execute:
   freeze: auto
-  echo: false
   warning: false
   error: false
 format: 
@@ -16,6 +15,8 @@ listing: true
 ---
 
 # Introduction
+
+![Source: <https://www.pexels.com/tr-tr/fotograf/belgenin-ustundeki-buyutec-6801648/>](images/paste-0B2C4B8E.png){width="400"}
 
 We have following features for BIST30 stocks:
 
@@ -34,6 +35,8 @@ We have following features for BIST30 stocks:
 ```{r}
 library(readr)
 data <- read_csv("data.csv")
+data <- as.data.frame(data)
+row.names(data) <- data$stock
 data
 ```
 
@@ -48,50 +51,60 @@ cols <- 5:ncol(data)
 data_scaled <- lapply(data[, cols], function(x) if(is.numeric(x)) rescale(x, to=c(0,1)) else x)
 data_scaled <- as.data.frame(data_scaled)
 data_scaled <- cbind(data[,1:4], data_scaled)
+row.names(data_scaled) <- data_scaled$stock
+data_scaled$stock <- NULL
 data_scaled
 ```
 
-We will use K-means method. Let's plot elbow plot:
-
-![](images/paste-1622CD6D.png){width="400"}
-
-We have four clusters, let's fit model and see results:
-
-| Clusters | N    | R$^{2}$ | AIC       | BIC       | Silhouette |
-|----------|------|---------|-----------|-----------|------------|
-| $4$      | $30$ | $0.606$ | $194.190$ | $250.240$ | $0.310$    |
-
-| Cluster                                           | $1$      | $2$      | $3$      | $4$     |
-|-------------------------------|----------|----------|----------|----------|
-| Size                                              | $17$     | $2$      | $9$      | $2$     |
-| Explained proportion within-cluster heterogeneity | $0.616$  | $0.127$  | $0.192$  | $0.065$ |
-| Within sum of squares                             | $70.320$ | $14.532$ | $21.962$ | $7.376$ |
-| Silhouette score                                  | $0.267$  | $0.029$  | $0.419$  | $0.449$ |
-
-|                         | Value    |
-|-------------------------|----------|
-| Maximum diameter        | $5.696$  |
-| Minimum separation      | $1.664$  |
-| Pearson's γ             | $0.593$  |
-| Dunn index              | $0.292$  |
-| Entropy                 | $1.044$  |
-| Calinski-Harabasz index | $13.343$ |
-
-There is no negative silhouette score, but second cluster's score is near to zero. It indicates that seperetion is not well.
-
-Cluster contents:
+Earnings Growth column has NA values, replace NA's with zero:
 
 ```{r}
-library(dplyr)
-
-data_clustered <- read_csv("data_clustered.csv")
-
-data_clustered[,c(1,15)]
+data_scaled$earningsGrowth[is.na(data_scaled$earningsGrowth)] <- 0
 ```
+
+We will use K-means method. Let's calculate silhouette score for optimal cluster count:
+
+```{r}
+library(factoextra)
+library(cluster)
+
+fviz_nbclust(data_scaled, kmeans, method = "silhouette", k.max = 10)
+```
+
+We have two different clusters, let's fit model and see results:
+
+```{r}
+model <- kmeans(data_scaled, 2)
+fviz_cluster(object = model,
+             data = data_scaled,
+             ellipse.type = "norm",
+             geom = "text",
+             palette = "jco",
+             main = "",
+             ggtheme = theme_minimal())
+```
+
+Statistics:
+
+```{r}
+model
+```
+
+```{r}
+sil <- silhouette(model$cluster, dist(data_scaled))
+fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic())
+```
+
+There are negative silhouette scores, it indicates that it may be in the wrong cluster.
 
 Let's look the mean return statistics of each cluster:
 
 ```{r}
+library(dplyr)
+
+predicted_clusters <- data.frame(predicted_cluster=model$cluster, row.names=names(model$cluster))
+data_clustered <- merge(data, predicted_clusters, by=0)
+
 data_clustered %>%
   group_by(predicted_cluster) %>%
   summarise(
@@ -104,12 +117,10 @@ data_clustered %>%
     )
 ```
 
-Mean returns will be better if we select stocks from a bigger stock set like BIST100 or all BIST stocks.
-
 Full source code: <https://github.com/mrtkp9993/MyDsProjects/tree/main/StockClustering>
 
 # References
 
-$^1$   <https://www.investopedia.com/terms/c/cluster_analysis.asp>
+$^1$ <https://www.investopedia.com/terms/c/cluster_analysis.asp>
 
-$^2$   <https://www.investopedia.com/terms/f/factor-investing.asp>
+$^2$ <https://www.investopedia.com/terms/f/factor-investing.asp>
