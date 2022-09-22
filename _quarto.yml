@@ -4,7 +4,7 @@ project:
 
 website:
   site-url: "https://www.muratkoptur.com/MyDsProjects"
-  title: "My Data Science Blog & Projects"
+  title: "Murat Koptur Data Science Blog & Projects"
   description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   navbar:
     right:

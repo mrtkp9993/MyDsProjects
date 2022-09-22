@@ -9,7 +9,7 @@ listing:
   filter-ui: [title, date]
   feed: true
   page-size: 10
-keywords: data science, statistics
+keywords: data science, statistics, machine learning
 description-meta: Data science blog & projects.
 format: 
   html: 
