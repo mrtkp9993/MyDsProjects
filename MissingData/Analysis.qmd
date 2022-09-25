@@ -76,6 +76,7 @@ Descriptives:
 
 ```{r}
 #| echo: fenced
+library(ggplot2)
 library(finalfit)
 
 res <- ff_glimpse(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"))
@@ -88,7 +89,7 @@ Plot of missingness:
 
 ```{r}
 #| echo: fenced
-missing_plot(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"))
+missing_plot(ex_data, dependent = "y", explanatory = c("x_complete", "x_mcar", "x_mar", "x_mnar"), plot_opts = theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1)))
 ```
 
 Missingness patterns:

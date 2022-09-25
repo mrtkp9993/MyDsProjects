@@ -5,8 +5,6 @@ listing:
   sort: "date desc"
   fields: [image, date, title]
   grid-columns: 5
-  sort-ui: [title, date]
-  filter-ui: [title, date]
   feed: true
   page-size: 10
 keywords: data science, statistics, machine learning

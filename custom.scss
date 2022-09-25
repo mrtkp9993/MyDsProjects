@@ -1,0 +1,17 @@
+/*-- scss:defaults --*/
+
+$primary: #231832;
+$secondary: #E5E4CE;
+
+$body-bg: $secondary;
+$body-color: $primary;
+
+$navbar-fg: $secondary;
+
+$footer-bg: mix(black, $secondary, 20%);
+
+/*-- scss:rules --*/
+
+.quarto-grid-item {
+    background-color: $secondary;
+}

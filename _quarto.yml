@@ -8,8 +8,20 @@ website:
   description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   navbar:
     right:
-      - href: "about.qmd"
-        text: About Me
+      - href: "/MyDsProjects"
+        icon: "house-fill"
+      - href: "/MyDsProjects/about.html"
+        icon: "person-fill"
+      - href: "https://twitter.com/mrtkp9993"
+        icon: "twitter"
+      - href: "https://www.instagram.com/mrtkp9993/"
+        icon: "instagram"
+      - href: "https://www.linkedin.com/in/muratkoptur/"
+        icon: "linkedin"
+      - href: "https://github.com/mrtkp9993"
+        icon: "github"
+      - href: "mailto:muratkoptur@yandex.com"
+        icon: "mailbox"
   open-graph:
     title: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
@@ -26,20 +38,25 @@ website:
           Thanks for reading. If you enjoyed, please share it.\
           Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
     right:
-      - icon: linkedin
-        href: https://www.linkedin.com/in/muratkoptur/
-      - icon: github
-        href: https://github.com/mrtkp9993
-      - icon: instagram
-        href: https://www.instagram.com/mrtkp9993/
+      - href: "https://twitter.com/mrtkp9993"
+        icon: "twitter"
+      - href: "https://www.instagram.com/mrtkp9993/"
+        icon: "instagram"
+      - href: "https://www.linkedin.com/in/muratkoptur/"
+        icon: "linkedin"
+      - href: "https://github.com/mrtkp9993"
+        icon: "github"
+      - href: "mailto:muratkoptur@yandex.com"
+        icon: "mailbox"
 
 resources:
   - "ogimg.png"
   - "profile.png"
 
 theme:
-  light: yeti
-  dark: solar
+  light:
+    - yeti
+    - custom.scss
 
 comments:
   hypothesis:
