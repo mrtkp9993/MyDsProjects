@@ -65,13 +65,13 @@ tm_shape(tur_shp) + tm_fill() + tm_shape(spdf) + tm_dots(size=0.5, col = "magnit
 
 ```{r}
 #| echo: fenced
-p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density() +  theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+p <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_histogram(aes(y = ..density..)) + geom_density()
 p
 ```
 
 ```{r}
 #| echo: fenced
-p2 <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_boxplot() + theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+p2 <- ggplot(data_diff_between_eq, aes(x=diff)) + geom_boxplot()
 p2
 ```
 
@@ -79,7 +79,7 @@ p2
 
 ```{r}
 #| echo: fenced
-p3 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line() + theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+p3 <- ggplot(data_count_by_year, aes(x=year, y=count)) + geom_line()
 p3
 ```
 
@@ -90,7 +90,6 @@ earthquakes occurred successively.
 
 ```{r}
 #| echo: fenced
-par(bg="#E5E4CE")
 plotdist(data_diff_between_eq$diff, demp = TRUE)
 ```
 
@@ -139,7 +138,6 @@ Results:
 -   Plots:
 
     ```{r}
-    par(bg="#E5E4CE")
     plot(wei.fit)
     ```
 
@@ -167,7 +165,6 @@ Let's plot the CDF:
 
 ```{r}
 #| echo: fenced
-par(bg="#E5E4CE")
 plot(ecdf(simulated_data), xlim=c(0, 6000))
 ```
 

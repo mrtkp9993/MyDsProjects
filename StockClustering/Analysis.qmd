@@ -68,7 +68,7 @@ We will use K-means method. Let's calculate silhouette score for optimal cluster
 library(factoextra)
 library(cluster)
 
-fviz_nbclust(data_scaled, kmeans, method = "silhouette", k.max = 10) + theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+fviz_nbclust(data_scaled, kmeans, method = "silhouette", k.max = 10)
 ```
 
 We have two different clusters, let's fit model and see results:
@@ -81,7 +81,7 @@ fviz_cluster(object = model,
              geom = "text",
              palette = "jco",
              main = "",
-             ggtheme = theme_minimal()) + theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+             ggtheme = theme_minimal())
 ```
 
 Statistics:
@@ -92,7 +92,7 @@ model
 
 ```{r}
 sil <- silhouette(model$cluster, dist(data_scaled))
-fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic()) + theme(plot.background = element_rect(colour="#E5E4CE",fill="#E5E4CE",size=1))
+fviz_silhouette(sil, palette = "jco", ggtheme = theme_classic())
 ```
 
 There are negative silhouette scores, it indicates that it may be in the wrong cluster.

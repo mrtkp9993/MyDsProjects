@@ -8,9 +8,9 @@ website:
   description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   navbar:
     right:
-      - href: "/MyDsProjects"
+      - href: "/"
         icon: "house-fill"
-      - href: "/MyDsProjects/about.html"
+      - href: "/about.html"
         icon: "person-fill"
       - href: "https://twitter.com/mrtkp9993"
         icon: "twitter"

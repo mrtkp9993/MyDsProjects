@@ -246,12 +246,12 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="../MyDsProjects"><i class="bi bi-house-fill" role="img">
+    <a class="nav-link" href="../"><i class="bi bi-house-fill" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../MyDsProjects/about.html"><i class="bi bi-person-fill" role="img">
+    <a class="nav-link" href="../about.html"><i class="bi bi-person-fill" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -387,7 +387,7 @@ cookieconsent.run({
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(data_scaled, kmeans, <span class="at">method =</span> <span class="st">"silhouette"</span>, <span class="at">k.max =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">colour=</span><span class="st">"#E5E4CE"</span>,<span class="at">fill=</span><span class="st">"#E5E4CE"</span>,<span class="at">size=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(data_scaled, kmeans, <span class="at">method =</span> <span class="st">"silhouette"</span>, <span class="at">k.max =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -401,7 +401,7 @@ cookieconsent.run({
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"text"</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="st">"jco"</span>,</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>()) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">colour=</span><span class="st">"#E5E4CE"</span>,<span class="at">fill=</span><span class="st">"#E5E4CE"</span>,<span class="at">size=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -445,7 +445,7 @@ Available components:
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sil <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(model<span class="sc">$</span>cluster, <span class="fu">dist</span>(data_scaled))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil, <span class="at">palette =</span> <span class="st">"jco"</span>, <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>()) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">colour=</span><span class="st">"#E5E4CE"</span>,<span class="at">fill=</span><span class="st">"#E5E4CE"</span>,<span class="at">size=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil, <span class="at">palette =</span> <span class="st">"jco"</span>, <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
 1       1   24          0.45

@@ -2628,7 +2628,7 @@ No matching items
 <p>Plot of missingness:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;">missing_plot</span>(ex_data, <span class="at" style="color: #657422;">dependent =</span> <span class="st" style="color: #20794D;">"y"</span>, <span class="at" style="color: #657422;">explanatory =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"x_complete"</span>, <span class="st" style="color: #20794D;">"x_mcar"</span>, <span class="st" style="color: #20794D;">"x_mar"</span>, <span class="st" style="color: #20794D;">"x_mnar"</span>), <span class="at" style="color: #657422;">plot_opts =</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>)))</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;">missing_plot</span>(ex_data, <span class="at" style="color: #657422;">dependent =</span> <span class="st" style="color: #20794D;">"y"</span>, <span class="at" style="color: #657422;">explanatory =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"x_complete"</span>, <span class="st" style="color: #20794D;">"x_mcar"</span>, <span class="st" style="color: #20794D;">"x_mar"</span>, <span class="st" style="color: #20794D;">"x_mnar"</span>))</span>
 <span id="cb3-3"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://www.muratkoptur.com/MyDsProjects/MissingData/Analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
@@ -2810,7 +2810,7 @@ No matching items
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">library</span>(factoextra)</span>
 <span id="cb4-2"><span class="fu" style="color: #4758AB;">library</span>(cluster)</span>
 <span id="cb4-3"></span>
-<span id="cb4-4"><span class="fu" style="color: #4758AB;">fviz_nbclust</span>(data_scaled, kmeans, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"silhouette"</span>, <span class="at" style="color: #657422;">k.max =</span> <span class="dv" style="color: #AD0000;">10</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span></code></pre></div>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;">fviz_nbclust</span>(data_scaled, kmeans, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">"silhouette"</span>, <span class="at" style="color: #657422;">k.max =</span> <span class="dv" style="color: #AD0000;">10</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://www.muratkoptur.com/MyDsProjects/StockClustering/Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2824,7 +2824,7 @@ No matching items
 <span id="cb5-5">             <span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">"text"</span>,</span>
 <span id="cb5-6">             <span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"jco"</span>,</span>
 <span id="cb5-7">             <span class="at" style="color: #657422;">main =</span> <span class="st" style="color: #20794D;">""</span>,</span>
-<span id="cb5-8">             <span class="at" style="color: #657422;">ggtheme =</span> <span class="fu" style="color: #4758AB;">theme_minimal</span>()) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span></code></pre></div>
+<span id="cb5-8">             <span class="at" style="color: #657422;">ggtheme =</span> <span class="fu" style="color: #4758AB;">theme_minimal</span>())</span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://www.muratkoptur.com/MyDsProjects/StockClustering/Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2868,7 +2868,7 @@ Available components:
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">sil <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">silhouette</span>(model<span class="sc" style="color: #5E5E5E;">$</span>cluster, <span class="fu" style="color: #4758AB;">dist</span>(data_scaled))</span>
-<span id="cb8-2"><span class="fu" style="color: #4758AB;">fviz_silhouette</span>(sil, <span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"jco"</span>, <span class="at" style="color: #657422;">ggtheme =</span> <span class="fu" style="color: #4758AB;">theme_classic</span>()) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span></code></pre></div>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">fviz_silhouette</span>(sil, <span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"jco"</span>, <span class="at" style="color: #657422;">ggtheme =</span> <span class="fu" style="color: #4758AB;">theme_classic</span>())</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
 1       1   24          0.45
@@ -2957,7 +2957,7 @@ No matching items
 <h2 class="anchored" data-anchor-id="time-span-between-earthquake-occurrences">Time Span between Earthquake Occurrences</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb1-2">p <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_diff_between_eq, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>diff)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_histogram</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">y =</span> ..density..)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_density</span>() <span class="sc" style="color: #5E5E5E;">+</span>  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb1-2">p <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_diff_between_eq, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>diff)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_histogram</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">y =</span> ..density..)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_density</span>()</span>
 <span id="cb1-3">p</span>
 <span id="cb1-4"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -2966,7 +2966,7 @@ No matching items
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb2-2">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_diff_between_eq, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>diff)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_boxplot</span>() <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb2-2">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_diff_between_eq, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>diff)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_boxplot</span>()</span>
 <span id="cb2-3">p2</span>
 <span id="cb2-4"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -2978,7 +2978,7 @@ No matching items
 <h2 class="anchored" data-anchor-id="earthquake-count-by-year">Earthquake Count By Year</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb3-2">p3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_count_by_year, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>year, <span class="at" style="color: #657422;">y=</span>count)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_line</span>() <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">plot.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">colour=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">fill=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>,<span class="at" style="color: #657422;">size=</span><span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb3-2">p3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(data_count_by_year, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x=</span>year, <span class="at" style="color: #657422;">y=</span>count)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">geom_line</span>()</span>
 <span id="cb3-3">p3</span>
 <span id="cb3-4"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -2992,9 +2992,8 @@ No matching items
 <p>Let’s fit Weibull distribution to distribution of days between two earthquakes occurred successively.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb4-2"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">bg=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>)</span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;">plotdist</span>(data_diff_between_eq<span class="sc" style="color: #5E5E5E;">$</span>diff, <span class="at" style="color: #657422;">demp =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
-<span id="cb4-4"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;">plotdist</span>(data_diff_between_eq<span class="sc" style="color: #5E5E5E;">$</span>diff, <span class="at" style="color: #657422;">demp =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
+<span id="cb4-3"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://www.muratkoptur.com/MyDsProjects/EarthQuakeProbability/Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -3102,9 +3101,8 @@ No matching items
 <p>Let’s plot the CDF:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
-<span id="cb9-2"><span class="fu" style="color: #4758AB;">par</span>(<span class="at" style="color: #657422;">bg=</span><span class="st" style="color: #20794D;">"#E5E4CE"</span>)</span>
-<span id="cb9-3"><span class="fu" style="color: #4758AB;">plot</span>(<span class="fu" style="color: #4758AB;">ecdf</span>(simulated_data), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">6000</span>))</span>
-<span id="cb9-4"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;">plot</span>(<span class="fu" style="color: #4758AB;">ecdf</span>(simulated_data), <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">6000</span>))</span>
+<span id="cb9-3"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
 <div class="cell-output-display">
 <p><img src="https://www.muratkoptur.com/MyDsProjects/EarthQuakeProbability/Analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
