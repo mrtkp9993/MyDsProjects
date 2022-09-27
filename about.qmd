@@ -13,6 +13,9 @@ about:
       - icon: instagram
         href: https://www.instagram.com/mrtkp9993/
         text: Instagram
+format: 
+  html: 
+    citation: false
 
 ---
 

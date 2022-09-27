@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.154">
+<meta name="generator" content="quarto-1.2.157">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -339,75 +339,75 @@ cookieconsent.run({
 <h1>Data</h1>
 <p>Read data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyquant)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the comment for downloading the data</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># stock_list &lt;- read.table("bist100_stocks.txt") </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># stock_ohlc &lt;- stock_list$V1 |&gt; tq_get() </span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(stock_ohlc, file="stock_data.rds")</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>stock_ohlc <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"stock_data.rds"</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Fix the index data (XU100.IS)</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>stock_ohlc<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(stock_ohlc<span class="sc">$</span>date, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>stock_ohlc <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">adjusted =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    symbol <span class="sc">==</span> <span class="st">'XU100.IS'</span> <span class="sc">&amp;</span> date <span class="sc">&lt;</span> <span class="st">"2020-07-27"</span>, adjusted <span class="sc">/</span> <span class="dv">100</span>, adjusted)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(quantmod)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(tidyquant)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># Delete the comment for downloading the data</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># stock_list &lt;- read.table("bist100_stocks.txt") </span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co"># stock_ohlc &lt;- stock_list$V1 |&gt; tq_get() </span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># saveRDS(stock_ohlc, file="stock_data.rds")</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>stock_ohlc <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"stock_data.rds"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co"># Fix the index data (XU100.IS)</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>stock_ohlc<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(stock_ohlc<span class="sc">$</span>date, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a>stock_ohlc <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  <span class="at">adjusted =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb1-23"><a href="#cb1-23"></a>    symbol <span class="sc">==</span> <span class="st">'XU100.IS'</span> <span class="sc">&amp;</span> date <span class="sc">&lt;</span> <span class="st">"2020-07-27"</span>, adjusted <span class="sc">/</span> <span class="dv">100</span>, adjusted)</span>
+<span id="cb1-24"><a href="#cb1-24"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Visualize annual returns of 5 stocks which has most volume:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>top_5_by_vol <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(symbol <span class="sc">!=</span> <span class="st">"XU100.IS"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Volume =</span> <span class="fu">sum</span>(volume)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>stock_ohlc <span class="sc">%&gt;%</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(symbol <span class="sc">%in%</span> top_5_by_vol<span class="sc">$</span>symbol) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select     =</span> adjusted, </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn, </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">period     =</span> <span class="st">"yearly"</span>, </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_rename =</span> <span class="st">"yearly.returns"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">year</span>(date), <span class="at">y =</span> yearly.returns, <span class="at">fill =</span> symbol)) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"5 Most Active XU100 Stocks"</span>, </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Returns"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">color =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tq</span>() <span class="sc">+</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_tq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>top_5_by_vol <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">filter</span>(symbol <span class="sc">!=</span> <span class="st">"XU100.IS"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">summarise</span>(<span class="at">Volume =</span> <span class="fu">sum</span>(volume)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>stock_ohlc <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">filter</span>(symbol <span class="sc">%in%</span> top_5_by_vol<span class="sc">$</span>symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="fu">tq_transmute</span>(<span class="at">select     =</span> adjusted, </span>
+<span id="cb2-11"><a href="#cb2-11"></a>               <span class="at">mutate_fun =</span> periodReturn, </span>
+<span id="cb2-12"><a href="#cb2-12"></a>               <span class="at">period     =</span> <span class="st">"yearly"</span>, </span>
+<span id="cb2-13"><a href="#cb2-13"></a>               <span class="at">col_rename =</span> <span class="st">"yearly.returns"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">year</span>(date), <span class="at">y =</span> yearly.returns, <span class="at">fill =</span> symbol)) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"5 Most Active XU100 Stocks"</span>, </span>
+<span id="cb2-17"><a href="#cb2-17"></a>       <span class="at">y =</span> <span class="st">"Returns"</span>, <span class="at">x =</span> <span class="st">""</span>, <span class="at">color =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>  <span class="fu">theme_tq</span>() <span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>  <span class="fu">scale_fill_tq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Calculate daily returns for each stock and the market:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>daily_returns <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> adjusted,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">mutate_fun =</span> periodReturn,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">type =</span> <span class="st">"log"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">period =</span> <span class="st">"daily"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">col_rename =</span> <span class="st">"daily.returns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>daily_returns <span class="ot">&lt;-</span> stock_ohlc <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">group_by</span>(symbol) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">tq_transmute</span>(<span class="at">select =</span> adjusted,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>               <span class="at">mutate_fun =</span> periodReturn,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>               <span class="at">type =</span> <span class="st">"log"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>               <span class="at">period =</span> <span class="st">"daily"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7"></a>               <span class="at">col_rename =</span> <span class="st">"daily.returns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pivot the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> symbol, <span class="at">values_from =</span> daily.returns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> symbol, <span class="at">values_from =</span> daily.returns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check the NA counts:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(daily_returns_p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(daily_returns_p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    date XU100.IS AGHOL.IS AKBNK.IS AKCNS.IS  AKSA.IS AKSEN.IS ALGYO.IS 
        0       80        0        0        0        0        0        0 
@@ -439,19 +439,19 @@ VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZRGYO.IS ZOREN.IS
 </div>
 <p>Some stocks have only one day data, 30% or more missing data. We discard them and subset the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns_p <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)) <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">*</span> <span class="dv">2764</span>))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>indx <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(daily_returns_p)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns_p[indx, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns_p <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)) <span class="sc">&lt;</span> <span class="fl">0.3</span> <span class="sc">*</span> <span class="dv">2764</span>))</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>indx <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(daily_returns_p)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>daily_returns_p <span class="ot">&lt;-</span> daily_returns_p[indx, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check NA count again and date continuity:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(daily_returns_p))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">colSums</span>(<span class="fu">is.na</span>(daily_returns_p))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(daily_returns_p <span class="sc">%&gt;%</span> <span class="fu">select</span>(date) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">date_diff =</span> date <span class="sc">-</span> <span class="fu">lag</span>(date)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(date_diff <span class="sc">&gt;</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">print</span>(daily_returns_p <span class="sc">%&gt;%</span> <span class="fu">select</span>(date) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">date_diff =</span> date <span class="sc">-</span> <span class="fu">lag</span>(date)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(date_diff <span class="sc">&gt;</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 37 × 2
    date       date_diff
@@ -471,18 +471,18 @@ VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZRGYO.IS ZOREN.IS
 </div>
 <p>I’ll omit the gaps for sake of simplicity. Finally, split the market and stocks data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>market_return <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">date=</span>daily_returns_p<span class="sc">$</span>date, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">daily.return=</span>daily_returns_p<span class="sc">$</span>XU100.IS)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">date=</span>daily_returns_p<span class="sc">$</span>date,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                        daily_returns_p[,<span class="sc">!</span>(<span class="fu">colnames</span>(daily_returns_p) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"XU100.IS"</span>))])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>market_return <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">date=</span>daily_returns_p<span class="sc">$</span>date, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>                        <span class="at">daily.return=</span>daily_returns_p<span class="sc">$</span>XU100.IS)</span>
+<span id="cb12-3"><a href="#cb12-3"></a>stock_returns <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">date=</span>daily_returns_p<span class="sc">$</span>date,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>                        daily_returns_p[,<span class="sc">!</span>(<span class="fu">colnames</span>(daily_returns_p) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"XU100.IS"</span>))])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="clustering" class="level1">
 <h1>Clustering</h1>
 <p>Let’s standardize the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stock_returns_scaled <span class="ot">&lt;-</span> stock_returns <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span>date) <span class="sc">%&gt;%</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(scale))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stock_returns_scaled[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>stock_returns_scaled <span class="ot">&lt;-</span> stock_returns <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span>date) <span class="sc">%&gt;%</span> <span class="fu">mutate_each</span>(<span class="fu">funs</span>(scale))</span>
+<span id="cb13-2"><a href="#cb13-2"></a>stock_returns_scaled[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -494,12 +494,12 @@ VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZRGYO.IS ZOREN.IS
 </div>
 <p>Transpose the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stock_returns_scaled <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="fu">names</span>(stock_returns_scaled), <span class="fu">t</span>(stock_returns_scaled))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>stock_returns_scaled <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">row.names =</span> <span class="fu">names</span>(stock_returns_scaled), <span class="fu">t</span>(stock_returns_scaled))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Find optimum number of clusters for k-means:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(stock_returns_scaled, <span class="at">method =</span> <span class="st">"kmeans"</span>, <span class="at">min.nc =</span> <span class="dv">3</span>, <span class="at">max.nc =</span> <span class="dv">7</span>, <span class="at">index=</span><span class="st">"gap"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(stock_returns_scaled, <span class="at">method =</span> <span class="st">"kmeans"</span>, <span class="at">min.nc =</span> <span class="dv">3</span>, <span class="at">max.nc =</span> <span class="dv">7</span>, <span class="at">index=</span><span class="st">"gap"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>nb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$All.index
       3       4       5       6       7 
@@ -540,14 +540,14 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 </div>
 <p>Optimal cluster count is three, let’s fit and look cluster contents:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>km_model <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(stock_returns_scaled, <span class="dv">3</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="at">object =</span> km_model,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> stock_returns_scaled,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ellipse.type =</span> <span class="st">"norm"</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"text"</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="st">"jco"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>km_model <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(stock_returns_scaled, <span class="dv">3</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">fviz_cluster</span>(<span class="at">object =</span> km_model,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>             <span class="at">data =</span> stock_returns_scaled,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>             <span class="at">ellipse.type =</span> <span class="st">"norm"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>             <span class="at">geom =</span> <span class="st">"text"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>             <span class="at">palette =</span> <span class="st">"jco"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>             <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -558,32 +558,32 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 <p>We’ve XU100 daily returns as baseline.</p>
 <p>Let’s select one stock from each cluster randomly two times and construct two different portfolios:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select two stocks from each cluster randomly</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame(stock=names(km_model$cluster),</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#            cluster=km_model$cluster) %&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(km_model$cluster) %&gt;% sample_n(2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Select two stocks from each cluster randomly</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># data.frame(stock=names(km_model$cluster),</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co">#            cluster=km_model$cluster) %&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">#   group_by(km_model$cluster) %&gt;% sample_n(2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In my run, it selected EGEEN and ECILC from cluster 1, FROTO and THYAO from cluster 2 and AKSA and TTRAK from cluster 3. Construct two different portfolios with them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>stocks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"EGEEN.IS"</span>, <span class="st">"ECILC.IS"</span>, <span class="st">"FROTO.IS"</span>, <span class="st">"THYAO.IS"</span>, <span class="st">"AKSA.IS"</span>, <span class="st">"TTRAK.IS"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>weights_table <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(stocks) <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_cols</span>(<span class="fu">tibble</span>(weights)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(portfolio)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>portfolio_returns <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">weights     =</span> weights_table, </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_rename  =</span> <span class="st">"portfolio.returns"</span>)</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(portfolio_returns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>stocks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"EGEEN.IS"</span>, <span class="st">"ECILC.IS"</span>, <span class="st">"FROTO.IS"</span>, <span class="st">"THYAO.IS"</span>, <span class="st">"AKSA.IS"</span>, <span class="st">"TTRAK.IS"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb19-4"><a href="#cb19-4"></a>    <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7"></a>weights_table <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(stocks) <span class="sc">%&gt;%</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="fu">bind_cols</span>(<span class="fu">tibble</span>(weights)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="fu">group_by</span>(portfolio)</span>
+<span id="cb19-11"><a href="#cb19-11"></a></span>
+<span id="cb19-12"><a href="#cb19-12"></a>portfolio_returns <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
+<span id="cb19-16"><a href="#cb19-16"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
+<span id="cb19-17"><a href="#cb19-17"></a>                 <span class="at">weights     =</span> weights_table, </span>
+<span id="cb19-18"><a href="#cb19-18"></a>                 <span class="at">col_rename  =</span> <span class="st">"portfolio.returns"</span>)</span>
+<span id="cb19-19"><a href="#cb19-19"></a><span class="fu">head</span>(portfolio_returns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -595,8 +595,8 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 </div>
 <p>Merge daily return data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>daily_returns_portfolios <span class="ot">&lt;-</span> <span class="fu">left_join</span>(portfolio_returns, market_return, , <span class="at">by=</span><span class="st">"date"</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>daily_returns_portfolios</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>daily_returns_portfolios <span class="ot">&lt;-</span> <span class="fu">left_join</span>(portfolio_returns, market_return, , <span class="at">by=</span><span class="st">"date"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>daily_returns_portfolios</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -608,8 +608,8 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 </div>
 <p>Calculate performances, risks, CAPM table:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> daily.return, <span class="at">performance_fun =</span> table.CAPM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> daily.return, <span class="at">performance_fun =</span> table.CAPM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -618,8 +618,8 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> daily.return, <span class="at">performance_fun =</span> table.DownsideRisk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> daily.return, <span class="at">performance_fun =</span> table.DownsideRisk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -628,8 +628,8 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> <span class="cn">NULL</span>, <span class="at">performance_fun =</span> table.AnnualizedReturns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>daily_returns_portfolios <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>    <span class="fu">tq_performance</span>(<span class="at">Ra =</span> portfolio.returns, <span class="at">Rb =</span> <span class="cn">NULL</span>, <span class="at">performance_fun =</span> table.AnnualizedReturns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -641,46 +641,46 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 </div>
 <p>Visualize portfolio growths with 1000 TRY initial capital, let’s add the index XU100 to the graph:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>stocks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"XU100.IS"</span>, <span class="st">"EGEEN.IS"</span>, <span class="st">"ECILC.IS"</span>, <span class="st">"FROTO.IS"</span>, <span class="st">"THYAO.IS"</span>, <span class="st">"AKSA.IS"</span>, <span class="st">"TTRAK.IS"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>weights_table <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(stocks) <span class="sc">%&gt;%</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_cols</span>(<span class="fu">tibble</span>(weights)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(portfolio)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>portfolio_returns <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">weights     =</span> weights_table, </span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_rename  =</span> <span class="st">"portfolio.returns"</span>)</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>portfolio_growth_daily <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                 <span class="at">weights     =</span> weights_table, </span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_rename   =</span> <span class="st">"investment.growth"</span>,</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>                 <span class="at">wealth.index =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">investment.growth =</span> investment.growth <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>portfolio_growth_daily <span class="sc">%&gt;%</span></span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> investment.growth, <span class="at">color =</span> <span class="fu">factor</span>(portfolio))) <span class="sc">+</span></span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Portfolio Growth"</span>,</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Portfolio Value"</span>,</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="st">"Portfolio"</span>) <span class="sc">+</span></span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_tq</span>() <span class="sc">+</span></span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_tq</span>() <span class="sc">+</span></span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>stocks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"XU100.IS"</span>, <span class="st">"EGEEN.IS"</span>, <span class="st">"ECILC.IS"</span>, <span class="st">"FROTO.IS"</span>, <span class="st">"THYAO.IS"</span>, <span class="st">"AKSA.IS"</span>, <span class="st">"TTRAK.IS"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.34</span>, <span class="fl">0.33</span>, <span class="fl">0.33</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>)</span>
+<span id="cb24-8"><a href="#cb24-8"></a>weights_table <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(stocks) <span class="sc">%&gt;%</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>    <span class="fu">bind_cols</span>(<span class="fu">tibble</span>(weights)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a>    <span class="fu">group_by</span>(portfolio)</span>
+<span id="cb24-12"><a href="#cb24-12"></a></span>
+<span id="cb24-13"><a href="#cb24-13"></a>portfolio_returns <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb24-15"><a href="#cb24-15"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
+<span id="cb24-17"><a href="#cb24-17"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
+<span id="cb24-18"><a href="#cb24-18"></a>                 <span class="at">weights     =</span> weights_table, </span>
+<span id="cb24-19"><a href="#cb24-19"></a>                 <span class="at">col_rename  =</span> <span class="st">"portfolio.returns"</span>)</span>
+<span id="cb24-20"><a href="#cb24-20"></a></span>
+<span id="cb24-21"><a href="#cb24-21"></a>portfolio_growth_daily <span class="ot">&lt;-</span> daily_returns <span class="sc">%&gt;%</span></span>
+<span id="cb24-22"><a href="#cb24-22"></a>    <span class="fu">filter</span>(date <span class="sc">&gt;=</span> daily_returns_p<span class="sc">$</span>date[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb24-23"><a href="#cb24-23"></a>    <span class="fu">tq_repeat_df</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-24"><a href="#cb24-24"></a>    <span class="fu">tq_portfolio</span>(<span class="at">assets_col  =</span> symbol, </span>
+<span id="cb24-25"><a href="#cb24-25"></a>                 <span class="at">returns_col =</span> daily.returns, </span>
+<span id="cb24-26"><a href="#cb24-26"></a>                 <span class="at">weights     =</span> weights_table, </span>
+<span id="cb24-27"><a href="#cb24-27"></a>                 <span class="at">col_rename   =</span> <span class="st">"investment.growth"</span>,</span>
+<span id="cb24-28"><a href="#cb24-28"></a>                 <span class="at">wealth.index =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-29"><a href="#cb24-29"></a>    <span class="fu">mutate</span>(<span class="at">investment.growth =</span> investment.growth <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb24-30"><a href="#cb24-30"></a></span>
+<span id="cb24-31"><a href="#cb24-31"></a>portfolio_growth_daily <span class="sc">%&gt;%</span></span>
+<span id="cb24-32"><a href="#cb24-32"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> investment.growth, <span class="at">color =</span> <span class="fu">factor</span>(portfolio))) <span class="sc">+</span></span>
+<span id="cb24-33"><a href="#cb24-33"></a>    <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-34"><a href="#cb24-34"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Portfolio Growth"</span>,</span>
+<span id="cb24-35"><a href="#cb24-35"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Portfolio Value"</span>,</span>
+<span id="cb24-36"><a href="#cb24-36"></a>         <span class="at">color =</span> <span class="st">"Portfolio"</span>) <span class="sc">+</span></span>
+<span id="cb24-37"><a href="#cb24-37"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
+<span id="cb24-38"><a href="#cb24-38"></a>    <span class="fu">theme_tq</span>() <span class="sc">+</span></span>
+<span id="cb24-39"><a href="#cb24-39"></a>    <span class="fu">scale_color_tq</span>() <span class="sc">+</span></span>
+<span id="cb24-40"><a href="#cb24-40"></a>    <span class="fu">scale_y_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -698,7 +698,20 @@ VERUS.IS VESBE.IS VESTL.IS YKBNK.IS YATAS.IS ZOREN.IS
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+  author = {Murat Koptur},
+  editor = {},
+  title = {Build {Diversified} {Portfolio} with {Machine} {Learning:}
+    {Clustering} Method for Stock Selection},
+  date = {2022-09-18},
+  url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Murat Koptur. 2022. <span>“Build Diversified Portfolio with Machine
+Learning: Clustering Method for Stock Selection.”</span> September 18,
+2022. <a href="https://www.muratkoptur.com/MyDsProjects/Analysis.html">https://www.muratkoptur.com/MyDsProjects/Analysis.html</a>.
+</div></div></section></div></main> <!-- /main -->
 <a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" alt="DMCA.com Protection Status"></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

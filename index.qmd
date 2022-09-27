@@ -11,5 +11,6 @@ keywords: data science, statistics, machine learning
 description-meta: Data science blog & projects.
 format: 
   html: 
+    citation: false
     page-layout: full
 ---

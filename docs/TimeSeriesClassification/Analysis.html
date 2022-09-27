@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.154">
+<meta name="generator" content="quarto-1.2.157">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -357,15 +357,15 @@ cookieconsent.run({
 </blockquote>
 <p>Let’s read dataset:</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X_tr, y_tr <span class="op">=</span> load_from_tsfile_to_dataframe(<span class="st">"data/AtrialFibrillation_TRAIN.ts"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X_ts, y_ts <span class="op">=</span> load_from_tsfile_to_dataframe(<span class="st">"data/AtrialFibrillation_TEST.ts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>X_tr, y_tr <span class="op">=</span> load_from_tsfile_to_dataframe(<span class="st">"data/AtrialFibrillation_TRAIN.ts"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>X_ts, y_ts <span class="op">=</span> load_from_tsfile_to_dataframe(<span class="st">"data/AtrialFibrillation_TEST.ts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Take a look:</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  X_tr.head(<span class="dv">1</span>), </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  headers<span class="op">=</span>X_tr.columns</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>Markdown(tabulate(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  X_tr.head(<span class="dv">1</span>), </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  headers<span class="op">=</span>X_tr.columns</span>
+<span id="cb2-4"><a href="#cb2-4"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <table class="table table-sm table-striped">
 <thead>
@@ -441,10 +441,10 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  y_tr, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  headers<span class="op">=</span><span class="st">"Labels"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>Markdown(tabulate(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  y_tr, </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  headers<span class="op">=</span><span class="st">"Labels"</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <p>L</p>
 <hr>
@@ -452,57 +452,57 @@ cookieconsent.run({
 </div>
 </div>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">0</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">0</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"non termination artiral fibrilation"</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>X_tr.iloc[<span class="dv">0</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb4-4"><a href="#cb4-4"></a>X_tr.iloc[<span class="dv">0</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>fig.tight_layout()</span>
+<span id="cb4-7"><a href="#cb4-7"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>fig.suptitle(<span class="st">"non termination artiral fibrilation"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="Analysis_files/figure-html/cell-6-output-1.png" width="662" height="474"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">6</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">6</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"an atrial fibrilation that self terminates"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>X_tr.iloc[<span class="dv">6</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb5-4"><a href="#cb5-4"></a>X_tr.iloc[<span class="dv">6</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a>fig.tight_layout()</span>
+<span id="cb5-7"><a href="#cb5-7"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>fig.suptitle(<span class="st">"an atrial fibrilation that self terminates"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="Analysis_files/figure-html/cell-7-output-1.png" width="662" height="474"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">12</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>X_tr.iloc[<span class="dv">12</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"terminating immediatly"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>X_tr.iloc[<span class="dv">12</span>,<span class="dv">0</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb6-4"><a href="#cb6-4"></a>X_tr.iloc[<span class="dv">12</span>,<span class="dv">1</span>].plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>fig.tight_layout()</span>
+<span id="cb6-7"><a href="#cb6-7"></a>fig.subplots_adjust(top<span class="op">=</span><span class="fl">0.88</span>)</span>
+<span id="cb6-8"><a href="#cb6-8"></a>fig.suptitle(<span class="st">"terminating immediatly"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="Analysis_files/figure-html/cell-8-output-1.png" width="662" height="474"></p>
 </div>
 </div>
 <p>Our data is multivariate. We’ll use <code>ColumnConcatenator</code> which concatenates each dimension and converts multivariate time series to univariate time series.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> ColumnConcatenator()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>X_tr <span class="op">=</span> cc.fit_transform(X_tr)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X_ts <span class="op">=</span> cc.fit_transform(X_ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>cc <span class="op">=</span> ColumnConcatenator()</span>
+<span id="cb7-2"><a href="#cb7-2"></a>X_tr <span class="op">=</span> cc.fit_transform(X_tr)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>X_ts <span class="op">=</span> cc.fit_transform(X_ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s train classifier:</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> TimeSeriesForestClassifier(min_interval<span class="op">=</span><span class="dv">200</span>, n_estimators<span class="op">=</span><span class="dv">10000</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clf.fit(X_tr, y_tr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>clf <span class="op">=</span> TimeSeriesForestClassifier(min_interval<span class="op">=</span><span class="dv">200</span>, n_estimators<span class="op">=</span><span class="dv">10000</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>clf.fit(X_tr, y_tr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>TimeSeriesForestClassifier(min_interval=200, n_estimators=10000, n_jobs=-1,
                            random_state=1234)</code></pre>
@@ -510,8 +510,8 @@ cookieconsent.run({
 </div>
 <p>Predict test data and check accuracy:</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>y_pr <span class="op">=</span> clf.predict(X_ts)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_ts, y_pr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>y_pr <span class="op">=</span> clf.predict(X_ts)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="bu">print</span>(classification_report(y_ts, y_pr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
@@ -527,12 +527,12 @@ weighted avg       0.60      0.47      0.48        15
 </div>
 <p>Visualize confusion matrix:</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_ts, y_pr, labels<span class="op">=</span>[<span class="st">'n'</span>, <span class="st">'s'</span>, <span class="st">'t'</span>])</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sn.heatmap(pd.DataFrame(cm), annot<span class="op">=</span><span class="va">True</span>, square<span class="op">=</span><span class="va">True</span>, cbar<span class="op">=</span><span class="va">False</span>, fmt<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Predicted"</span>) </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Actual"</span>) </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>cm <span class="op">=</span> confusion_matrix(y_ts, y_pr, labels<span class="op">=</span>[<span class="st">'n'</span>, <span class="st">'s'</span>, <span class="st">'t'</span>])</span>
+<span id="cb12-2"><a href="#cb12-2"></a>ax <span class="op">=</span> sn.heatmap(pd.DataFrame(cm), annot<span class="op">=</span><span class="va">True</span>, square<span class="op">=</span><span class="va">True</span>, cbar<span class="op">=</span><span class="va">False</span>, fmt<span class="op">=</span><span class="st">'g'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3"></a>plt.xlabel(<span class="st">"Predicted"</span>) </span>
+<span id="cb12-4"><a href="#cb12-4"></a>plt.ylabel(<span class="st">"Actual"</span>) </span>
+<span id="cb12-5"><a href="#cb12-5"></a>ax.invert_yaxis()</span>
+<span id="cb12-6"><a href="#cb12-6"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="Analysis_files/figure-html/cell-12-output-1.png" width="422" height="422"></p>
 </div>
@@ -559,7 +559,18 @@ weighted avg       0.60      0.47      0.48        15
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+  author = {Murat Koptur},
+  editor = {},
+  title = {Time {Series} {Classification} with {Random} {Forests}},
+  date = {2022-09-17},
+  url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Murat Koptur. 2022. <span>“Time Series Classification with Random
+Forests.”</span> September 17, 2022. <a href="https://www.muratkoptur.com/MyDsProjects/Analysis.html">https://www.muratkoptur.com/MyDsProjects/Analysis.html</a>.
+</div></div></section></div></main> <!-- /main -->
 <a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" alt="DMCA.com Protection Status"></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

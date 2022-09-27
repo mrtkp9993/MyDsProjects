@@ -65,6 +65,10 @@ comments:
 
 format:
   html:
+    code-copy: true
+    code-line-numbers: true
+    fig-align: center
+    citation: true
     page-layout: article
     include-in-header: header.html
     include-after-body: footer.html

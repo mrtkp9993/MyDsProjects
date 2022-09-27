@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.154">
+<meta name="generator" content="quarto-1.2.157">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -343,19 +343,19 @@ cookieconsent.run({
 <section id="time-span-between-earthquake-occurrences" class="level2">
 <h2 class="anchored" data-anchor-id="time-span-between-earthquake-occurrences">Time Span between Earthquake Occurrences</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_diff_between_eq, <span class="fu">aes</span>(<span class="at">x=</span>diff)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_diff_between_eq, <span class="fu">aes</span>(<span class="at">x=</span>diff)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span>
+<span id="cb1-3"><a href="#cb1-3"></a>p</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_diff_between_eq, <span class="fu">aes</span>(<span class="at">x=</span>diff)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p2</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_diff_between_eq, <span class="fu">aes</span>(<span class="at">x=</span>diff)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb2-3"><a href="#cb2-3"></a>p2</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -364,10 +364,10 @@ cookieconsent.run({
 <section id="earthquake-count-by-year" class="level2">
 <h2 class="anchored" data-anchor-id="earthquake-count-by-year">Earthquake Count By Year</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_count_by_year, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>count)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>p3</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_count_by_year, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>count)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
+<span id="cb3-3"><a href="#cb3-3"></a>p3</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -378,27 +378,27 @@ cookieconsent.run({
 <h1>Modelling the probability</h1>
 <p>Let’s fit Weibull distribution to distribution of days between two earthquakes occurred successively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotdist</span>(data_diff_between_eq<span class="sc">$</span>diff, <span class="at">demp =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">plotdist</span>(data_diff_between_eq<span class="sc">$</span>diff, <span class="at">demp =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Fit the distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add all data points to 0.1 for avoiding zero division errors</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_diff_between_eq<span class="sc">$</span>diff <span class="ot">&lt;-</span> data_diff_between_eq<span class="sc">$</span>diff <span class="sc">+</span> <span class="fl">0.01</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>wei.fit <span class="ot">&lt;-</span> <span class="fu">fitdist</span>(data_diff_between_eq<span class="sc">$</span>diff, <span class="st">"weibull"</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># add all data points to 0.1 for avoiding zero division errors</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>data_diff_between_eq<span class="sc">$</span>diff <span class="ot">&lt;-</span> data_diff_between_eq<span class="sc">$</span>diff <span class="sc">+</span> <span class="fl">0.01</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>wei.fit <span class="ot">&lt;-</span> <span class="fu">fitdist</span>(data_diff_between_eq<span class="sc">$</span>diff, <span class="st">"weibull"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check convergence, 0 means procedure was converged:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(wei.fit<span class="sc">$</span>convergence)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">print</span>(wei.fit<span class="sc">$</span>convergence)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
@@ -459,12 +459,12 @@ cookieconsent.run({
 </ul>
 <p>Let’s calculate mean occurence period of earthquakes which have magnitudes equal or bigger than 5 (simulation and theoretical mean):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shape.v <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wei.fit<span class="sc">$</span>estimate[<span class="dv">1</span>])</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>scale.v <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wei.fit<span class="sc">$</span>estimate[<span class="dv">2</span>])</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(<span class="dv">100000</span>, <span class="at">shape =</span> shape.v, <span class="at">scale =</span> scale.v)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>shape.v <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wei.fit<span class="sc">$</span>estimate[<span class="dv">1</span>])</span>
+<span id="cb8-3"><a href="#cb8-3"></a>scale.v <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wei.fit<span class="sc">$</span>estimate[<span class="dv">2</span>])</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(<span class="dv">100000</span>, <span class="at">shape =</span> shape.v, <span class="at">scale =</span> scale.v)</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <table class="table">
 <thead>
@@ -487,9 +487,9 @@ cookieconsent.run({
 <p>It is expected to have another earthquake having magnitude equal to 5 or above are average 545 days later than the preceding one.</p>
 <p>Let’s plot the CDF:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(simulated_data), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6000</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(simulated_data), <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6000</span>))</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -515,7 +515,19 @@ cookieconsent.run({
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+  author = {Murat Koptur},
+  editor = {},
+  title = {Modelling the Probability of Earthquakes {(M} \textgreater=
+    5.0) in {North} {Anatolian} {Fault} {Zone}},
+  date = {2022-08-25},
+  url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Murat Koptur. 2022. <span>“Modelling the Probability of Earthquakes (M
+&gt;= 5.0) in North Anatolian Fault Zone.”</span> August 25, 2022. <a href="https://www.muratkoptur.com/MyDsProjects/Analysis.html">https://www.muratkoptur.com/MyDsProjects/Analysis.html</a>.
+</div></div></section></div></main> <!-- /main -->
 <a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" alt="DMCA.com Protection Status"></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
