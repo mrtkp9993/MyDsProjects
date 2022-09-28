@@ -35,7 +35,9 @@ website:
   page-footer:
     left: |
           Thanks for reading. If you enjoyed, please share it.\
-          Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
+          Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).\
+          <a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+
     right:
       - href: "https://twitter.com/mrtkp9993"
         icon: "twitter"
@@ -57,17 +59,10 @@ theme:
     - yeti
     - custom.scss
 
-comments:
-  hypothesis:
-    theme: clean
-    openSidebar: false
-
 format:
   html:
-    code-copy: true
-    code-line-numbers: true
     fig-align: center
     citation: true
     page-layout: article
     include-in-header: header.html
-    include-after-body: footer.html
+
