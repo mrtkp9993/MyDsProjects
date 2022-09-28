@@ -19,7 +19,7 @@ listing: true
 
 A missing data pattern is the structure of observed and missing values in a data set. This is not to be confused with a missing data mechanism, which describes possible relationships between data and an one's propensity for missing values. Patterns describe where the gaps in the data are, whereas mechanisms explain why the values are missing.
 
-![](images/paste-82A43477.png){width="400"}
+![](images/paste-82A43477.webp){width="400"}
 
 The missing values in panel a have been isolated on a single variable in the univariate pattern. This pattern could appear, for example, in an experimental setting where outcome scores for a subset of participants are missing. Panel b depicts a monotone missing data pattern from a longitudinal study in which individuals who have missing data at one measurement event always have missing data at subsequent measurements. The general pattern in panel c is that missing values are scattered all through the entire data matrix. Panel d depicts a planned missing data pattern in which three variables are intentionally left blank for a large number of respondents. Panel e depicts a pattern in which a latent variable is absent across the entire sample.
 

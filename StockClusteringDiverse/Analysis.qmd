@@ -33,7 +33,7 @@ Note: We assume that the index components have not changed over the
 time. For a more realistic calculation, the stocks added to and excluded
 from the index should also be taken into account.
 
-![Source: <https://www.pexels.com/tr-tr/fotograf/borsa-kurulu-210607/>](images/paste-6599A03E.png){width="500"}
+![Source: <https://www.pexels.com/tr-tr/fotograf/borsa-kurulu-210607/>](images/paste-6599A03E.webp){width="500"}
 
 # Data
 

@@ -35,7 +35,7 @@ In short, SVMs separates two classes using a hyperplane with the largest
 possible margin. On other side, One-Class SVMs try to identify smallest
 hypersphere which contains most of the data points$^4$.
 
-![Source: $^5$](images/paste-DBD557B8.png)
+![Source: $^5$](images/paste-DBD557B8.webp)
 
 # Example
 

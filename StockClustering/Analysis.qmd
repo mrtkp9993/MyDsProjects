@@ -16,7 +16,7 @@ listing: true
 
 # Introduction
 
-![Source: <https://www.pexels.com/tr-tr/fotograf/belgenin-ustundeki-buyutec-6801648/>](images/paste-0B2C4B8E.png){width="400"}
+![Source: <https://www.pexels.com/tr-tr/fotograf/belgenin-ustundeki-buyutec-6801648/>](images/paste-0B2C4B8E.webp){width="400"}
 
 We have following features for BIST30 stocks:
 

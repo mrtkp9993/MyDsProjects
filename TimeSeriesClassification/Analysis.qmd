@@ -30,7 +30,7 @@ measured at equally-spaced intervals and training and test time series
 examples are of the same length $M$ $^1$.
 
 ![Source:
-<https://www.sciencedirect.com/science/article/pii/B9780128119686000097>](images/paste-B898F7B3.png)
+<https://www.sciencedirect.com/science/article/pii/B9780128119686000097>](images/paste-B898F7B3.webp)
 
 Time series classification methods can be divided into two categories:
 Instance-based and feature-based. Instance-based methods like

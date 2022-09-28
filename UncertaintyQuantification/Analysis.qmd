@@ -20,7 +20,7 @@ editor:
 # Introduction
 
 ![Source:
-$^4$](images/paste-B931C479.png)
+$^4$](images/paste-B931C479.webp)
 
 According to $^2$, uncertainty
 quantification is defined as
@@ -59,7 +59,7 @@ model parameters are calibrated simultaneously using test data) $^1$.
 Polynomial chaos is a method for quantifiying uncertainties on forward
 problems. Its convergence is better than Monte Carlo methods $^3$.
 
-![Source: $^3$](images/paste-4B607140.png)
+![Source: $^3$](images/paste-4B607140.webp)
 
 # Polynomial Chaos Expansion (PCE)
 

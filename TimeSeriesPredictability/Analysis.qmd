@@ -89,9 +89,9 @@ there is a spectrum of Lyapunov exponents. It is common to refer to the
 largest one as the maximal Lyapunov exponent (MLE), because it
 determines a notion of predictability for a dynamical system $^{7}$.
 
-![](images/paste-DD2528C4.png)
+![](images/paste-DD2528C4.webp)
 
-![](images/paste-875EA0B2.png)
+![](images/paste-875EA0B2.webp)
 
 I'll not go into detail on how to calculate the maximal Lyapunov
 exponent, we'll look at practical implications.

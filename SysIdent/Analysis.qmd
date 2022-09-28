@@ -39,7 +39,7 @@ or more outputs. Anything that can be related to input and output data
 is a system example: electrical systems, mechanical systems, biological
 systems, financial systems, chemical systems...$^3$
 
-![Source: $^2$](images/paste-20AD539F.png)
+![Source: $^2$](images/paste-20AD539F.webp)
 
 Systems can be considered of two types, depending on whether they
 satisfy the principle of superposition:

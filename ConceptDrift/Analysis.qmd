@@ -44,7 +44,7 @@ shapes:
 4.  Reoccurring drifts: Some time after a change occurs, the old
     distribution comes again.
 
-![](images/paste-FB2D446A.png)
+![](images/paste-FB2D446A.webp)
 
 # Methods for detecting model drift
 
