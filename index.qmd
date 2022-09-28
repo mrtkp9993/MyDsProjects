@@ -1,9 +1,9 @@
 ---
 listing:
   contents: "**/Analysis.qmd"
-  type: grid
+  type: default
   sort: "date desc"
-  fields: [image, date, title]
+  fields: [image, date, title, description]
   grid-columns: 5
   feed: true
   page-size: 10

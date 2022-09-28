@@ -3,7 +3,7 @@ title: "Uncertainty Quantification with Polynomial Chaos"
 date: 09/13/2022
 author: Murat Koptur
 keywords: data science, statistics, uncertainty quantification
-description-meta: "How to perform uncertainty quantification using polynomial chaos expansion."
+description: "How to perform uncertainty quantification using polynomial chaos expansion."
 execute:
   freeze: auto
   warning: false

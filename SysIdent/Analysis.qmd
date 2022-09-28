@@ -3,7 +3,7 @@ title: "Nonlinear System Identification with NARMAX"
 date: 09/07/2022
 author: Murat Koptur
 keywords: data science, statistics, machine learning, system identification, control theory
-description-meta: "How to identify a dynamical system from measurements."
+description: "How to identify a dynamical system from measurements."
 execute:
   freeze: auto
   warning: false

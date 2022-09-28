@@ -3,7 +3,7 @@ title: "Why ML models fail in production: Model Drift"
 date: 09/04/2022
 author: Murat Koptur
 keywords: data science, statistics, machine learning, concept drift, model drift
-description-meta: "How to detect whether your data changed or not."
+description: "How to detect whether your data changed or not."
 execute:
   freeze: auto
   echo: false

@@ -6,6 +6,8 @@ website:
   site-url: "https://www.muratkoptur.com/MyDsProjects"
   title: "Murat Koptur Data Science Blog & Projects"
   description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
+  favicon: "favicon.ico"
+  search: false
   navbar:
     right:
       - href: "/"
@@ -23,7 +25,6 @@ website:
       - href: "mailto:muratkoptur@yandex.com"
         icon: "mailbox"
   open-graph:
-    title: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
     image: "https://muratkoptur.com/MyDsProjects/ogimg.png"
     description: "Murat Koptur - Data Scientist - Data Science Blog & Projects"
   twitter-card:
@@ -34,10 +35,7 @@ website:
   google-analytics: "G-TQSZS8HRH9"
   page-footer:
     left: |
-          Thanks for reading. If you enjoyed, please share it.\
-          Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).\
-          <a href="//www.dmca.com/Protection/Status.aspx?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=b742ca88-8c4f-4803-82cb-d32b9b87901e"  alt="DMCA.com Protection Status" /></a>  <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
-
+          Support my work from [GitHub Sponsors](https://github.com/sponsors/mrtkp9993/) and [Patreon](https://patreon.com/muratkoptur?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=creatorshare_creator).
     right:
       - href: "https://twitter.com/mrtkp9993"
         icon: "twitter"
@@ -53,6 +51,7 @@ website:
 resources:
   - "ogimg.png"
   - "profile.png"
+  - "favicon.ico"
 
 theme:
   light:

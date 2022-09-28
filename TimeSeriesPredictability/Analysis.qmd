@@ -3,7 +3,7 @@ title: "Don't Try to Forecast Everything: Predictability of Time Series"
 date: 09/01/2022
 author: Murat Koptur
 keywords: data science, statistics, time series analysis
-description-meta: "We'll look at a few handy tools that give more information about our time series."
+description: "We'll look at a few handy tools that give more information about our time series."
 execute:
   freeze: auto
   echo: false

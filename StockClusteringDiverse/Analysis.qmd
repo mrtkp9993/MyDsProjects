@@ -3,7 +3,7 @@ title: "Build Diversified Portfolio with Machine Learning: Clustering method for
 date: 09/18/2022
 author: Murat Koptur
 keywords: data science, statistics, time series, clustering, portfolio management, stock portfolio, machine learning
-description-meta: "How to create diversified portfolio using clustering."
+description: "How to create diversified portfolio using clustering."
 execute:
   freeze: auto
   warning: false

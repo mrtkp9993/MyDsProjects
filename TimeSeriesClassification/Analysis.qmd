@@ -3,7 +3,7 @@ title: "Time Series Classification with Random Forests"
 date: 09/17/2022
 author: Murat Koptur
 keywords: data science, statistics, time series, classification, machine learning
-description-meta: "How to classify time series."
+description: "How to classify time series."
 execute:
   freeze: auto
   warning: false

@@ -3,7 +3,7 @@ title: "Unsupervised Anomaly Detection with One-Class SVM"
 date: 09/10/2022
 author: Murat Koptur
 keywords: data science, statistics, machine learning, anomaly detection, svm
-description-meta: "How to identify anomalies with One-Class SVM."
+description: "How to identify anomalies with One-Class SVM."
 execute:
   freeze: auto
   warning: false

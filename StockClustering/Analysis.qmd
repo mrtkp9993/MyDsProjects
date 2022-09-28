@@ -3,7 +3,7 @@ title: "Stock Return and Fundamental Clustering & Portfolio Selection"
 date: 08/26/2022
 author: Murat Koptur
 keywords: data science, statistics, finance, stock markets, portfolio optimization, machine learning
-description-meta: "Better portfolio management & optimization with machine learning / clustering"
+description: "Better portfolio management & optimization with machine learning / clustering"
 execute:
   freeze: auto
   warning: false

@@ -3,7 +3,7 @@ title: "Modelling the probability of earthquakes (M >= 5.0) in North Anatolian F
 date: 08/25/2022
 author: Murat Koptur
 keywords: data science, statistics, weibull distribution, distribution fitting, seismology, earthquakes
-description-meta: "Modelling distribution of days between two earthquakes occurred successively."
+description: "Modelling distribution of days between two earthquakes occurred successively."
 execute:
   freeze: auto
   echo: false

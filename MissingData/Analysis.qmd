@@ -3,7 +3,7 @@ title: "Don't impute all missing data: Missing Data Patterns"
 date: 08/28/2022
 author: Murat Koptur
 keywords: data science, statistics, missing data
-description-meta: "How to handle the data with missing values?"
+description: "How to handle the data with missing values?"
 execute:
   freeze: auto
   echo: false
