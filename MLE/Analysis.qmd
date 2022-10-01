@@ -1,6 +1,6 @@
 ---
 title: "Under the hood: Maximum Likelihood Estimation (MLE)"
-date: 09/18/2022
+date: 10/01/2022
 author: Murat Koptur
 keywords: data science, statistics, estimation, maximum likelihood estimation
 description: "Understand the working mechanism of one of the most used statistical methods."
