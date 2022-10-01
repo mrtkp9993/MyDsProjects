@@ -14,6 +14,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/MLE/Analysis.html",
       "/StockClusteringDiverse/Analysis.html",
       "/TimeSeriesClassification/Analysis.html",
       "/UncertaintyQuantification/Analysis.html",
@@ -28,6 +29,10 @@
   },
   {
     "listing": "/MissingData/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/MLE/Analysis.html",
     "items": []
   },
   {

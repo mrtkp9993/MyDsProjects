@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.157">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Murat Koptur">
+<meta name="dcterms.date" content="2022-09-18">
+<meta name="keywords" content="data science, statistics, estimation, maximum likelihood estimation">
+<meta name="description" content="Understand the working mechanism of one of the most used statistical methods.">
+
+<title>Murat Koptur Data Science Blog &amp; Projects - Under the hood: Maximum Likelihood Estimation (MLE)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../favicon.ico" rel="icon">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: [{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: [],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TQSZS8HRH9"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
+</script>
+<meta name="dmca-site-verification" content="Z3FSZHB5TVZmMkNyQlhFMjlORitOQT090">
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6702378382603826" crossorigin="anonymous"></script>
+
+<script src="../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="../site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Murat Koptur Data Science Blog &amp; Projects - Under the hood: Maximum Likelihood Estimation (MLE)">
+<meta property="og:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
+<meta property="og:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
+<meta property="og:site-name" content="Murat Koptur Data Science Blog &amp; Projects">
+<meta name="twitter:title" content="Murat Koptur Data Science Blog &amp; Projects - Under the hood: Maximum Likelihood Estimation (MLE)">
+<meta name="twitter:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
+<meta name="twitter:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
+<meta name="twitter:creator" content="@mrtkp9993">
+<meta name="twitter:site" content="@mrtkp9993">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Murat Koptur Data Science Blog &amp; Projects</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../"><i class="bi bi-house-fill" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../about.html"><i class="bi bi-person-fill" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mrtkp9993"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/mrtkp9993/"><i class="bi bi-instagram" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/muratkoptur/"><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mrtkp9993"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:muratkoptur@yandex.com"><i class="bi bi-mailbox" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Under the hood: Maximum Likelihood Estimation (MLE)</h1>
+</div>
+
+<div>
+  <div class="description">
+    Understand the working mechanism of one of the most used statistical methods.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Murat Koptur </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 18, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/mle.webp" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Source: <span class="math inline">\(^1\)</span></figcaption><p></p>
+</figure>
+</div>
+<p>Maximum likelihood is a method for constructing an estimator for an unknown parameter <span class="math inline">\(\theta\)</span>, which was introduced by Fisher in 1912. Method can be applied in most problems and often gives a reasonable estimator for <span class="math inline">\(\theta\)</span>, and if sample size is big, the method will give an excellent estimator of <span class="math inline">\(\theta\)</span>. For these reasons, the method is most widely used estimation method in statistics <span class="math inline">\(^2\)</span>.</p>
+<p>Maximum likelihood estimation can be described as follow: suppose that we observed <span class="math inline">\(X_1,\cdots,X_n\)</span> from a distribution <span class="math inline">\(f(x|\theta)\)</span>. Then we define the likelihood function (the joint probability of the observed data viewed as a function of parameters of the statistical model) as</p>
+<p><span class="math display">\[L(\theta)=f(x_1,\ldots,x_n|\theta)=f(x_1|\theta)\cdots f(x_n|\theta)\]</span></p>
+<p>Since <span class="math inline">\(\text{log}\)</span> is a monotonic increasing function, maximizing <span class="math inline">\(L(\theta)\)</span> is equivalent to maximizing <span class="math inline">\(\text{log}L(\theta)\)</span>. Then we define the log-likelihood function as</p>
+<p><span class="math display">\[l(\theta)=\text{log}L(\theta)=\text{log}\prod_{i=1}^n f(X_i|\theta)=\sum_{i=1}^n\text{log}f(X_i|\theta)\]</span></p>
+<p>Maximizing <span class="math inline">\(l(\theta)\)</span> with respect to <span class="math inline">\(\theta\)</span> will give us the MLE <span class="math inline">\(^{2,3}\)</span>:</p>
+<p><span class="math display">\[\hat{\theta}=\mathop{\mathrm{argmax}}_{\theta\in\Theta}l(\theta)\]</span></p>
+</section>
+<section id="examples" class="level1">
+<h1>Examples</h1>
+<section id="estimate-the-distribution-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="estimate-the-distribution-parameters">Estimate the distribution parameters</h2>
+<div class="cell">
+
+</div>
+<p>Assume that we observed <span class="math inline">\(15\)</span> different <span class="math inline">\(X_i\)</span> values from Poisson distribution with unknown <span class="math inline">\(\lambda\)</span> (we simulate the data, so we know the true value of parameter <span class="math inline">\(\lambda = 3\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>obs_pois <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">15</span>, <span class="dv">3</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obs_pois)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(obs_pois)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Since we know that data is distributed as Poisson, we can write the likelihood and log-likelihood functions as:</p>
+<p><span class="math display">\[
+L(\lambda)=\prod_{i=1}^{n}\exp(-\lambda)\frac{1}{x_i!}\lambda^{x_i}
+\]</span></p>
+<p><span class="math display">\[
+l(\lambda)=-n\lambda-\sum_{i=1}^n\ln(x_i!)+\ln(\lambda)\sum_{i=1}^nx_i
+\]</span></p>
+<p>Let’s estimate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>loglikMLEpois <span class="ot">&lt;-</span> <span class="cf">function</span>(params, x_data) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">dpois</span>(x_data, <span class="at">lambda =</span> params[<span class="dv">1</span>], <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>estPois <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="at">lambda =</span> <span class="dv">1</span>), <span class="at">fn =</span> loglikMLEpois, <span class="at">x_data =</span> obs_pois, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale=</span><span class="sc">-</span><span class="dv">1</span>), <span class="at">method=</span><span class="st">"BFGS"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(estPois<span class="sc">$</span>par, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lambda 
+2.9333 </code></pre>
+</div>
+</div>
+<p>We estimated <span class="math inline">\(\hat{\lambda}=\)</span> 2.9333 which is a good estimation.</p>
+<p>Plot the log-likelihood function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logLikValuesPois <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">lambda=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>logLikValuesPois<span class="sc">$</span>LL <span class="ot">&lt;-</span> <span class="fu">apply</span>(logLikValuesPois, <span class="dv">1</span>, loglikMLEpois, <span class="at">x_data=</span>obs_pois)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(logLikValuesPois<span class="sc">$</span>lambda, logLikValuesPois<span class="sc">$</span>LL, <span class="at">type=</span><span class="st">"o"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="estimate-the-linear-regression-model-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="estimate-the-linear-regression-model-parameters">Estimate the linear regression model parameters</h2>
+<p>Suppose that we observed 10 different <span class="math inline">\((x_i, y_i), \quad i=1,\ldots,10\)</span> samples. For this, we generate some random data (Our data generation process is <span class="math inline">\(y = 2x-1+\epsilon\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.983404"},{"1":"2","2":"2.377543"},{"1":"3","2":"4.268464"},{"1":"4","2":"6.483330"},{"1":"5","2":"7.249267"},{"1":"6","2":"11.880104"},{"1":"7","2":"14.370010"},{"1":"8","2":"13.312673"},{"1":"9","2":"16.372564"},{"1":"10","2":"19.018317"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Plot of our generated data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"o"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We simulated the data, so we know the true parameter values, <span class="math inline">\(\theta=(\theta_0, \theta_1)=(-1, 2)\)</span>. Let’s try to estimate them with MLE.</p>
+<p>If we assume that errors has the Normal distribution with mean zero and standard deviation one and error variance is constant, we get</p>
+<p><span class="math display">\[
+y~\sim N(\theta_0+\theta_1x,\sigma^2)
+\]</span></p>
+<p>So we can write the conditional distribution as:</p>
+<p><span class="math display">\[
+f(y|x,\theta_0,\theta_1,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2}\frac{(y-(\theta_1x+\theta_0))^2}{\sigma^2}}
+\]</span></p>
+<p>Then we get following likelihood and log-likelihood functions:</p>
+<p><span class="math display">\[
+L(\theta_0,\theta_1,\sigma^2)=\frac{1}{(2\pi\sigma^2)^{n/2}}\prod_{(x,y)\in X}e^\frac{-(y-(\theta_1 x + \theta_0))^2}{2\sigma^2}
+\]</span></p>
+<p><span class="math display">\[
+l(\theta_0,\theta_1,\sigma^2)=-\frac{n}{2}\log 2\pi-n\log \sigma-\frac{1}{\sigma^2}\sum_{i=1}^n(y_i-(\theta_1x_i+\theta_0))^2
+\]</span></p>
+<p>Let’s define log-likelihood function in R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>loglikMLEreg <span class="ot">&lt;-</span> <span class="cf">function</span>(params, y_data) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  x_data <span class="ot">=</span> x</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">dnorm</span>(y_data, <span class="at">mean =</span> params[<span class="dv">1</span>] <span class="sc">+</span> params[<span class="dv">2</span>] <span class="sc">*</span> x_data, <span class="at">sd =</span> params[<span class="dv">3</span>], <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Maximize:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>estReg <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">sigma =</span> <span class="dv">1</span>), <span class="at">fn =</span> loglikMLEreg,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">y_data =</span> y, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale=</span><span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(estReg<span class="sc">$</span>par, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept     slope     sigma 
+  -1.0947    1.9684    1.0153 </code></pre>
+</div>
+</div>
+<p>Our estimation is <span class="math inline">\(\hat{\theta}=(\)</span>-1.0946921, 1.9683684<span class="math inline">\()\)</span>. We know that true values are <span class="math inline">\(\theta=(-1, 2)\)</span> so this estimation is a pretty good.</p>
+<p>Lastly, visualize our log-likelihood function with constant sigma:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>logLikValues <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">theta_0=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>), <span class="at">theta_1=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>logLikValues<span class="sc">$</span>sigma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>logLikValues<span class="sc">$</span>LL <span class="ot">&lt;-</span> <span class="fu">apply</span>(logLikValues, <span class="dv">1</span>, loglikMLEreg, <span class="at">y_data=</span>y)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plot_matrix <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">acast</span>(logLikValues, theta_0<span class="sc">~</span>theta_1, <span class="at">value.var=</span><span class="st">"LL"</span>))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">as.numeric</span>(<span class="fu">colnames</span>(plot_matrix)), </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">as.numeric</span>(<span class="fu">rownames</span>(plot_matrix)), </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">z =</span> plot_matrix</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_surface</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">layout</span>(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">scene =</span> <span class="fu">list</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"theta_0"</span>),</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"theta_1"</span>),</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">zaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"LL"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-798441fdaea77ad32f6b" style="width:100%;height:464px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-798441fdaea77ad32f6b">{"x":{"visdat":{"76c42423267":["function () ","plotlyVisDat"]},"cur_data":"76c42423267","attrs":{"76c42423267":{"x":[-5,-4,-3,-2,-1,0,1,2,3,4,5],"y":[-5,-4,-3,-2,-1,0,1,2,3,4,5],"z":[[-10934.9322484066,-10517.6165724981,-10110.3008965896,-9712.98522068113,-9325.66954477265,-8948.35386886417,-8581.03819295569,-8223.7225170472,-7876.40684113872,-7539.09116523024,-7211.77548932175],[-8229.8003892592,-7867.48471335072,-7515.16903744224,-7172.85336153375,-6840.53768562527,-6518.22200971679,-6205.90633380831,-5903.59065789982,-5611.27498199134,-5328.95930608286,-5056.64363017438],[-5909.66853011182,-5602.35285420334,-5305.03717829486,-5017.72150238638,-4740.40582647789,-4473.09015056941,-4215.77447466093,-3968.45879875244,-3731.14312284396,-3503.82744693548,-3286.511771027],[-3974.53667096444,-3722.22099505596,-3479.90531914748,-3247.589643239,-3025.27396733051,-2812.95829142203,-2610.64261551355,-2418.32693960507,-2236.01126369658,-2063.6955877881,-1901.37991187962],[-2424.40481181707,-2227.08913590858,-2039.7734600001,-1862.45778409162,-1695.14210818313,-1537.82643227465,-1390.51075636617,-1253.19508045769,-1125.8794045492,-1008.56372864072,-901.248052732237],[-1259.27295266969,-1116.9572767612,-984.641600852721,-862.325924944238,-750.010249035755,-647.694573127272,-555.378897218789,-473.063221310307,-400.747545401824,-338.431869493341,-286.116193584858],[-479.141093522307,-391.825417613824,-314.509741705341,-247.194065796859,-189.878389888376,-142.562713979893,-105.24703807141,-77.9313621629273,-60.6156862544445,-53.3000103459616,-55.9843344374788],[-84.0092343749279,-51.6935584664451,-29.3778825579623,-17.0622066494794,-14.7465307409966,-22.4308548325137,-40.1151789240309,-67.7995030155481,-105.483827107065,-153.168151198582,-210.8524752901],[-73.8773752275487,-96.5616993190659,-129.246023410583,-171.9303475021,-224.614671593617,-287.298995685135,-359.983319776652,-442.667643868169,-535.351967959686,-638.036292051203,-750.72061614272],[-448.745516080169,-526.429840171687,-614.114164263204,-711.798488354721,-819.482812446238,-937.167136537755,-1064.85146062927,-1202.53578472079,-1350.22010881231,-1507.90443290382,-1675.58875699534],[-1208.61365693279,-1341.29798102431,-1483.98230511582,-1636.66662920734,-1799.35095329886,-1972.03527739038,-2154.71960148189,-2347.40392557341,-2550.08824966493,-2762.77257375644,-2985.45689784796]],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"theta_0"},"yaxis":{"title":"theta_1"},"zaxis":{"title":"LL"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"colorbar":{"title":"","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"x":[-5,-4,-3,-2,-1,0,1,2,3,4,5],"y":[-5,-4,-3,-2,-1,0,1,2,3,4,5],"z":[[-10934.9322484066,-10517.6165724981,-10110.3008965896,-9712.98522068113,-9325.66954477265,-8948.35386886417,-8581.03819295569,-8223.7225170472,-7876.40684113872,-7539.09116523024,-7211.77548932175],[-8229.8003892592,-7867.48471335072,-7515.16903744224,-7172.85336153375,-6840.53768562527,-6518.22200971679,-6205.90633380831,-5903.59065789982,-5611.27498199134,-5328.95930608286,-5056.64363017438],[-5909.66853011182,-5602.35285420334,-5305.03717829486,-5017.72150238638,-4740.40582647789,-4473.09015056941,-4215.77447466093,-3968.45879875244,-3731.14312284396,-3503.82744693548,-3286.511771027],[-3974.53667096444,-3722.22099505596,-3479.90531914748,-3247.589643239,-3025.27396733051,-2812.95829142203,-2610.64261551355,-2418.32693960507,-2236.01126369658,-2063.6955877881,-1901.37991187962],[-2424.40481181707,-2227.08913590858,-2039.7734600001,-1862.45778409162,-1695.14210818313,-1537.82643227465,-1390.51075636617,-1253.19508045769,-1125.8794045492,-1008.56372864072,-901.248052732237],[-1259.27295266969,-1116.9572767612,-984.641600852721,-862.325924944238,-750.010249035755,-647.694573127272,-555.378897218789,-473.063221310307,-400.747545401824,-338.431869493341,-286.116193584858],[-479.141093522307,-391.825417613824,-314.509741705341,-247.194065796859,-189.878389888376,-142.562713979893,-105.24703807141,-77.9313621629273,-60.6156862544445,-53.3000103459616,-55.9843344374788],[-84.0092343749279,-51.6935584664451,-29.3778825579623,-17.0622066494794,-14.7465307409966,-22.4308548325137,-40.1151789240309,-67.7995030155481,-105.483827107065,-153.168151198582,-210.8524752901],[-73.8773752275487,-96.5616993190659,-129.246023410583,-171.9303475021,-224.614671593617,-287.298995685135,-359.983319776652,-442.667643868169,-535.351967959686,-638.036292051203,-750.72061614272],[-448.745516080169,-526.429840171687,-614.114164263204,-711.798488354721,-819.482812446238,-937.167136537755,-1064.85146062927,-1202.53578472079,-1350.22010881231,-1507.90443290382,-1675.58875699534],[-1208.61365693279,-1341.29798102431,-1483.98230511582,-1636.66662920734,-1799.35095329886,-1972.03527739038,-2154.71960148189,-2347.40392557341,-2550.08824966493,-2762.77257375644,-2985.45689784796]],"type":"surface","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/MLE" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/MLE</a></p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><span class="math inline">\(^1\)</span> <a href="https://media.geeksforgeeks.org/wp-content/uploads/20210415012617/MLEexample.png" class="uri">https://media.geeksforgeeks.org/wp-content/uploads/20210415012617/MLEexample.png</a></p>
+<p><span class="math inline">\(^2\)</span> <a href="https://people.missouristate.edu/songfengzheng/Teaching/MTH541/Lecture%20notes/MLE.pdf" class="uri">https://people.missouristate.edu/songfengzheng/Teaching/MTH541/Lecture%20notes/MLE.pdf</a></p>
+<p><span class="math inline">\(^3\)</span> <a href="https://en.wikipedia.org/wiki/Likelihood_function?oldformat=true" class="uri">https://en.wikipedia.org/wiki/Likelihood_function?oldformat=true</a></p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+  author = {Murat Koptur},
+  editor = {},
+  title = {Under the Hood: {Maximum} {Likelihood} {Estimation} {(MLE)}},
+  date = {2022-09-18},
+  url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Murat Koptur. 2022. <span>“Under the Hood: Maximum Likelihood Estimation
+(MLE).”</span> September 18, 2022. <a href="https://www.muratkoptur.com/MyDsProjects/Analysis.html">https://www.muratkoptur.com/MyDsProjects/Analysis.html</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Support my work from <a href="https://github.com/sponsors/mrtkp9993/">GitHub Sponsors</a> and <a href="https://patreon.com/muratkoptur?utm_medium=clipboard_copy&amp;utm_source=copyLink&amp;utm_campaign=creatorshare_creator">Patreon</a>.</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mrtkp9993">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/mrtkp9993/">
+      <i class="bi bi-instagram" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/muratkoptur/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mrtkp9993">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:muratkoptur@yandex.com">
+      <i class="bi bi-mailbox" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
