@@ -8,8 +8,8 @@
 <title>Murat Koptur Data Science Blog &amp; Projects</title>
 <link>https://www.muratkoptur.com/MyDsProjects/index.html</link>
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
-<description>Murat Koptur - Data Scientist - Data Science Blog &amp; Projects</description>
-<generator>quarto-1.2.157</generator>
+<description>Murat Koptur - Data Scientist - Data science Blog &amp; Projects.</description>
+<generator>quarto-1.2.174</generator>
 <lastBuildDate>Fri, 30 Sep 2022 21:00:00 GMT</lastBuildDate>
 <item>
   <title>Under the hood: Maximum Likelihood Estimation (MLE)</title>

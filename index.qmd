@@ -1,14 +1,15 @@
 ---
 listing:
   contents: "**/Analysis.qmd"
-  type: default
+  type: grid
+  image-height: "100px"
   sort: "date desc"
   fields: [image, date, title, description]
   grid-columns: 5
   feed: true
   page-size: 10
 keywords: data science, statistics, machine learning
-description-meta: Data science blog & projects.
+description: Murat Koptur - Data Scientist - Data science Blog & Projects.
 format: 
   html: 
     citation: false
