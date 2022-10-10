@@ -9,8 +9,151 @@
 <link>https://www.muratkoptur.com/MyDsProjects/index.html</link>
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
 <description>Murat Koptur - Data Scientist - Data science Blog &amp; Projects.</description>
-<generator>quarto-1.2.174</generator>
-<lastBuildDate>Fri, 30 Sep 2022 21:00:00 GMT</lastBuildDate>
+<generator>quarto-1.2.198</generator>
+<lastBuildDate>Sun, 09 Oct 2022 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Under the hood: Expectation Maximization (EM)</title>
+  <dc:creator>Murat Koptur</dc:creator>
+  <link>https://www.muratkoptur.com/MyDsProjects/EM/Analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/EM/images/cover.webp" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Source: <a href="https://jonathan-hui.medium.com/machine-learning-expectation-maximization-algorithm-em-2e954cb76959" class="uri">https://jonathan-hui.medium.com/machine-learning-expectation-maximization-algorithm-em-2e954cb76959</a></figcaption><p></p>
+</figure>
+</div>
+<p>If data contains missing values or latent (unobserved) variables, we cannot use the MLE for estimating parameters since the likelihood will be based on both observed and unobserved data. Expectation-maximization (EM) algorithm was developed by Dempster, Laird and Rubin for to find a maximum likelihood estimate of parameters in presence of missing or unobserved data <img src="https://latex.codecogs.com/png.latex?%5E2">.</p>
+<p>Assume that the complete dataset consists of <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BZ%7D=(%5Cmathcal%7BX%7D,%5Cmathcal%7BY%7D)"> but that only <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BX%7D"> is observed. Denote the (complete-data) log-likelihood as <img src="https://latex.codecogs.com/png.latex?l(%5Ctheta;%5Cmathcal%7BX%7D,%5Cmathcal%7BY%7D)"> where <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> is the unknown parameter vector which we want to estimate. Then, algorithm iteratively applies these two steps:</p>
+<p><em>Expectation step (E-step)</em>: Calculate the expected value of complete-data log-likelihood function <img src="https://latex.codecogs.com/png.latex?l(%5Ctheta;%5Cmathcal%7BX%7D,%5Cmathcal%7BY%7D)"> given the observed data and the current parameter estimate <img src="https://latex.codecogs.com/png.latex?%5Ctheta_%7B%5Ctext%7Bold%7D%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign*%7D%0AQ(%5Ctheta;%5Ctheta_%5Ctext%7Bold%7D)%20&amp;:=%20%5Cmathbb%7BE%7D%5Bl(%5Ctheta;%5Cmathcal%7BX%7D,%5Cmathcal%7BY%7D)%7C%5Cmathcal%7BX%7D,%5Ctheta_%5Ctext%7Bold%7D%5D%5C%5C%0A&amp;=%20%5Cint%20l(%5Ctheta;%5Cmathcal%7BX%7D,y)p(y%7C%5Cmathcal%7BX%7D,%5Ctheta_%7B%5Ctext%7Bold%7D%7D)dy%0A%5Cend%7Balign*%7D%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?p(%5Ccdot%7C%5Cmathcal%7BX%7D,%5Ctheta_%7B%5Ctext%7Bold%7D%7D)"> is the conditional density of <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BY%7D"> given observed data <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BX%7D">, and assuming <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Ctheta_%5Ctext%7Bold%7D">.</p>
+<p><em>Maximization step (M-step)</em>: Maximize the expectation over <img src="https://latex.codecogs.com/png.latex?%5Ctheta">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctheta_%5Ctext%7Bnew%7D:=%5Cmax_%5Ctheta%20Q(%5Ctheta;%5Ctheta_%7B%5Ctext%7Bold%7D%7D)%0A"></p>
+<p>and set <img src="https://latex.codecogs.com/png.latex?%5Ctheta_%5Ctext%7Bold%7D=%5Ctheta_%5Ctext%7Bnew%7D">. Repeat these two steps until the sequence of <img src="https://latex.codecogs.com/png.latex?%5Ctheta_%5Ctext%7Bnew%7D">’s converge <img src="https://latex.codecogs.com/png.latex?%5E1">.</p>
+<p>One can ask “How can we choose the initial values?”: for finite mixture distributions, we can estimate initial values for each distribution by K-means.</p>
+</section>
+<section id="example---finite-mixture-gaussians" class="level1">
+<h1>Example - Finite Mixture Gaussians</h1>
+<p>Let’s generate the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>)</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">n1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">100</span></span>
+<span id="cb1-4">mu1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">5</span></span>
+<span id="cb1-5">sigma1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7">n2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">50</span></span>
+<span id="cb1-8">mu2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">7</span></span>
+<span id="cb1-9">sigma2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fl" style="color: #AD0000;">1.5</span></span>
+<span id="cb1-10"></span>
+<span id="cb1-11">d1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(n1, mu1, sigma1)</span>
+<span id="cb1-12">d2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">rnorm</span>(n2, mu2, sigma2)</span>
+<span id="cb1-13"></span>
+<span id="cb1-14">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(d1, d2) <span class="co" style="color: #5E5E5E;"># combine data</span></span></code></pre></div>
+</div>
+<p>Let’s look our generated data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">hist</span>(d)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/EM/Analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We need to estimate initial values for EM algorithm. I’ll use K-means estimates for initial values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">clusters <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">kmeans</span>(d,<span class="dv" style="color: #AD0000;">2</span>)<span class="sc" style="color: #5E5E5E;">$</span>cluster</span>
+<span id="cb3-2">mu1i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mean</span>(d[clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb3-3">mu2i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mean</span>(d[clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">2</span>])</span>
+<span id="cb3-4">sigma1i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sd</span>(d[clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb3-5">sigma2i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sd</span>(d[clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">2</span>])</span>
+<span id="cb3-6">pi1i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">1</span>)<span class="sc" style="color: #5E5E5E;">/</span><span class="fu" style="color: #4758AB;">length</span>(clusters)</span>
+<span id="cb3-7">pi2i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(clusters<span class="sc" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">2</span>)<span class="sc" style="color: #5E5E5E;">/</span><span class="fu" style="color: #4758AB;">length</span>(clusters)</span></code></pre></div>
+</div>
+<p>Apply algorithm:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># Source: https://rpubs.com/H_Zhu/246450</span></span>
+<span id="cb4-2">Q <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb4-3">Q[<span class="dv" style="color: #AD0000;">2</span>] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(<span class="fu" style="color: #4758AB;">log</span>(pi1i)<span class="sc" style="color: #5E5E5E;">+</span><span class="fu" style="color: #4758AB;">log</span>(<span class="fu" style="color: #4758AB;">dnorm</span>(d, mu1i, sigma1i))) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">sum</span>(<span class="fu" style="color: #4758AB;">log</span>(pi2i)<span class="sc" style="color: #5E5E5E;">+</span><span class="fu" style="color: #4758AB;">log</span>(<span class="fu" style="color: #4758AB;">dnorm</span>(d, mu2i, sigma2i)))</span>
+<span id="cb4-4"></span>
+<span id="cb4-5">k <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">2</span></span>
+<span id="cb4-6"></span>
+<span id="cb4-7"><span class="cf" style="color: #003B4F;">while</span> (<span class="fu" style="color: #4758AB;">abs</span>(Q[k]<span class="sc" style="color: #5E5E5E;">-</span>Q[k<span class="dv" style="color: #AD0000;">-1</span>])<span class="sc" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">1e-6</span>) {</span>
+<span id="cb4-8">  <span class="co" style="color: #5E5E5E;"># E step</span></span>
+<span id="cb4-9">  comp1 <span class="ot" style="color: #003B4F;">&lt;-</span> pi1i <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">dnorm</span>(d, mu1i, sigma1i)</span>
+<span id="cb4-10">  comp2 <span class="ot" style="color: #003B4F;">&lt;-</span> pi2i <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">dnorm</span>(d, mu2i, sigma2i)</span>
+<span id="cb4-11">  comp.sum <span class="ot" style="color: #003B4F;">&lt;-</span> comp1 <span class="sc" style="color: #5E5E5E;">+</span> comp2</span>
+<span id="cb4-12">  </span>
+<span id="cb4-13">  p1 <span class="ot" style="color: #003B4F;">&lt;-</span> comp1<span class="sc" style="color: #5E5E5E;">/</span>comp.sum</span>
+<span id="cb4-14">  p2 <span class="ot" style="color: #003B4F;">&lt;-</span> comp2<span class="sc" style="color: #5E5E5E;">/</span>comp.sum</span>
+<span id="cb4-15">  </span>
+<span id="cb4-16">  <span class="co" style="color: #5E5E5E;"># M step</span></span>
+<span id="cb4-17">  pi1i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(p1) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">length</span>(d)</span>
+<span id="cb4-18">  pi2i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(p2) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">length</span>(d)</span>
+<span id="cb4-19">  </span>
+<span id="cb4-20">  mu1i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(p1 <span class="sc" style="color: #5E5E5E;">*</span> d) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sum</span>(p1)</span>
+<span id="cb4-21">  mu2i <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(p2 <span class="sc" style="color: #5E5E5E;">*</span> d) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sum</span>(p2)</span>
+<span id="cb4-22">  </span>
+<span id="cb4-23">  sigma1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sqrt</span>(<span class="fu" style="color: #4758AB;">sum</span>(p1 <span class="sc" style="color: #5E5E5E;">*</span> (d<span class="sc" style="color: #5E5E5E;">-</span>mu1i)<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sum</span>(p1))</span>
+<span id="cb4-24">  sigma2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sqrt</span>(<span class="fu" style="color: #4758AB;">sum</span>(p2 <span class="sc" style="color: #5E5E5E;">*</span> (d<span class="sc" style="color: #5E5E5E;">-</span>mu2i)<span class="sc" style="color: #5E5E5E;">^</span><span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">sum</span>(p2))</span>
+<span id="cb4-25">  </span>
+<span id="cb4-26">  p1 <span class="ot" style="color: #003B4F;">&lt;-</span> pi1i</span>
+<span id="cb4-27">  p2 <span class="ot" style="color: #003B4F;">&lt;-</span> pi2i</span>
+<span id="cb4-28">  </span>
+<span id="cb4-29">  k <span class="ot" style="color: #003B4F;">&lt;-</span> k <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb4-30">  Q[k] <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">sum</span>(<span class="fu" style="color: #4758AB;">log</span>(comp.sum))</span>
+<span id="cb4-31">}</span></code></pre></div>
+</div>
+<p>Let’s plot the resulting distributions over data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">hist</span>(d, <span class="at" style="color: #657422;">prob=</span>T, <span class="at" style="color: #657422;">breaks=</span><span class="dv" style="color: #AD0000;">32</span>, <span class="at" style="color: #657422;">xlim=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="fu" style="color: #4758AB;">range</span>(d)[<span class="dv" style="color: #AD0000;">1</span>], <span class="fu" style="color: #4758AB;">range</span>(d)[<span class="dv" style="color: #AD0000;">2</span>]), <span class="at" style="color: #657422;">main=</span><span class="st" style="color: #20794D;">''</span>)</span>
+<span id="cb5-2">x1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="at" style="color: #657422;">from=</span><span class="fu" style="color: #4758AB;">range</span>(d)[<span class="dv" style="color: #AD0000;">1</span>], <span class="at" style="color: #657422;">to=</span><span class="fu" style="color: #4758AB;">range</span>(d)[<span class="dv" style="color: #AD0000;">2</span>], <span class="at" style="color: #657422;">length.out=</span><span class="dv" style="color: #AD0000;">1000</span>)</span>
+<span id="cb5-3">y1 <span class="ot" style="color: #003B4F;">&lt;-</span> pi1i <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">dnorm</span>(x1, <span class="at" style="color: #657422;">mean=</span>mu1i, <span class="at" style="color: #657422;">sd=</span>sigma1i) <span class="co" style="color: #5E5E5E;"># first dist.</span></span>
+<span id="cb5-4">y2 <span class="ot" style="color: #003B4F;">&lt;-</span> pi2i <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">dnorm</span>(x1, <span class="at" style="color: #657422;">mean=</span>mu2i, <span class="at" style="color: #657422;">sd=</span>sigma2i) <span class="co" style="color: #5E5E5E;"># second dist.</span></span>
+<span id="cb5-5"><span class="fu" style="color: #4758AB;">lines</span>(x1, y1, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"red"</span>, <span class="at" style="color: #657422;">lwd=</span><span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb5-6"><span class="fu" style="color: #4758AB;">lines</span>(x1, y2, <span class="at" style="color: #657422;">col=</span><span class="st" style="color: #20794D;">"blue"</span>, <span class="at" style="color: #657422;">lwd=</span><span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb5-7"><span class="fu" style="color: #4758AB;">legend</span>(<span class="st" style="color: #20794D;">'topright'</span>, <span class="at" style="color: #657422;">col=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"red"</span>, <span class="st" style="color: #20794D;">'blue'</span>), <span class="at" style="color: #657422;">lwd=</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">legend=</span><span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">"EM - 1st distribution"</span>, <span class="st" style="color: #20794D;">"EM - 2st distribution"</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/EM/Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/EM" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/EM</a></p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><img src="https://latex.codecogs.com/png.latex?%5E1"> <a href="http://www.columbia.edu/~mh2078/MachineLearningORFE/EM_Algorithm.pdf" class="uri">http://www.columbia.edu/~mh2078/MachineLearningORFE/EM_Algorithm.pdf</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E2"> <a href="https://web.mit.edu/6.435/www/Dempster77.pdf" class="uri">https://web.mit.edu/6.435/www/Dempster77.pdf</a></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5E3"> <a href="https://rpubs.com/H_Zhu/246450" class="uri">https://rpubs.com/H_Zhu/246450</a></p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+  author = {Murat Koptur},
+  title = {Under the Hood: {Expectation} {Maximization} {(EM)}},
+  date = {2022-10-10},
+  url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas">
+Murat Koptur. 2022. <span>“Under the Hood: Expectation Maximization
+(EM).”</span> October 10, 2022. <a href="https://www.muratkoptur.com/MyDsProjects/Analysis.html">https://www.muratkoptur.com/MyDsProjects/Analysis.html</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://www.muratkoptur.com/MyDsProjects/EM/Analysis.html</guid>
+  <pubDate>Sun, 09 Oct 2022 21:00:00 GMT</pubDate>
+  <media:content url="https://www.muratkoptur.com/MyDsProjects/EM/images/cover.webp" medium="image" type="image/webp"/>
+</item>
 <item>
   <title>Under the hood: Maximum Likelihood Estimation (MLE)</title>
   <dc:creator>Murat Koptur</dc:creator>
@@ -186,7 +329,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Under the Hood: {Maximum} {Likelihood} {Estimation} {(MLE)}},
   date = {2022-10-01},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -585,7 +727,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Build {Diversified} {Portfolio} with {Machine} {Learning:}
     {Clustering} Method for Stock Selection},
   date = {2022-09-18},
@@ -850,7 +991,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Time {Series} {Classification} with {Random} {Forests}},
   date = {2022-09-17},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -1025,7 +1165,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Uncertainty {Quantification} with {Polynomial} {Chaos}},
   date = {2022-09-13},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -1746,7 +1885,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Unsupervised {Anomaly} {Detection} with {One-Class} {SVM}},
   date = {2022-09-10},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -2145,7 +2283,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Nonlinear {System} {Identification} with {NARMAX}},
   date = {2022-09-07},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -2524,7 +2661,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Why {ML} Models Fail in Production: {Model} {Drift}},
   date = {2022-09-04},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -2785,7 +2921,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Don’t {Try} to {Forecast} {Everything:} {Predictability} of
     {Time} {Series}},
   date = {2022-09-01},
@@ -3007,7 +3142,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Don’t Impute All Missing Data: {Missing} {Data} {Patterns}},
   date = {2022-08-28},
   url = {https://www.muratkoptur.com/MyDsProjects/Analysis.html},
@@ -3208,7 +3342,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Stock {Return} and {Fundamental} {Clustering} \&amp; {Portfolio}
     {Selection}},
   date = {2022-08-26},
@@ -3425,7 +3558,6 @@ No matching items
 </div>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
   author = {Murat Koptur},
-  editor = {},
   title = {Modelling the Probability of Earthquakes {(M} \textgreater=
     5.0) in {North} {Anatolian} {Fault} {Zone}},
   date = {2022-08-25},

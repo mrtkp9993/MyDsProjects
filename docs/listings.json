@@ -12,8 +12,13 @@
     "items": []
   },
   {
+    "listing": "/EM/Analysis.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/EM/Analysis.html",
       "/MLE/Analysis.html",
       "/StockClusteringDiverse/Analysis.html",
       "/TimeSeriesClassification/Analysis.html",
