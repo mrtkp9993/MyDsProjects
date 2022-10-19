@@ -9,7 +9,7 @@
 <link>https://www.muratkoptur.com/MyDsProjects/index.html</link>
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
 <description>Murat Koptur - Data Scientist - Data science Blog &amp; Projects.</description>
-<generator>quarto-1.2.198</generator>
+<generator>quarto-1.2.229</generator>
 <lastBuildDate>Sun, 09 Oct 2022 21:00:00 GMT</lastBuildDate>
 <item>
   <title>Under the hood: Expectation Maximization (EM)</title>
