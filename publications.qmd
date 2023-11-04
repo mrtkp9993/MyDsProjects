@@ -1,0 +1,11 @@
+---
+listing:
+  contents: "**/Analysis.qmd"
+  template: custom.ejs
+keywords: data science, statistics, machine learning
+description: Murat Koptur - Data Scientist - Data science Blog & Projects - Publications List.
+format:
+  html:
+    citation: false
+    page-layout: full
+---
