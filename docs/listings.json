@@ -12,27 +12,25 @@
     "items": []
   },
   {
-    "listing": "/MLE/Analysis.html",
-    "items": []
+    "listing": "/publications.html",
+    "items": [
+      "/LotkaVolterraOptimalControl/Analysis.html",
+      "/StockClusteringDiverse/Analysis.html",
+      "/TimeSeriesPredictability/Analysis.html",
+      "/MissingData/Analysis.html",
+      "/EarthQuakeProbability/Analysis.html",
+      "/SysIdent/Analysis.html",
+      "/StockClustering/Analysis.html",
+      "/TimeSeriesClassification/Analysis.html",
+      "/UncertaintyQuantification/Analysis.html",
+      "/EM/Analysis.html",
+      "/MLE/Analysis.html",
+      "/AnomalyOcsvm/Analysis.html",
+      "/ConceptDrift/Analysis.html"
+    ]
   },
   {
-    "listing": "/LotkaVolterraOptimalControl/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/EM/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/ConceptDrift/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/AnomalyOcsvm/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/EarthQuakeProbability/Analysis.html",
+    "listing": "/MissingData/Analysis.html",
     "items": []
   },
   {
@@ -54,7 +52,27 @@
     ]
   },
   {
-    "listing": "/MissingData/Analysis.html",
+    "listing": "/EarthQuakeProbability/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/AnomalyOcsvm/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/ConceptDrift/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/EM/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/LotkaVolterraOptimalControl/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/MLE/Analysis.html",
     "items": []
   },
   {
@@ -68,23 +86,5 @@
   {
     "listing": "/TimeSeriesPredictability/Analysis.html",
     "items": []
-  },
-  {
-    "listing": "/publications.html",
-    "items": [
-      "/LotkaVolterraOptimalControl/Analysis.html",
-      "/StockClusteringDiverse/Analysis.html",
-      "/TimeSeriesPredictability/Analysis.html",
-      "/MissingData/Analysis.html",
-      "/EarthQuakeProbability/Analysis.html",
-      "/SysIdent/Analysis.html",
-      "/StockClustering/Analysis.html",
-      "/TimeSeriesClassification/Analysis.html",
-      "/UncertaintyQuantification/Analysis.html",
-      "/EM/Analysis.html",
-      "/MLE/Analysis.html",
-      "/AnomalyOcsvm/Analysis.html",
-      "/ConceptDrift/Analysis.html"
-    ]
   }
 ]
