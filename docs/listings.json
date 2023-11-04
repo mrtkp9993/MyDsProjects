@@ -38,6 +38,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/LotkaVolterraOptimalControl/Analysis.html",
       "/EM/Analysis.html",
       "/MLE/Analysis.html",
       "/StockClusteringDiverse/Analysis.html",

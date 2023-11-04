@@ -13,16 +13,14 @@ about:
       - icon: instagram
         href: https://www.instagram.com/mrtkp9993/
         text: Instagram
-format: 
-  html: 
+format:
+  html:
     citation: false
 
 ---
 
-I'm a mathematician and data scientist from Turkey. I have experience in 
-developing and building end-to-end data science solutions. 
-My interests are data science, numerical analysis, dynamical systems and chaos,
-and mathematical/statistical modeling.
+I am a professional Data Scientist with 6+ years of experience building small to large end-to-end data science solutions. I hold a Bachelor's degree in Math and a Master's degree in Data Analytics and Management. My interests are data science (machine learning, deep learning, Bayesian methods, time series modeling, stochastic processes & quantitative finance, topological data analysis, image & text processing), chaos theory (dynamical systems, simulation, system identification), and numerical analysis.
 
-When not playing with data, I'm enjoying spending time playing music and 
-working on digital art paintings.
+As a data scientist, I offer a range of services to help clients extract value from their data. I have a strong understanding of statistical and mathematical concepts and I am proficient in using the latest tools and technologies to deliver high-quality results. My services are tailored to meet the specific needs of my clients and I am dedicated to helping them achieve their goals.
+
+Are you looking for an end-to-end data science solution? or looking for any kind of consultation? or want to ask questions? or just want to say "Hi 👋" in any case feel free to Let me know. I will do my best to respond back. The quickest way to reach out to me is via an email.

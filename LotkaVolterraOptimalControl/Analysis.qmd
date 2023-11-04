@@ -3,10 +3,9 @@ title: "Applying Optimal Control to Fishing"
 date: 11/04/2023
 author: Murat Koptur
 keywords: mathematics, dynamical systems
-description: "We'll look at a few handy tools that give more information about our time series."
+description: "How can we control dynamical systems?"
 execute:
   freeze: auto
-  echo: false
   warning: false
   error: false
 format:
@@ -23,6 +22,8 @@ Optimal control theory is a field of control theory that focuses on identifying 
 1. Mathematical description of the system to be controlled
 2. Specification of a performance criterion (cost function)
 3. Specification of constraints (i.e. initial & boundary conditions)
+
+![Optimal Control](heading.jpg){width="400"}
 
 In this text, we will not examine the existince of admissible controls, we will just assume that admissible controls are exists for problems.
 

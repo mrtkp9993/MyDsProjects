@@ -10,7 +10,483 @@
 <atom:link href="https://www.muratkoptur.com/MyDsProjects/index.xml" rel="self" type="application/rss+xml"/>
 <description>Murat Koptur - Data Scientist - Data science Blog &amp; Projects.</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sun, 09 Oct 2022 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 03 Nov 2023 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Applying Optimal Control to Fishing</title>
+  <dc:creator>Murat Koptur</dc:creator>
+  <link>https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>Optimal control theory is a field of control theory that focuses on identifying the best way to control a dynamic system within a given time frame to achieve an optimized objective function while accounting for any constraints or limitations on the system. As we can see from this definition, an optimal control problem has three components:</p>
+<ol type="1">
+<li>Mathematical description of the system to be controlled</li>
+<li>Specification of a performance criterion (cost function)</li>
+<li>Specification of constraints (i.e.&nbsp;initial &amp; boundary conditions)</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/heading.jpg" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Optimal Control</figcaption>
+</figure>
+</div>
+<p>In this text, we will not examine the existince of admissible controls, we will just assume that admissible controls are exists for problems.</p>
+<section id="lotka-volterra-equations" class="level2">
+<h2 class="anchored" data-anchor-id="lotka-volterra-equations">Lotka-Volterra Equations</h2>
+<p>Lotka-Volterra equations are a pair of first-order nonlinear differential equations, used to describe the dynamics of two biologicals species’ interaction, one as a predator and the other as prey:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%7D%0A%5Cfrac%7Bdx%7D%7Bdt%7D%20&amp;=%20%5Calpha%20x%20-%20%5Cbeta%20xy%20%5C%5C%0A%5Cfrac%7Bdy%7D%7Bdt%7D%20&amp;=%20-%5Cgamma%20y%20+%20%5Cdelta%20xy%0A%5Cend%7Balign%7D%0A"></p>
+<p>where:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?x"> is the population density of prey;</li>
+<li><img src="https://latex.codecogs.com/png.latex?y"> is the population density of predator;</li>
+<li><img src="https://latex.codecogs.com/png.latex?t"> is the time;</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Calpha"> and <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> describes prey’s growth rate and effect of the presence of predators on prey’s growth rate, respectively.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cgamma"> and <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> describes predators’s death rate and effect of the presence of prey on predator’s growth rate, respectively.</li>
+</ul>
+<p>In our example, we will let <img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Cbeta=%5Cgamma=%5Cdelta=1">.</p>
+<p>Let’s simulate the system with following parameters:</p>
+<p><img src="https://latex.codecogs.com/png.latex?t_0=0,%20t_f=12"></p>
+<p><img src="https://latex.codecogs.com/png.latex?x(0)=0.5,%20y(0)=0.7"></p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code - Lotka-Volterra Simulation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> scipy.integrate <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> odeint</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">t0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-5">tf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span></span>
+<span id="cb1-6">X0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>]</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> lotka_volterra(X, t):</span>
+<span id="cb1-9">    x, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> X</span>
+<span id="cb1-10">    dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y</span>
+<span id="cb1-11">    dy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y</span>
+<span id="cb1-12">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> [dx, dy]</span>
+<span id="cb1-13"></span>
+<span id="cb1-14">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(t0, tf, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb1-15">sol <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> odeint(lotka_volterra, X0, t)</span>
+<span id="cb1-16"></span>
+<span id="cb1-17"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-18">plt.style.use(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'classic'</span>)</span>
+<span id="cb1-19">plt.plot(t, sol[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Prey'</span>)</span>
+<span id="cb1-20">plt.plot(t, sol[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'g'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Predator'</span>)</span>
+<span id="cb1-21">plt.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'best'</span>)</span>
+<span id="cb1-22">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'t'</span>)</span>
+<span id="cb1-23">plt.grid()</span>
+<span id="cb1-24">plt.savefig(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prey_predator_uncontrolled.png"</span>)</span>
+<span id="cb1-25">plt.show()</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>Result:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/prey_predator_uncontrolled.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Uncontrolled Lotka-Volterra Dynamics</figcaption>
+</figure>
+</div>
+<p>As we can see from graph, prey and predator population density values oscillates between 0.45 and 1.88.</p>
+</section>
+<section id="lotka-volterra-fishing-problem" class="level2">
+<h2 class="anchored" data-anchor-id="lotka-volterra-fishing-problem">Lotka-Volterra Fishing Problem</h2>
+<p>We can define mixed-integer optimal control problem in Mayer form as follows:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmin%20x_2(t_f)%0A"></p>
+<p>subject to</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%7D%0A%5Cfrac%7Bdx_0%7D%7Bdt%7D%20&amp;=%20x_0%20-%20x_0x_1%20-%20c_0x_0%20w%20%5C%5C%0A%5Cfrac%7Bdx_1%7D%7Bdt%7D%20&amp;=%20-x_1%20+%20x_0x_1%20-%20c_1x_1%20w%20%5C%5C%0A%5Cfrac%7Bdx_2%7D%7Bdt%7D%20&amp;=%20(x_0-1)%5E2%20+%20(x_1-1)%5E2%0A%5Cend%7Balign%7D%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?x(0)=(0.5,0.7,0)%5ET"> and <img src="https://latex.codecogs.com/png.latex?w(t)%5Cin%5C%7B0,1%5C%7D">. The third state <img src="https://latex.codecogs.com/png.latex?x_2"> is used to transform the objective into the Mayer formulation. The decision, whether the fishing fleet is actually fishing at time <img src="https://latex.codecogs.com/png.latex?t"> is denoted by <img src="https://latex.codecogs.com/png.latex?w(t)">.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code - Optimal Control Example
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> gekko <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> GEKKO</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> GEKKO(remote<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb2-4">m.solver_options <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_gap_tol 0.001'</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-5">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_max_iter_with_int_sol 100'</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-6">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_branch_method 1'</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-7">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_integer_tol 0.001'</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-8">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_integer_leaves 0'</span>,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-9">                    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'minlp_maximum_iterations 200'</span>]</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">m.time <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(t0, tf, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb2-12">x0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.Var(value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,lb<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-13">x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.Var(value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>,lb<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-14">x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.Var(value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>,lb<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb2-15">w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.MV(value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,lb<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,ub<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,integer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-16">w.STATUS <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-17">last <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.Param(np.zeros(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>))</span>
+<span id="cb2-18">last.value[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-19">m.Minimize(last<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x2)</span>
+<span id="cb2-20"></span>
+<span id="cb2-21">m.Equations([x0.dt() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> x0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x0<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x0<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>w,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-22">             x1.dt() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x0<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>w,<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-23">             x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> m.integral((x0<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (x1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)])</span>
+<span id="cb2-24"></span>
+<span id="cb2-25">m.options.IMODE <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span></span>
+<span id="cb2-26">m.options.NODES <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb2-27">m.options.SOLVER <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-28">m.options.MV_TYPE <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb2-29">m.solve()</span>
+<span id="cb2-30"></span>
+<span id="cb2-31">plt.figure(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb2-32">plt.step(m.time,w.value,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'r-'</span>,label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Control Variable (0/1)'</span>)</span>
+<span id="cb2-33">plt.plot(m.time,x0.value,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>,label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'Prey'</span>)</span>
+<span id="cb2-34">plt.plot(m.time,x1.value,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'g'</span>,label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'Predator'</span>)</span>
+<span id="cb2-35">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'t'</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Biomass / Control Variable'</span>)</span>
+<span id="cb2-36">plt.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'best'</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> plt.grid()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span> plt.tight_layout()</span>
+<span id="cb2-37">plt.savefig(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prey_predator_controlled.png"</span>)</span>
+<span id="cb2-38">plt.show()</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>Result:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/prey_predator_controlled.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Controlled Lotka-Volterra Dynamics</figcaption>
+</figure>
+</div>
+<p>As we can see from graph, with control variable, oscillation dampens and population density values converges to 1.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><img src="https://latex.codecogs.com/png.latex?%5E1"> <a href="https://www.mathematik.uni-konstanz.de/en/volkwein/python/oppy/Notebooks_Web/lotka_volterra_optimal_control.html">Solve a Lotka-Volterra based ODE Optimal Control Problem</a> <img src="https://latex.codecogs.com/png.latex?%5E2"> <a href="https://mintoc.de/index.php/Lotka_Volterra_fishing_problem">Lotka Volterra fishing problem</a> <img src="https://latex.codecogs.com/png.latex?%5E3"> <a href="https://apmonitor.com/do/index.php/Main/LotkaVolterra">Lotka Volterra Fishing Optimization</a> <img src="https://latex.codecogs.com/png.latex?%5E4"> <a href="https://www.princeton.edu/~aaa/Public/Teaching/ORF523/ORF523_S21_Guest_Lecture.pdf">Introduction to Optimal Control</a></p>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2023,
+  author = {Koptur, Murat},
+  title = {Applying {Optimal} {Control} to {Fishing}},
+  date = {2023-11-04},
+  url = {https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2023" class="csl-entry quarto-appendix-citeas">
+Koptur, Murat. 2023. <span>“Applying Optimal Control to Fishing.”</span>
+November 4, 2023. <a href="https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html">https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html</guid>
+  <pubDate>Fri, 03 Nov 2023 21:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Under the hood: Expectation Maximization (EM)</title>
   <dc:creator>Murat Koptur</dc:creator>
