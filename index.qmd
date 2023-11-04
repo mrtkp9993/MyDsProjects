@@ -10,8 +10,8 @@ listing:
   page-size: 10
 keywords: data science, statistics, machine learning
 description: Murat Koptur - Data Scientist - Data science Blog & Projects.
-format: 
-  html: 
+format:
+  html:
     citation: false
     page-layout: full
 ---

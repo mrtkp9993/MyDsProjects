@@ -1,6 +1,26 @@
 [
   {
-    "listing": "/AnomalyOcsvm/Analysis.html",
+    "listing": "/UncertaintyQuantification/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/TimeSeriesClassification/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/StockClusteringDiverse/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/MLE/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/LotkaVolterraOptimalControl/Analysis.html",
+    "items": []
+  },
+  {
+    "listing": "/EM/Analysis.html",
     "items": []
   },
   {
@@ -8,11 +28,11 @@
     "items": []
   },
   {
-    "listing": "/EarthQuakeProbability/Analysis.html",
+    "listing": "/AnomalyOcsvm/Analysis.html",
     "items": []
   },
   {
-    "listing": "/EM/Analysis.html",
+    "listing": "/EarthQuakeProbability/Analysis.html",
     "items": []
   },
   {
@@ -37,15 +57,7 @@
     "items": []
   },
   {
-    "listing": "/MLE/Analysis.html",
-    "items": []
-  },
-  {
     "listing": "/StockClustering/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/StockClusteringDiverse/Analysis.html",
     "items": []
   },
   {
@@ -53,15 +65,7 @@
     "items": []
   },
   {
-    "listing": "/TimeSeriesClassification/Analysis.html",
-    "items": []
-  },
-  {
     "listing": "/TimeSeriesPredictability/Analysis.html",
-    "items": []
-  },
-  {
-    "listing": "/UncertaintyQuantification/Analysis.html",
     "items": []
   }
 ]

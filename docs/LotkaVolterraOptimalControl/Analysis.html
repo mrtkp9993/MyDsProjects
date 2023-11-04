@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Murat Koptur">
-<meta name="dcterms.date" content="2022-09-13">
-<meta name="keywords" content="data science, statistics, uncertainty quantification">
-<meta name="description" content="How to perform uncertainty quantification using polynomial chaos expansion.">
+<meta name="dcterms.date" content="2023-11-04">
+<meta name="keywords" content="mathematics, dynamical systems">
+<meta name="description" content="We’ll look at a few handy tools that give more information about our time series.">
 
-<title>Murat Koptur Data Science Blog &amp; Projects - Uncertainty Quantification with Polynomial Chaos</title>
+<title>Murat Koptur Data Science Blog &amp; Projects - Applying Optimal Control to Fishing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,11 +134,11 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<meta property="og:title" content="Murat Koptur Data Science Blog &amp; Projects - Uncertainty Quantification with Polynomial Chaos">
+<meta property="og:title" content="Murat Koptur Data Science Blog &amp; Projects - Applying Optimal Control to Fishing">
 <meta property="og:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
 <meta property="og:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
 <meta property="og:site-name" content="Murat Koptur Data Science Blog &amp; Projects">
-<meta name="twitter:title" content="Murat Koptur Data Science Blog &amp; Projects - Uncertainty Quantification with Polynomial Chaos">
+<meta name="twitter:title" content="Murat Koptur Data Science Blog &amp; Projects - Applying Optimal Control to Fishing">
 <meta name="twitter:description" content="Murat Koptur - Data Scientist - Data Science Blog &amp; Projects">
 <meta name="twitter:image" content="https://muratkoptur.com/MyDsProjects/ogimg.png">
 <meta name="twitter:creator" content="@mrtkp9993">
@@ -214,12 +214,12 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Uncertainty Quantification with Polynomial Chaos</h1>
+<h1 class="title">Applying Optimal Control to Fishing</h1>
 </div>
 
 <div>
   <div class="description">
-    How to perform uncertainty quantification using polynomial chaos expansion.
+    We’ll look at a few handy tools that give more information about our time series.
   </div>
 </div>
 
@@ -236,7 +236,7 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 13, 2022</p>
+      <p class="date">November 4, 2023</p>
     </div>
   </div>
   
@@ -246,161 +246,163 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
 
 </header>
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/paste-B931C479.webp" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Source: <span class="math inline">\(^4\)</span></figcaption>
-</figure>
-</div>
-<p>According to <span class="math inline">\(^2\)</span>, uncertainty quantification is defined as</p>
-<blockquote class="blockquote">
-<p>The process of quantifying uncertainties associated with model calculations of true, physical QOIs, with the goals of accounting for all sources of uncertainty and quantifying the contributions of specific sources to the overall uncertainty.</p>
-</blockquote>
-<p>and answers the question</p>
-<blockquote class="blockquote">
-<p>How do the various sources of error and uncertainty feed into uncertainty in the model-based prediction of the quantities of interest?</p>
-</blockquote>
-</section>
-<section id="types-of-uncertainties" class="level1">
-<h1>Types of uncertainties</h1>
+<p>Optimal control theory is a field of control theory that focuses on identifying the best way to control a dynamic system within a given time frame to achieve an optimized objective function while accounting for any constraints or limitations on the system. As we can see from this definition, an optimal control problem has three components:</p>
+<ol type="1">
+<li>Mathematical description of the system to be controlled</li>
+<li>Specification of a performance criterion (cost function)</li>
+<li>Specification of constraints (i.e.&nbsp;initial &amp; boundary conditions)</li>
+</ol>
+<p>In this text, we will not examine the existince of admissible controls, we will just assume that admissible controls are exists for problems.</p>
+<section id="lotka-volterra-equations" class="level2">
+<h2 class="anchored" data-anchor-id="lotka-volterra-equations">Lotka-Volterra Equations</h2>
+<p>Lotka-Volterra equations are a pair of first-order nonlinear differential equations, used to describe the dynamics of two biologicals species’ interaction, one as a predator and the other as prey:</p>
+<p><span class="math display">\[
+\begin{align}
+\frac{dx}{dt} &amp;= \alpha x - \beta xy \\
+\frac{dy}{dt} &amp;= -\gamma y + \delta xy
+\end{align}
+\]</span></p>
+<p>where:</p>
 <ul>
-<li><p>Aleatoric (statistical) uncertainty refers to the notion of randomness, that is, the variability in the outcome of an experiment which is due to inherently random effects <span class="math inline">\(^6\)</span>.</p></li>
-<li><p>Epistemic uncertainty refers to uncertainty caused by a lack of knowledge, i.e., to the epistemic state of the agent <span class="math inline">\(^6\)</span>.</p></li>
+<li><span class="math inline">\(x\)</span> is the population density of prey;</li>
+<li><span class="math inline">\(y\)</span> is the population density of predator;</li>
+<li><span class="math inline">\(t\)</span> is the time;</li>
+<li><span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> describes prey’s growth rate and effect of the presence of predators on prey’s growth rate, respectively.</li>
+<li><span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\delta\)</span> describes predators’s death rate and effect of the presence of prey on predator’s growth rate, respectively.</li>
 </ul>
-<p>In real life applications, both kinds of uncertainties are present.</p>
-</section>
-<section id="types-of-problems" class="level1">
-<h1>Types of problems</h1>
-<p>There are two major types of problems in uncertainty quantification: one is the forward propagation of uncertainty (where the various sources of uncertainty are propagated through the model to predict the overall uncertainty in the system response) and the other is the inverse assessment of model uncertainty and parameter uncertainty (where the model parameters are calibrated simultaneously using test data) <span class="math inline">\(^1\)</span>.</p>
-<p>Polynomial chaos is a method for quantifiying uncertainties on forward problems. Its convergence is better than Monte Carlo methods <span class="math inline">\(^3\)</span>.</p>
+<p>In our example, we will let <span class="math inline">\(\alpha=\beta=\gamma=\delta=1\)</span>.</p>
+<p>Let’s simulate the system with following parameters:</p>
+<p><span class="math inline">\(t_0=0, t_f=12\)</span></p>
+<p><span class="math inline">\(x(0)=0.5, y(0)=0.7\)</span></p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code - Lotka-Volterra Simulation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> odeint</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tf <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X0 <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">0.7</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> lotka_volterra(X, t):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> X</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    dx <span class="op">=</span> x <span class="op">-</span> x <span class="op">*</span> y</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    dy <span class="op">=</span> <span class="op">-</span> y <span class="op">+</span> x <span class="op">*</span> y</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [dx, dy]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(t0, tf, <span class="dv">100</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> odeint(lotka_volterra, X0, t)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'classic'</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.plot(t, sol[:, <span class="dv">0</span>], <span class="st">'b'</span>, label<span class="op">=</span><span class="st">'Prey'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.plot(t, sol[:, <span class="dv">1</span>], <span class="st">'g'</span>, label<span class="op">=</span><span class="st">'Predator'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'best'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"prey_predator_uncontrolled.png"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Result:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/paste-4B607140.webp" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Source: <span class="math inline">\(^3\)</span></figcaption>
+<p><img src="prey_predator_uncontrolled.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Uncontrolled Lotka-Volterra Dynamics</figcaption>
 </figure>
 </div>
+<p>As we can see from graph, prey and predator population density values oscillates between 0.45 and 1.88.</p>
 </section>
-<section id="polynomial-chaos-expansion-pce" class="level1">
-<h1>Polynomial Chaos Expansion (PCE)</h1>
-<p>Consider a problem in space <span class="math inline">\(x\)</span> and time <span class="math inline">\(t\)</span> where the aim is to quantify the uncertainty in response <span class="math inline">\(Y\)</span>, computed bu a forward model <span class="math inline">\(f\)</span>, which depends on uncertain input parameters <span class="math inline">\(Q\)</span>:</p>
+<section id="lotka-volterra-fishing-problem" class="level2">
+<h2 class="anchored" data-anchor-id="lotka-volterra-fishing-problem">Lotka-Volterra Fishing Problem</h2>
+<p>We can define mixed-integer optimal control problem in Mayer form as follows:</p>
 <p><span class="math display">\[
-Y = f(x,t,Q)
+\min x_2(t_f)
 \]</span></p>
-<p>We want to quantify uncertainty in <span class="math inline">\(Y\)</span>, but we know nothing about its density distribution <span class="math inline">\(p_Y\)</span>. The goal is to either build the density <span class="math inline">\(p_Y\)</span> or revelant density properties of <span class="math inline">\(Y\)</span> using the density <span class="math inline">\(p_Q\)</span> and the forward model <span class="math inline">\(f\)</span> <span class="math inline">\(^5\)</span>.</p>
-<p>A general polynomial approximation can be defined as</p>
+<p>subject to</p>
 <p><span class="math display">\[
-\hat{f}(x,t,Q)=\sum_{n\in I_N}c_n(x,t)\Phi_n(Q),\quad I_N=\{0,\ldots N\}
+\begin{align}
+\frac{dx_0}{dt} &amp;= x_0 - x_0x_1 - c_0x_0 w \\
+\frac{dx_1}{dt} &amp;= -x_1 + x_0x_1 - c_1x_1 w \\
+\frac{dx_2}{dt} &amp;= (x_0-1)^2 + (x_1-1)^2
+\end{align}
 \]</span></p>
-<p>where <span class="math inline">\(\{c_n\}_{n\in I_N}\)</span> are coefficients and <span class="math inline">\(\{\Phi_n\}_{n\in I_N}\)</span> are polynomials. If <span class="math inline">\(\hat{f}\)</span> is a good approximation of <span class="math inline">\(f\)</span>, it is possible to either infer statistical properties of <span class="math inline">\(\hat{f}\)</span> analytically or through numerical computations where <span class="math inline">\(\hat{f}\)</span> is used as a surrogate for <span class="math inline">\(f\)</span> <span class="math inline">\(^5\)</span>.</p>
-<p>A polynomial chaos expansion is defined as a polynomial approximation, where the polynomials <span class="math inline">\(\{\Phi_n\}_{n\in I_N}\)</span> are orthogonal on a custom weighted function space <span class="math inline">\(L_Q\)</span>:</p>
-<p><span class="math display">\[
-\begin{align*}
-\langle \Phi_n,\Phi_m \rangle =&amp; \mathbb{E}\Phi_n(Q)\Phi_m(Q) \\
-=&amp; \int\ldots\int \Phi_n(q)\Phi_m(q)p_Q(q)dq=0,\quad n\neq m
-\end{align*}
-\]</span></p>
-<section id="logistic-growth-model-example" class="level2">
-<h2 class="anchored" data-anchor-id="logistic-growth-model-example">Logistic Growth Model Example</h2>
-<p>Logistic growth model is defined as</p>
-<p><span class="math display">\[
-\frac{dX}{dt}=rX(1-\frac{X}{K})
-\]</span></p>
-<p>where <span class="math inline">\(r\)</span> is the growth rate and <span class="math inline">\(K\)</span> is the population capacity (horizontal asymptote).</p>
-<p>Let’s define the model and visualize it for some parameters and the initial condition <span class="math inline">\(X_0=50\)</span>:</p>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> numpy.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logistic_model(x, t, r, K):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r <span class="op">*</span> x <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> x <span class="op">/</span> K)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'Logistic model with different params'</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>axs <span class="op">=</span> axs.ravel()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, params <span class="kw">in</span> <span class="bu">enumerate</span>([(<span class="fl">0.7</span>, <span class="dv">60</span>), (<span class="fl">1.1</span>, <span class="dv">60</span>), (<span class="fl">0.7</span>, <span class="dv">300</span>), (<span class="fl">1.1</span>, <span class="dv">300</span>)]):</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  sol <span class="op">=</span> odeint(logistic_model, x0, t, args<span class="op">=</span>params)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  axs[i].plot(t, sol[:, <span class="dv">0</span>], <span class="st">'b'</span>, label<span class="op">=</span><span class="st">'x(t)'</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  axs[i].legend(loc<span class="op">=</span><span class="st">'best'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  axs[i].set_xlabel(<span class="st">'t'</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  axs[i].set_ylabel(<span class="st">'x'</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  axs[i].grid()</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  axs[i].plot()</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="Analysis_files/figure-html/cell-3-output-1.png" width="597" height="470"></p>
+<p>where <span class="math inline">\(x(0)=(0.5,0.7,0)^T\)</span> and <span class="math inline">\(w(t)\in\{0,1\}\)</span>. The third state <span class="math inline">\(x_2\)</span> is used to transform the objective into the Mayer formulation. The decision, whether the fishing fleet is actually fishing at time <span class="math inline">\(t\)</span> is denoted by <span class="math inline">\(w(t)\)</span>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code - Optimal Control Example
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gekko <span class="im">import</span> GEKKO</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> GEKKO(remote<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>m.solver_options <span class="op">=</span> [<span class="st">'minlp_gap_tol 0.001'</span>,<span class="op">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'minlp_max_iter_with_int_sol 100'</span>,<span class="op">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'minlp_branch_method 1'</span>,<span class="op">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'minlp_integer_tol 0.001'</span>,<span class="op">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'minlp_integer_leaves 0'</span>,<span class="op">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'minlp_maximum_iterations 200'</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>m.time <span class="op">=</span> np.linspace(t0, tf, <span class="dv">100</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> m.Var(value<span class="op">=</span><span class="fl">0.5</span>,lb<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> m.Var(value<span class="op">=</span><span class="fl">0.7</span>,lb<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> m.Var(value<span class="op">=</span><span class="fl">0.0</span>,lb<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> m.MV(value<span class="op">=</span><span class="dv">0</span>,lb<span class="op">=</span><span class="dv">0</span>,ub<span class="op">=</span><span class="dv">1</span>,integer<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>w.STATUS <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>last <span class="op">=</span> m.Param(np.zeros(<span class="dv">100</span>))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>last.value[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>m.Minimize(last<span class="op">*</span>x2)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>m.Equations([x0.dt() <span class="op">==</span> x0 <span class="op">-</span> x0<span class="op">*</span>x1 <span class="op">-</span> <span class="fl">0.4</span><span class="op">*</span>x0<span class="op">*</span>w,<span class="op">\</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>             x1.dt() <span class="op">==</span> <span class="op">-</span> x1 <span class="op">+</span> x0<span class="op">*</span>x1 <span class="op">-</span> <span class="fl">0.2</span><span class="op">*</span>x1<span class="op">*</span>w,<span class="op">\</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>             x2 <span class="op">==</span> m.integral((x0<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (x1<span class="op">-</span><span class="dv">1</span>)<span class="op">**</span><span class="dv">2</span>)])</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>m.options.IMODE <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>m.options.NODES <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>m.options.SOLVER <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>m.options.MV_TYPE <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>m.solve()</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>plt.step(m.time,w.value,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'Control Variable (0/1)'</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.plot(m.time,x0.value,<span class="st">'b'</span>,label<span class="op">=</span><span class="vs">r'Prey'</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>plt.plot(m.time,x1.value,<span class="st">'g'</span>,label<span class="op">=</span><span class="vs">r'Predator'</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t'</span>)<span class="op">;</span> plt.ylabel(<span class="st">'Biomass / Control Variable'</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'best'</span>)<span class="op">;</span> plt.grid()<span class="op">;</span> plt.tight_layout()</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"prey_predator_controlled.png"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Now let’s assume that we have uncertainties over our parameters and assume that</p>
-<p><span class="math display">\[
-\begin{align*}
-r &amp;\sim \text{Log-Normal}(1, 0.1)\\
-K &amp;\sim \text{Uniform}(100, 200)
-\end{align*}
-\]</span> Let’s define our joint distribution:</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rdist<span class="op">=</span> chaospy.LogNormal(<span class="dv">1</span>, <span class="fl">0.1</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Kdist <span class="op">=</span> chaospy.Uniform(<span class="dv">100</span>, <span class="dv">200</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>joint <span class="op">=</span> chaospy.J(rdist, Kdist)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> numpy.mgrid[joint.lower[<span class="dv">0</span>]:joint.upper[<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span>, joint.lower[<span class="dv">1</span>]:joint.upper[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>contour <span class="op">=</span> plt.contourf(grid[<span class="dv">0</span>], grid[<span class="dv">1</span>], joint.pdf(grid), <span class="dv">50</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(<span class="op">*</span>joint.sample(<span class="dv">50</span>, seed<span class="op">=</span><span class="dv">1234</span>))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.xlim(joint.lower[<span class="dv">0</span>], joint.upper[<span class="dv">0</span>])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.ylim(joint.lower[<span class="dv">1</span>], joint.upper[<span class="dv">1</span>])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="Analysis_files/figure-html/cell-4-output-1.png" width="575" height="409"></p>
 </div>
+<p>Result:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="prey_predator_controlled.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Controlled Lotka-Volterra Dynamics</figcaption>
+</figure>
 </div>
-<p>Generate expension, sample the joint distribution, evaluate model at these points and plot:</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>expansion <span class="op">=</span> chaospy.generate_expansion(order<span class="op">=</span><span class="dv">3</span>, dist<span class="op">=</span>joint)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and sample the joint distribution</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> joint.sample(<span class="dv">1000</span>, rule<span class="op">=</span><span class="st">"sobol"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and evulate solver at these samples</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>evaluations <span class="op">=</span> numpy.array([odeint(logistic_model, x0, t, args<span class="op">=</span>(sample[<span class="dv">0</span>], sample[<span class="dv">1</span>])) <span class="cf">for</span> sample <span class="kw">in</span> samples.T])</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># and plot</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.plot(t, evaluations[:,:,<span class="dv">0</span>].T, alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="Analysis_files/figure-html/cell-5-output-1.png" width="575" height="404"></p>
-</div>
-</div>
-<p>Create polynomial approximation:</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>approx_solver <span class="op">=</span> chaospy.fit_regression(expansion, samples, evaluations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Calculate mean and deviance and plot:</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> chaospy.E(approx_solver, joint)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>deviation <span class="op">=</span> chaospy.Std(approx_solver, joint)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.fill_between(t, expected[:,<span class="dv">0</span>]<span class="op">-</span><span class="dv">2</span><span class="op">*</span>deviation[:,<span class="dv">0</span>], expected[:,<span class="dv">0</span>]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>deviation[:,<span class="dv">0</span>], alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t, expected[:,<span class="dv">0</span>])</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="Analysis_files/figure-html/cell-7-output-1.png" width="575" height="404"></p>
-</div>
-</div>
-<p>Full source code: <a href="https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification" class="uri">https://github.com/mrtkp9993/MyDsProjects/tree/main/UncertaintyQuantification</a></p>
+<p>As we can see from graph, with control variable, oscillation dampens and population density values converges to 1.</p>
 </section>
-</section>
-<section id="references" class="level1">
-<h1>References</h1>
-<p><span class="math inline">\(^1\)</span> Contributors to Wikimedia projects. (2022, July 27). Uncertainty quantification - Wikipedia. Retrieved from <a href="https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551" class="uri">https://en.wikipedia.org/w/index.php?title=Uncertainty_quantification&amp;oldid=1100714551</a></p>
-<p><span class="math inline">\(^2\)</span> Council, N. R., Engineering and Physical Sciences, D. O., Mathematical Sciences and Their Applications, B. O., &amp; Mathematical Foundations of Verification, Validation, and Uncertainty Quantification, C. O. (2012). Assessing the Reliability of Complex Models. In Mathematical and Statistical Foundations of Verification, Validation, and Uncertainty Quantification.</p>
-<p><span class="math inline">\(^3\)</span> <a href="https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf" class="uri">https://www.sintef.no/globalassets/project/evitameeting/2015/feinberg_lecture1.pdf</a></p>
-<p><span class="math inline">\(^4\)</span> <a href="https://www.intechopen.com/media/chapter/54982/media/F1.png" class="uri">https://www.intechopen.com/media/chapter/54982/media/F1.png</a></p>
-<p><span class="math inline">\(^5\)</span> Feinberg, J., &amp; Langtangen, H. P. (2015). Chaospy: An open source tool for designing methods of uncertainty quantification. Journal of Computational Science, 11, 46–57. <a href="https://doi.org/10.1016/j.jocs.2015.08.008" class="uri">https://doi.org/10.1016/j.jocs.2015.08.008</a></p>
-<p><span class="math inline">\(^6\)</span> <a href="https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf" class="uri">https://www.gdsd.statistik.uni-muenchen.de/2021/gdsd_huellermeier.pdf</a></p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><span class="math inline">\(^1\)</span> <a href="https://www.mathematik.uni-konstanz.de/en/volkwein/python/oppy/Notebooks_Web/lotka_volterra_optimal_control.html">Solve a Lotka-Volterra based ODE Optimal Control Problem</a> <span class="math inline">\(^2\)</span> <a href="https://mintoc.de/index.php/Lotka_Volterra_fishing_problem">Lotka Volterra fishing problem</a> <span class="math inline">\(^3\)</span> <a href="https://apmonitor.com/do/index.php/Main/LotkaVolterra">Lotka Volterra Fishing Optimization</a> <span class="math inline">\(^4\)</span> <a href="https://www.princeton.edu/~aaa/Public/Teaching/ORF523/ORF523_S21_Guest_Lecture.pdf">Introduction to Optimal Control</a></p>
 
 
 
@@ -413,16 +415,16 @@ K &amp;\sim \text{Uniform}(100, 200)
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2022,
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{koptur2023,
   author = {Koptur, Murat},
-  title = {Uncertainty {Quantification} with {Polynomial} {Chaos}},
-  date = {2022-09-13},
-  url = {https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html},
+  title = {Applying {Optimal} {Control} to {Fishing}},
+  date = {2023-11-04},
+  url = {https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2022" class="csl-entry quarto-appendix-citeas" role="listitem">
-Koptur, Murat. 2022. <span>“Uncertainty Quantification with Polynomial
-Chaos.”</span> September 13, 2022. <a href="https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html">https://www.muratkoptur.com/MyDsProjects/UncertaintyQuantification/Analysis.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-koptur2023" class="csl-entry quarto-appendix-citeas" role="listitem">
+Koptur, Murat. 2023. <span>“Applying Optimal Control to Fishing.”</span>
+November 4, 2023. <a href="https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html">https://www.muratkoptur.com/MyDsProjects/LotkaVolterraOptimalControl/Analysis.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

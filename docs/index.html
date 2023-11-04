@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.229">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,7 +19,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -50,7 +50,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -95,6 +96,7 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
 <meta name="dmca-site-verification" content="Z3FSZHB5TVZmMkNyQlhFMjlORitOQT090">
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6702378382603826" crossorigin="anonymous"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="alternate" type="application/rss+xml" title="Murat Koptur Data Science Blog &amp; Projects" href="index.xml"><meta property="og:title" content="">
@@ -126,41 +128,43 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="./"><i class="bi bi-house-fill" role="img">
+    <a class="nav-link" href="./" rel="" target=""><i class="bi bi-house-fill" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./about.html"><i class="bi bi-person-fill" role="img">
+    <a class="nav-link" href="./about.html" rel="" target=""><i class="bi bi-person-fill" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/mrtkp9993"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mrtkp9993" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/mrtkp9993/"><i class="bi bi-instagram" role="img">
+    <a class="nav-link" href="https://www.instagram.com/mrtkp9993/" rel="" target=""><i class="bi bi-instagram" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/muratkoptur/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/muratkoptur/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/mrtkp9993"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/mrtkp9993" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:muratkoptur@yandex.com"><i class="bi bi-mailbox" role="img">
+    <a class="nav-link" href="mailto:muratkoptur@yandex.com" rel="" target=""><i class="bi bi-mailbox" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -181,12 +185,10 @@ gtag('config', 'G-TQSZS8HRH9', { 'anonymize_ip': true});
 
 <div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
 <div class="list grid quarto-listing-cols-5">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1665349200000" data-listing-file-modified-sort="1665399541046" data-listing-reading-time-sort="2.125">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1665349200000" data-listing-file-modified-sort="1665399541046" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./EM/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./EM/images/cover.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="EM\images\cover.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Under the hood: Expectation Maximization (EM)
@@ -203,12 +205,10 @@ Oct 10, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1664571600000" data-listing-file-modified-sort="1664987974407" data-listing-reading-time-sort="2.78">
+<div class="g-col-1" data-index="1" data-listing-date-sort="1664571600000" data-listing-file-modified-sort="1664987974407" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./MLE/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./MLE/images/mle.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="MLE\images\mle.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Under the hood: Maximum Likelihood Estimation (MLE)
@@ -225,12 +225,10 @@ Oct 1, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-listing-date-sort="1663448400000" data-listing-file-modified-sort="1664987974428" data-listing-reading-time-sort="6.455">
+<div class="g-col-1" data-index="2" data-listing-date-sort="1663448400000" data-listing-file-modified-sort="1664987974428" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <a href="./StockClusteringDiverse/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./StockClusteringDiverse/images/paste-6599A03E.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="StockClusteringDiverse\images\paste-6599A03E.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Build Diversified Portfolio with Machine Learning: Clustering method for stock selection
@@ -247,12 +245,10 @@ Sep 18, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-listing-date-sort="1663362000000" data-listing-file-modified-sort="1664987974434" data-listing-reading-time-sort="3.275">
+<div class="g-col-1" data-index="3" data-listing-date-sort="1663362000000" data-listing-file-modified-sort="1664987974434" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <a href="./TimeSeriesClassification/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./TimeSeriesClassification/images/paste-B898F7B3.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="TimeSeriesClassification\images\paste-B898F7B3.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Time Series Classification with Random Forests
@@ -269,12 +265,10 @@ Sep 17, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="4" data-listing-date-sort="1663016400000" data-listing-file-modified-sort="1664987974432" data-listing-reading-time-sort="3.35">
+<div class="g-col-1" data-index="4" data-listing-date-sort="1663016400000" data-listing-file-modified-sort="1664987974432" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <a href="./UncertaintyQuantification/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./UncertaintyQuantification/images/paste-B931C479.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="UncertaintyQuantification\images\paste-B931C479.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Uncertainty Quantification with Polynomial Chaos
@@ -291,12 +285,10 @@ Sep 13, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-listing-date-sort="1662757200000" data-listing-file-modified-sort="1664987974282" data-listing-reading-time-sort="2.43">
+<div class="g-col-1" data-index="5" data-listing-date-sort="1662757200000" data-listing-file-modified-sort="1664987974282" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./AnomalyOcsvm/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./AnomalyOcsvm/images/paste-DBD557B8.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="AnomalyOcsvm\images\paste-DBD557B8.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Unsupervised Anomaly Detection with One-Class SVM
@@ -313,12 +305,10 @@ Sep 10, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="6" data-listing-date-sort="1662498000000" data-listing-file-modified-sort="1664987974430" data-listing-reading-time-sort="8.175">
+<div class="g-col-1" data-index="6" data-listing-date-sort="1662498000000" data-listing-file-modified-sort="1664987974430" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
 <a href="./SysIdent/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./SysIdent/images/paste-20AD539F.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="SysIdent\images\paste-20AD539F.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Nonlinear System Identification with NARMAX
@@ -335,12 +325,10 @@ Sep 7, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="7" data-listing-date-sort="1662238800000" data-listing-file-modified-sort="1664987974285" data-listing-reading-time-sort="5.845">
+<div class="g-col-1" data-index="7" data-listing-date-sort="1662238800000" data-listing-file-modified-sort="1664987974285" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <a href="./ConceptDrift/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./ConceptDrift/images/paste-FB2D446A.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="ConceptDrift\images\paste-FB2D446A.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Why ML models fail in production: Model Drift
@@ -357,12 +345,10 @@ Sep 4, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-listing-date-sort="1661979600000" data-listing-file-modified-sort="1664987974436" data-listing-reading-time-sort="6.04">
+<div class="g-col-1" data-index="8" data-listing-date-sort="1661979600000" data-listing-file-modified-sort="1664987974436" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <a href="./TimeSeriesPredictability/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./TimeSeriesPredictability/images/paste-DD2528C4.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="TimeSeriesPredictability\images\paste-DD2528C4.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Don’t Try to Forecast Everything: Predictability of Time Series
@@ -379,12 +365,10 @@ Sep 1, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="9" data-listing-date-sort="1661634000000" data-listing-file-modified-sort="1664987974409" data-listing-reading-time-sort="4.985">
+<div class="g-col-1" data-index="9" data-listing-date-sort="1661634000000" data-listing-file-modified-sort="1664987974409" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./MissingData/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./MissingData/images/paste-82A43477.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img src="MissingData\images\paste-82A43477.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Don’t impute all missing data: Missing Data Patterns
@@ -401,12 +385,10 @@ Aug 28, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="10" data-listing-date-sort="1661461200000" data-listing-file-modified-sort="1664987974429" data-listing-reading-time-sort="1.475">
+<div class="g-col-1" data-index="10" data-listing-date-sort="1661461200000" data-listing-file-modified-sort="1664987974429" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <a href="./StockClustering/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img data-src="./StockClustering/images/paste-0B2C4B8E.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img data-src="StockClustering\images\paste-0B2C4B8E.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Stock Return and Fundamental Clustering &amp; Portfolio Selection
@@ -423,12 +405,10 @@ Aug 26, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="11" data-listing-date-sort="1661374800000" data-listing-file-modified-sort="1664987974400" data-listing-reading-time-sort="2.935">
+<div class="g-col-1" data-index="11" data-listing-date-sort="1661374800000" data-listing-file-modified-sort="1664987974400" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./EarthQuakeProbability/Analysis.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img data-src="./EarthQuakeProbability/images/paste-FACE8B18.webp" class="thumbnail-image card-img" style="height: 100px;">
-</p>
+<p class="card-img-top"><img data-src="EarthQuakeProbability\images\paste-FACE8B18.webp" style="height: 100px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Modelling the probability of earthquakes (M &gt;= 5.0) in North Anatolian Fault Zone
@@ -480,9 +460,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -547,6 +541,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -590,6 +670,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Support my work from <a href="https://github.com/sponsors/mrtkp9993/">GitHub Sponsors</a> and <a href="https://patreon.com/muratkoptur?utm_medium=clipboard_copy&amp;utm_source=copyLink&amp;utm_campaign=creatorshare_creator">Patreon</a>.</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
